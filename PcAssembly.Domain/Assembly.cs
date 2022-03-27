@@ -5,10 +5,11 @@ namespace PcAssembly.Domain
     public class Assembly : BaseEntity
     {
         [Required]
-        public string Name { get; set; } = "New Assembly";
+        public string Name { get; set; }
+        public int cpuId { get; set; }
         public CPU Cpu { get; set; }
         [ConcurrencyCheck]
-        public double TotalPrice { get; set; } = 0;
+        public double TotalPrice { get; set; }
 
         //public override bool Equals(object? obj)
         //{
