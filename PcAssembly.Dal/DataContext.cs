@@ -11,6 +11,5 @@ namespace PcAssembly.Dal
         }
 
         public DbSet<CPU> CPUs { get; set; }
-        public DbSet<ManufacturerInfo> ManufacturerInfos { get; set; }
     }
 }

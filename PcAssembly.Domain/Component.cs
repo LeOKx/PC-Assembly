@@ -13,8 +13,8 @@ namespace PcAssembly.Domain
         [Required]
         public TypeComponent Type { get; set; }
         [ConcurrencyCheck]
-        public double Price { get; set; } = 0;
-        public int PowerConsumption { get; set; } = 100;
-        [Required]
+        public double Price { get; set; }
+        [ConcurrencyCheck]
+        public int PowerConsumption { get; set; }
     }
 }

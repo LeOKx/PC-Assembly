@@ -10,7 +10,7 @@ namespace PcAssembly.Dal.Repositories
     public class ComponentRepository<TComponent> : IComponentRepository<TComponent> where TComponent : Component
     {
 
-        protected readonly DataContext _context;
+         protected readonly DataContext _context;
         //protected DbSet<TComponent> _dbSet;
 
         public ComponentRepository(DataContext context)
@@ -29,10 +29,10 @@ namespace PcAssembly.Dal.Repositories
         public async Task<TComponent> DeleteComponent(int id)
         {
             var component = await GetComponentById(id);
-            var info = component.ManufacturerInfo;
+            //var info = component.ManufacturerInfo;
             
-            //_context.Set<TComponent>().Remove(component);
-            _context.ManufacturerInfos.Remove(info);
+            _context.Set<TComponent>().Remove(component);
+            //_context.ManufacturerInfos.Remove(info);
             await SaveChangesAsync();
 
             return component;
@@ -40,7 +40,7 @@ namespace PcAssembly.Dal.Repositories
 
         public async Task<TComponent> GetComponentById(int id)
         {
-            var component = _context.Set<TComponent>().Include(c => c.ManufacturerInfo).FirstAsync(c => c.Id == id);
+            var component = _context.Set<TComponent>().FirstAsync(c => c.Id == id);
             if (component == null)
             {
                 throw new ValidationException($"Object of type {typeof(TComponent)} with id { id } not found");
@@ -54,7 +54,7 @@ namespace PcAssembly.Dal.Repositories
 
         public async Task<List<TComponent>> GetComponents()
         {
-            return await _context.Set<TComponent>().Include(c => c.ManufacturerInfo).ToListAsync();
+            return await _context.Set<TComponent>().ToListAsync();
         }
 
         public async Task<TComponent> UpdateComponent(TComponent updatedComponent)

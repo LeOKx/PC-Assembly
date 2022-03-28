@@ -22,7 +22,7 @@ namespace PcAssembly.Bll.Services
         {
 
             var serviceResponse = new ServiceResponse<GetCpuDto>();
-            if(!await _repository.ExistCpuWithTheModel(newCPU.ManufacturerInfo.Model))
+            if(!await _repository.ExistCpuWithTheModel(newCPU.Model))
             {
                 CPU cpu = _mapper.Map<CPU>(newCPU);
                 serviceResponse.Data = _mapper.Map<GetCpuDto>(await _repository.AddComponent(cpu));
