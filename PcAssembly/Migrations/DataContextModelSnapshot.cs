@@ -7,7 +7,7 @@ using PcAssembly.Dal;
 
 #nullable disable
 
-namespace PcAssembly.Dal.Migrations
+namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -21,7 +21,7 @@ namespace PcAssembly.Dal.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("PcAssembly.Domain.CPU", b =>
+            modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,17 +29,35 @@ namespace PcAssembly.Dal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Cores")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalPrice")
+                        .IsConcurrencyToken()
+                        .HasColumnType("float");
+
+                    b.Property<int>("cpuId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Family")
+                    b.HasKey("Id");
+
+                    b.HasIndex("cpuId");
+
+                    b.ToTable("Assemblies");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Component", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<float>("Frequency")
-                        .HasColumnType("real");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Generation")
-                        .HasColumnType("int");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ManufacturerInfoId")
                         .HasColumnType("int");
@@ -47,17 +65,14 @@ namespace PcAssembly.Dal.Migrations
                     b.Property<int>("PowerConsumption")
                         .HasColumnType("int");
 
-                    b.Property<int>("Socket")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Threads")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ManufacturerInfoId");
+                    b.HasIndex("ManufacturerInfoId")
+                        .IsUnique();
 
-                    b.ToTable("CPUs");
+                    b.ToTable("Component");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Component");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.ManufacturerInfo", b =>
@@ -89,6 +104,42 @@ namespace PcAssembly.Dal.Migrations
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.CPU", b =>
+                {
+                    b.HasBaseType("PcAssembly.Domain.Component");
+
+                    b.Property<int>("Cores")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Family")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Frequency")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Generation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Socket")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Threads")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("CPU");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.CPU", "Cpu")
+                        .WithMany()
+                        .HasForeignKey("cpuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cpu");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Component", b =>
                 {
                     b.HasOne("PcAssembly.Domain.ManufacturerInfo", "ManufacturerInfo")
                         .WithMany()

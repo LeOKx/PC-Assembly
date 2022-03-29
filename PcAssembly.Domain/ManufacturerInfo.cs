@@ -1,4 +1,6 @@
-﻿using PcAssembly.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using PcAssembly.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace PcAssembly.Domain

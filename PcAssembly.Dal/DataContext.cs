@@ -17,8 +17,9 @@ namespace PcAssembly.Dal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AssemblyConfig());
-            modelBuilder.ApplyConfiguration(new ComponentConfig());
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.ApplyConfiguration(new AssemblyConfig());
+            //modelBuilder.ApplyConfiguration(new ComponentConfig());
         }
 
 
