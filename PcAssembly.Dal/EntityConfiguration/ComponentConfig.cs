@@ -13,6 +13,10 @@ namespace PcAssembly.Dal.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Component> builder)
         {
+            builder.HasIndex(c => c.ManufacturerInfoId).IsUnique();
+            //builder.HasOne(c => c.ManufacturerInfo)
+            //    .WithOne<ManufacturerInfo>()
+            //    .HasForeignKey<ManufacturerInfo>(c => c.Id);
             //builder.HasOne(c => c.ManufacturerInfo)
             //    .WithOne(m => m.Id)
             //    .HasForeignKey(c => c.InfoId);

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PcAssembly.Domain
 {
@@ -10,6 +11,5 @@ namespace PcAssembly.Domain
         public CPU Cpu { get; set; }
         [ConcurrencyCheck]
         public double TotalPrice { get; set; }
-
     }
 }
