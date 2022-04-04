@@ -2,48 +2,68 @@
 using Microsoft.EntityFrameworkCore;
 using PcAssembly.Dal.Interfaces;
 using PcAssembly.Domain;
+using PcAssembly.Domain.Components;
 using System.ComponentModel.DataAnnotations;
 
 namespace PcAssembly.Dal.Repositories
 {
     //Abstract переделать
-    public class ComponentRepository<TComponent> : IComponentRepository<TComponent> where TComponent : Component
+    public class ComponentRepository<TComponent, TId> : GenericRepository<TComponent, TId>, 
+        IComponentRepository<TComponent, TId> where TComponent : Component, IBaseEntity<TId>
     {
-
-        protected readonly DataContext _context;
-        //protected DbSet<TComponent> _dbSet;
-
-        public ComponentRepository(DataContext context)
+        public ComponentRepository(DataContext _context) : base(_context)
         {
-            _context = context;
-            //_dbSet = context.Set<TComponent>();
         }
 
-        public async Task<TComponent> AddComponent(TComponent newComponent)
-        {
-            _context.Set<TComponent>().Add(newComponent);
-            await _context.SaveChangesAsync();
-            return newComponent;
-        }
+        //protected readonly DataContext _context;
+        ////protected DbSet<TComponent> _dbSet;
 
-        public async Task<TComponent> DeleteComponent(int id)
+        //public ComponentRepository(DataContext context)
+        //{
+        //    _context = context;
+        //    //_dbSet = context.Set<TComponent>();
+        //}
+
+        //public async Task<TComponent> Insert(TComponent newComponent)
+        //{
+
+        //    _context.Set<TComponent>().Add(newComponent);
+        //    await _context.SaveChangesAsync();
+        //    return newComponent;
+        //}
+
+        public async Task<TComponent> DeleteComponent(TComponent deleteComponent)
         {
+            try
+            {
+                var info = deleteComponent.ManufacturerInfo;
+                _context.ManufacturerInfos.Remove(info);
+                await SaveChangesAsync();
+
+                return deleteComponent;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public async Task<TComponent> DeleteComponent(TId id)
+        {
+
             var component = await GetComponentById(id);
             var info = component.ManufacturerInfo;
-            
-            //_context.Set<TComponent>().Remove(component);
             _context.ManufacturerInfos.Remove(info);
             await SaveChangesAsync();
 
             return component;
         }
 
-        public async Task<TComponent> GetComponentById(int id)
+        public async Task<TComponent> GetComponentById(TId id)
         {
-            var component = _context.Set<TComponent>().Include(c => c.ManufacturerInfo).FirstAsync(c => c.Id == id);
+            var component = _dbSet.Include(c => c.ManufacturerInfo).FirstAsync(c => c.Id.Equals(id));
             if (component == null)
             {
-                throw new ValidationException($"Object of type {typeof(TComponent)} with id { id } not found");
+                throw new Exception($"Object of type {typeof(TComponent)} with id { id } not found");
             }
             else
             {
@@ -54,18 +74,14 @@ namespace PcAssembly.Dal.Repositories
 
         public async Task<List<TComponent>> GetComponents()
         {
-            return await _context.Set<TComponent>().Include(c => c.ManufacturerInfo).ToListAsync();
+           return await _dbSet.Include(c => c.ManufacturerInfo).ToListAsync();
         }
 
-        public async Task<TComponent> UpdateComponent(TComponent updatedComponent)
-        {
-            _context.Set<TComponent>().Update(updatedComponent);
-            await SaveChangesAsync();
-            return await GetComponentById(updatedComponent.Id);
-        }
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+        //public async Task<TComponent> Update(TComponent updatedComponent)
+        //{
+        //    _context.Set<TComponent>().Update(updatedComponent);
+        //    await SaveChangesAsync();
+        //    return await GetComponentById(updatedComponent.Id);
+        //}
     }
 }

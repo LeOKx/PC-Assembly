@@ -1,15 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PcAssembly.Domain.Auth;
+using PcAssembly.Domain.Components;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PcAssembly.Domain
 {
     public class Assembly : BaseEntity
     {
-        //[Required]
+        [Required]
         public string Name { get; set; }
-        public int cpuId { get; set; }
+        public int CpuId { get; set; }
         public CPU Cpu { get; set; }
-        [ConcurrencyCheck]
+        public int GraphicCardId { get; set; }
+        public GraphicCard GraphicCard { get; set; }
+        [Required]
+        public User User { get; set; }
+
         public double TotalPrice { get; set; }
+        [Column(TypeName = "Date")]
+        public DateTime CreateDate { get; set; }
+        public ICollection<SavedAssemblies> SavedAssemblies { get; set; }
     }
 }

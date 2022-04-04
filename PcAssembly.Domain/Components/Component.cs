@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PcAssembly.Domain.Components;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PcAssembly.Domain
+namespace PcAssembly.Domain.Components
 {
-    public abstract class Component : BaseEntity
+    public abstract class Component : BaseEntity /*: ManufacturerInfo*/
     {
         public int PowerConsumption { get; set; } = 100;
-        [ForeignKey(nameof(ManufacturerInfoId))]
-        public int ManufacturerInfoId { get; set; }
         public ManufacturerInfo ManufacturerInfo { get; set; }
         
     }
