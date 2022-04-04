@@ -24,7 +24,7 @@ namespace PcAssembly.Bll.Services
         {
 
             var serviceResponse = new ServiceResponse<GetCpuDto>();
-            if(!await _repository.ExistCpuWithTheModel(newCPU.ManufacturerInfo.Model))
+            if(!await _repository.ExistComponentWithTheModel(newCPU.Model))
             {
                 CPU cpu = _mapper.Map<CPU>(newCPU);
                 serviceResponse.Data = _mapper.Map<GetCpuDto>(await _repository.Insert(cpu));
@@ -42,11 +42,11 @@ namespace PcAssembly.Bll.Services
             var serviceResponse = new ServiceResponse<GetCpuDto>();
             try
             {
-                var cpu = await _repository.GetComponentById(id);
+                var cpu = await _repository.GetById(id);
                 if(cpu != null)
                 {
-                    var deleteComponent = await _repository.GetComponentById(id);
-                    await _repository.DeleteComponent(deleteComponent);
+                    var deleteComponent = await _repository.GetById(id);
+                    await _repository.Delete(deleteComponent);
                     serviceResponse.Data = _mapper.Map<GetCpuDto>(cpu);
                     serviceResponse.Message = $"CPU {id} Deleted";
                 }
@@ -67,7 +67,7 @@ namespace PcAssembly.Bll.Services
         public async Task<ServiceResponse<List<GetCpuDto>>> GetAllCPUs()
         {
             var serviceResponse = new ServiceResponse<List<GetCpuDto>>();
-            var dbCPU = await _repository.GetComponents();
+            var dbCPU = await _repository.GetAll();
             serviceResponse.Data = dbCPU.Select(c => _mapper.Map<GetCpuDto>(c)).ToList();
 
             return serviceResponse;
@@ -78,7 +78,7 @@ namespace PcAssembly.Bll.Services
             var serviceResponse = new ServiceResponse<GetCpuDto>();
             try
             {
-                var dbCPU = await _repository.GetComponentById(id);
+                var dbCPU = await _repository.GetById(id);
                     serviceResponse.Data = _mapper.Map<GetCpuDto>(dbCPU);
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace PcAssembly.Bll.Services
             var serviceResponse = new ServiceResponse<GetCpuDto>();
             try
             {
-                var dbCPU = await _repository.GetComponentById(id);
+                var dbCPU = await _repository.GetById(id);
                 if(dbCPU != null) 
                 {
                 _mapper.Map(updatedCPU, dbCPU);

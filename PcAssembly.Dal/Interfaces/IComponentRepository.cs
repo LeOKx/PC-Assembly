@@ -9,11 +9,6 @@ namespace PcAssembly.Dal.Interfaces
         IGenericRepository<TComponent, TId> where TComponent : Component, IBaseEntity<TId>
 
     {
-        //Task<TComponent> Insert(TComponent newComponent);
-        Task<TComponent> DeleteComponent(TComponent deleteComponent);
-        Task<TComponent> DeleteComponent(TId id);
-        Task<List<TComponent>> GetComponents();
-        Task<TComponent> GetComponentById(TId id);
-        //Task<TComponent> Update(TComponent updatedComponent);
+        public Task<bool> ExistComponentWithTheModel(string model);
     }
 }
