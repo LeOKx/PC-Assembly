@@ -12,19 +12,6 @@ namespace PcAssembly.Dal.Repositories
         {
         }
 
-        public async Task<bool> ExistCpuWithTheModel(string model)
-        {
-            var component = await _context.CPUs
-                .Include(c => c.ManufacturerInfo)
-                .FirstOrDefaultAsync(c => c.ManufacturerInfo.Model == model);
-            if (component == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+ 
     }
 }

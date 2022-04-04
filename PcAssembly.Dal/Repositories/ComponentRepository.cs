@@ -15,73 +15,19 @@ namespace PcAssembly.Dal.Repositories
         {
         }
 
-        //protected readonly DataContext _context;
-        ////protected DbSet<TComponent> _dbSet;
-
-        //public ComponentRepository(DataContext context)
-        //{
-        //    _context = context;
-        //    //_dbSet = context.Set<TComponent>();
-        //}
-
-        //public async Task<TComponent> Insert(TComponent newComponent)
-        //{
-
-        //    _context.Set<TComponent>().Add(newComponent);
-        //    await _context.SaveChangesAsync();
-        //    return newComponent;
-        //}
-
-        public async Task<TComponent> DeleteComponent(TComponent deleteComponent)
+        public async Task<bool> ExistComponentWithTheModel(string model)
         {
-            try
-            {
-                var info = deleteComponent.ManufacturerInfo;
-                _context.ManufacturerInfos.Remove(info);
-                await SaveChangesAsync();
-
-                return deleteComponent;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-        public async Task<TComponent> DeleteComponent(TId id)
-        {
-
-            var component = await GetComponentById(id);
-            var info = component.ManufacturerInfo;
-            _context.ManufacturerInfos.Remove(info);
-            await SaveChangesAsync();
-
-            return component;
-        }
-
-        public async Task<TComponent> GetComponentById(TId id)
-        {
-            var component = _dbSet.Include(c => c.ManufacturerInfo).FirstAsync(c => c.Id.Equals(id));
+            var component = await _dbSet
+                .FirstOrDefaultAsync(c => c.Model == model);
             if (component == null)
             {
-                throw new Exception($"Object of type {typeof(TComponent)} with id { id } not found");
+                return false;
             }
             else
             {
-                return await component;
+                return true;
             }
- 
         }
 
-        public async Task<List<TComponent>> GetComponents()
-        {
-           return await _dbSet.Include(c => c.ManufacturerInfo).ToListAsync();
-        }
-
-        //public async Task<TComponent> Update(TComponent updatedComponent)
-        //{
-        //    _context.Set<TComponent>().Update(updatedComponent);
-        //    await SaveChangesAsync();
-        //    return await GetComponentById(updatedComponent.Id);
-        //}
     }
 }

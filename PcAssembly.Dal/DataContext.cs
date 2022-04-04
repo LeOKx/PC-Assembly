@@ -20,7 +20,7 @@ namespace PcAssembly.Dal
         //public DbSet<Component> Components { get; set; }
         public DbSet<CPU> CPUs { get; set; }
         public DbSet<GraphicCard> GraphicCards { get; set; }
-        public DbSet<ManufacturerInfo> ManufacturerInfos { get; set; }
+        //public DbSet<ManufacturerInfo> ManufacturerInfos { get; set; }
         public DbSet<Assembly> Assemblies{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UsersProfiles { get; set; }
