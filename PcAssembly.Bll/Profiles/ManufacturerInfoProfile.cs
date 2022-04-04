@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PcAssembly.Common.Dtos.ManufacturerInfo;
 using PcAssembly.Domain;
+using PcAssembly.Domain.Components;
 
 namespace PcAssembly.Bll.Profiles
 {

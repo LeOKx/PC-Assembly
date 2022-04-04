@@ -3,7 +3,7 @@ using PcAssembly.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace PcAssembly.Domain
+namespace PcAssembly.Domain.Components
 {
     public class ManufacturerInfo: BaseEntity
     {

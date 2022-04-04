@@ -6,6 +6,7 @@ using PcAssembly.Bll.Services;
 using PcAssembly.Dal;
 using PcAssembly.Dal.Interfaces;
 using PcAssembly.Dal.Repositories;
+using PcAssembly.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped(typeof(IComponentRepository<>), typeof(ComponentRepository<>));
+//builder.Services.AddScoped(typeof(IBaseEntity<>), typeof(BaseEntity));
+//builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+//builder.Services.AddScoped(typeof(IComponentRepository<>), typeof(ComponentRepository<>));
 builder.Services.AddScoped<ICpuService, CpuService>();
 builder.Services.AddScoped<ICpuRepository, CpuRepository>();
 
