@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityConfiguration\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PcAssembly.Domain\PcAssembly.Domain.csproj" />
   </ItemGroup>
 

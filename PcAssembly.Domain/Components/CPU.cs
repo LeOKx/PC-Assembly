@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PcAssembly.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
-
-namespace PcAssembly.Domain
+namespace PcAssembly.Domain.Components
 {
     public class CPU:Component
     {  
@@ -10,9 +9,9 @@ namespace PcAssembly.Domain
         public Socket Socket { get; set; }
         public CpuFamily Family { get; set; }
         public CpuGeneration Generation { get; set; }
-        public int Cores { get; set; } = 0;
-        public int Threads { get; set; } = 0;
-        public float Frequency { get; set; } = 0;
+        public int Cores { get; set; }
+        public int Threads { get; set; }
+        public float Frequency { get; set; }
         //public List<RamType> SupportedRam { get; set; } = new List<RamType>(){ RamType.DDR4 };
     }
 }

@@ -1,17 +1,14 @@
 ﻿
 
 using PcAssembly.Domain;
+using PcAssembly.Domain.Components;
 
 namespace PcAssembly.Dal.Interfaces
 {
-    public interface IComponentRepository<TComponent> where TComponent : Component
+    public interface IComponentRepository<TComponent, TId> : 
+        IGenericRepository<TComponent, TId> where TComponent : Component, IBaseEntity<TId>
 
     {
-        Task<TComponent> AddComponent(TComponent newComponent);
-        Task<TComponent> DeleteComponent(int id);
-        Task<List<TComponent>> GetComponents();
-        Task<TComponent> GetComponentById(int id);
-        Task<TComponent> UpdateComponent(TComponent updatedComponent);
-        Task SaveChangesAsync();
+        public Task<bool> ExistComponentWithTheModel(string model);
     }
 }
