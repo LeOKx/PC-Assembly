@@ -12,8 +12,8 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220404183939_FirstInit")]
-    partial class FirstInit
+    [Migration("20220406141254_ChangeTPCtoTPT")]
+    partial class ChangeTPCtoTPT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,6 +131,7 @@ namespace PcAssembly.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -140,6 +141,7 @@ namespace PcAssembly.Migrations
 
                     b.Property<double>("Price")
                         .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("float");
 
                     b.Property<int>("Socket")
@@ -173,6 +175,7 @@ namespace PcAssembly.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -182,6 +185,7 @@ namespace PcAssembly.Migrations
 
                     b.Property<double>("Price")
                         .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("float");
 
                     b.Property<int>("SgRamSize")

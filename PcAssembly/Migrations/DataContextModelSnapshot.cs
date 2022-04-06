@@ -129,6 +129,7 @@ namespace PcAssembly.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -138,6 +139,7 @@ namespace PcAssembly.Migrations
 
                     b.Property<double>("Price")
                         .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("float");
 
                     b.Property<int>("Socket")
@@ -171,6 +173,7 @@ namespace PcAssembly.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -180,6 +183,7 @@ namespace PcAssembly.Migrations
 
                     b.Property<double>("Price")
                         .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("float");
 
                     b.Property<int>("SgRamSize")

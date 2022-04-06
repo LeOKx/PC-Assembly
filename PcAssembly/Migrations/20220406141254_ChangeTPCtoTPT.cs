@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PcAssembly.Migrations
 {
-    public partial class FirstInit : Migration
+    public partial class ChangeTPCtoTPT : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,7 +24,7 @@ namespace PcAssembly.Migrations
                     Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Company = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
+                    Price = table.Column<double>(type: "float", rowVersion: true, nullable: false),
                     PowerConsumption = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -44,7 +44,7 @@ namespace PcAssembly.Migrations
                     Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Company = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
+                    Price = table.Column<double>(type: "float", rowVersion: true, nullable: false),
                     PowerConsumption = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
