@@ -8,9 +8,9 @@ namespace PcAssembly.Dal
 {
     public class DataContext : DbContext
     {
-        //public DataContext()
-        //{
-        //}
+        /*public DataContext()
+        {
+        }*/
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -31,10 +31,19 @@ namespace PcAssembly.Dal
             modelBuilder.ApplyConfiguration(new AssemblyConfig());
             modelBuilder.ApplyConfiguration(new SavedAssemblyConfig());
 
+            //modelBuilder.ApplyConfiguration(new ComponentConfig());
             //modelBuilder.Entity<CPU>();
             //modelBuilder.Entity<GraphicCard>();
-        }
 
+            //modelBuilder.Entity<CPU>().ToTable("CPUs");
+            //modelBuilder.Entity<GraphicCard>().ToTable("GraphicCards");
+        }
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(
+                @"Server=1080TI-I7-8700K\SQLEXPRESS;Database=pc-assembly;Trusted_Connection=True; MultipleActiveResultSets = true");
+        }*/
 
     }
 }
