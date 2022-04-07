@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PcAssembly.Dal;
 
@@ -11,9 +12,10 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220406144238_ChangeTPH")]
+    partial class ChangeTPH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,6 +118,10 @@ namespace PcAssembly.Migrations
                     b.Property<int>("Company")
                         .HasColumnType("int");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -134,6 +140,8 @@ namespace PcAssembly.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Components");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Component");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>
@@ -173,7 +181,7 @@ namespace PcAssembly.Migrations
                     b.Property<int>("Threads")
                         .HasColumnType("int");
 
-                    b.ToTable("CPUs", (string)null);
+                    b.HasDiscriminator().HasValue("CPU");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
@@ -191,7 +199,7 @@ namespace PcAssembly.Migrations
                     b.Property<int>("SgRamType")
                         .HasColumnType("int");
 
-                    b.ToTable("GraphicCards", (string)null);
+                    b.HasDiscriminator().HasValue("GraphicCard");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
@@ -249,24 +257,6 @@ namespace PcAssembly.Migrations
                     b.Navigation("Assembly");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PcAssembly.Domain.Components.CPU", b =>
-                {
-                    b.HasOne("PcAssembly.Domain.Components.Component", null)
-                        .WithOne()
-                        .HasForeignKey("PcAssembly.Domain.Components.CPU", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
-                {
-                    b.HasOne("PcAssembly.Domain.Components.Component", null)
-                        .WithOne()
-                        .HasForeignKey("PcAssembly.Domain.Components.GraphicCard", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>

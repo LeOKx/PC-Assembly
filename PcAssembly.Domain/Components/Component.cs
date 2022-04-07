@@ -10,15 +10,14 @@ namespace PcAssembly.Domain.Components
     {
         [Required]
         [MaxLength(50)]
-        [ConcurrencyCheck]
         public string Model { get; set; }
         [Required]
         public Company Company { get; set; }
         [Required]
         public TypeComponent Type { get; set; }
-        [Timestamp]
-        public double Price { get; set; } = 0;
-        public int PowerConsumption { get; set; } = 100;
+        [ConcurrencyCheck]
+        public double Price { get; set; }
+        public int PowerConsumption { get; set; }
         
     }
 }
