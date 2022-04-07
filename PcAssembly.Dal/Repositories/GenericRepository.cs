@@ -11,6 +11,7 @@ namespace PcAssembly.Dal.Repositories
 {
     public class GenericRepository<TEntity, TId> : 
         IGenericRepository<TEntity, TId> where TEntity : class, IBaseEntity<TId>
+        where TId : class
     {
         protected readonly DataContext _context;
         protected readonly DbSet<TEntity> _dbSet;
@@ -47,6 +48,10 @@ namespace PcAssembly.Dal.Repositories
         {
             try
             {
+                if(newEntity.Id.GetType() == typeof(Guid))
+                {
+                    newEntity.Id = newEntity.Id == null ? Guid.NewGuid() : newEntity.Id;
+                }
                 _dbSet.Add(newEntity);
                 await _context.SaveChangesAsync();
                 return newEntity;

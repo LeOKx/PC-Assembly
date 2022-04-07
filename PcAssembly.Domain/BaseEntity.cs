@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PcAssembly.Domain
 {
     //Добавить Generic Interface
-    public abstract class BaseEntity : IBaseEntity<int>
+    public abstract class BaseEntity : IBaseEntity<Guid>
     {
         //[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public Guid Id { get; set; }
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

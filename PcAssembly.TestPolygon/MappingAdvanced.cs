@@ -37,12 +37,12 @@ namespace PcAssembly.TestPolygon
                 catch (DbUpdateConcurrencyException ex)
                 {
                     Console.WriteLine("Handled Concurrency Exeption");
-                    //ex.Entries.Single().Reload();
+                //ex.Entries.Single().Reload();
 
-                    //context.SaveChanges();
-                    //Console.WriteLine("New Cpu Price Saved After Reload");
+                //context.SaveChanges();
+                //Console.WriteLine("New Cpu Price Saved After Reload");
 
-                }
+            }
             
         }
     }
