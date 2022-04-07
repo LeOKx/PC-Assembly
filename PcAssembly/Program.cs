@@ -7,6 +7,7 @@ using PcAssembly.Dal;
 using PcAssembly.Dal.Interfaces;
 using PcAssembly.Dal.Repositories;
 using PcAssembly.Domain;
+using PcAssembly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,13 +20,15 @@ builder.Services.AddDbContext<DataContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+    
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddScoped(typeof(IBaseEntity<>), typeof(BaseEntity));
 //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 //builder.Services.AddScoped(typeof(IComponentRepository<>), typeof(ComponentRepository<>));
 builder.Services.AddScoped<ICpuService, CpuService>();
 builder.Services.AddScoped<ICpuRepository, CpuRepository>();
+
+
 
 
 var app = builder.Build();

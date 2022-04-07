@@ -12,8 +12,8 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220404183939_FirstInit")]
-    partial class FirstInit
+    [Migration("20220406143626_InitTPT")]
+    partial class InitTPT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,67 +107,13 @@ namespace PcAssembly.Migrations
                     b.ToTable("UsersProfiles");
                 });
 
-            modelBuilder.Entity("PcAssembly.Domain.Components.CPU", b =>
+            modelBuilder.Entity("PcAssembly.Domain.Components.Component", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Company")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Cores")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Family")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Frequency")
-                        .HasColumnType("real");
-
-                    b.Property<int>("Generation")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("PowerConsumption")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .IsConcurrencyToken()
-                        .HasColumnType("float");
-
-                    b.Property<int>("Socket")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Threads")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CPUs");
-                });
-
-            modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("About")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("Company")
                         .HasColumnType("int");
@@ -184,18 +130,12 @@ namespace PcAssembly.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("float");
 
-                    b.Property<int>("SgRamSize")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SgRamType")
-                        .HasColumnType("int");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GraphicCards");
+                    b.ToTable("Components");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>
@@ -211,6 +151,49 @@ namespace PcAssembly.Migrations
                     b.HasIndex("AssemblyId");
 
                     b.ToTable("SavedAssemblies");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.CPU", b =>
+                {
+                    b.HasBaseType("PcAssembly.Domain.Components.Component");
+
+                    b.Property<int>("Cores")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Family")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Frequency")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Generation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Socket")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Threads")
+                        .HasColumnType("int");
+
+                    b.ToTable("CPUs", (string)null);
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
+                {
+                    b.HasBaseType("PcAssembly.Domain.Components.Component");
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("SgRamSize")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SgRamType")
+                        .HasColumnType("int");
+
+                    b.ToTable("GraphicCards", (string)null);
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
@@ -268,6 +251,24 @@ namespace PcAssembly.Migrations
                     b.Navigation("Assembly");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.CPU", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.CPU", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.GraphicCard", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>

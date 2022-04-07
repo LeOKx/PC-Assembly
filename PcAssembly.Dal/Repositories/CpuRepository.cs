@@ -6,7 +6,7 @@ using PcAssembly.Domain.Components;
 
 namespace PcAssembly.Dal.Repositories
 {
-    public class CpuRepository: ComponentRepository<CPU, int>, ICpuRepository
+    public class CpuRepository: ComponentRepository<CPU, Guid>, ICpuRepository
     {
         public CpuRepository(DataContext context) : base(context)
         {
