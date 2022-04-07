@@ -8,7 +8,7 @@ namespace PcAssembly.TestPolygon
         static async Task Main(string[] args)
         {
             await using var dbContext = new DataContext();
-            //await MappingAdvanced.ConcurrencyHandle(dbContext);
+            await MappingAdvanced.ConcurrencyHandle(dbContext);
             await Seed.SeedCPUs(dbContext);
             await Seed.SeedGraphicCards(dbContext);
             await Queries.GetAllComponents(dbContext);
