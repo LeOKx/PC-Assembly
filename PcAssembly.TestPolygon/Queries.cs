@@ -34,5 +34,48 @@ namespace PcAssembly.TestPolygon
                                                   $"PowerConsumption: {x.PowerConsumption}\n" +
                                                   $"Price: {x.Price}\n"));
         }
+        public static async Task Group(DataContext context)
+        {
+            var result =  context
+                .Components
+                .Where(x => x.Price > context.Components.Average(x => x.Price))
+                .GroupBy(x => x.Type)
+                .Select(x => new
+                {
+                    TypeComponent = x.Key,
+                    CountOfComponents = x.Count(),
+                    MaxPrice = x.Max(y => y.Price)
+                })
+                .Where(x => x.MaxPrice>10000)
+                .ToList();
+            foreach(var comp in result)
+            {
+                Console.WriteLine(comp.TypeComponent+" "+ comp.CountOfComponents +" "+ comp.MaxPrice);
+            }
+
+            var query2 = context.Assemblies
+                .GroupBy(x => x.Cpu.Generation)
+                .Select(x => new
+                {
+                    CpuGeneration = x.Key,
+                    CpuGenerationCount = x.Count()
+                })
+                .OrderByDescending(x => x.CpuGenerationCount)
+                .Take(3);
+            var cpus = context.CPUs;
+
+            var query3 = query2.GroupJoin(
+                cpus,
+                x => x.CpuGeneration,
+                x => x.Generation,
+                (c, cpu) => new
+                {
+                    CpusModel = cpu.Select(y => y.Model).ToList(),
+                    CpuGen = c.CpuGeneration
+                })
+                .ToList();
+            query3.ForEach(x => Console.WriteLine($"{x.CpuGen} {x.CpusModel}"));
+        }
+
     }
 }

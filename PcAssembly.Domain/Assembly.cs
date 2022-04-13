@@ -9,9 +9,9 @@ namespace PcAssembly.Domain
     {
         [Required]
         public string Name { get; set; }
-        public int CpuId { get; set; }
+        public Guid CpuId { get; set; }
         public CPU Cpu { get; set; }
-        public int GraphicCardId { get; set; }
+        public Guid GraphicCardId { get; set; }
         public GraphicCard GraphicCard { get; set; }
         [Required]
         public User User { get; set; }

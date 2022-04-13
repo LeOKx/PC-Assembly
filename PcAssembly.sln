@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Bll", "PcAssembl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Dal", "PcAssembly.Dal\PcAssembly.Dal.csproj", "{1FF98A03-BF59-4882-9BC9-65C9C4BCA3CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcAssembly.TestPolygon", "PcAssembly.TestPolygon\PcAssembly.TestPolygon.csproj", "{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.TestPolygon", "PcAssembly.TestPolygon\PcAssembly.TestPolygon.csproj", "{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcAssembly.MVC", "PcAssembly.MVC\PcAssembly.MVC.csproj", "{E7061A3A-2DAF-4B82-8D6D-3B8E5CE9EE27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7061A3A-2DAF-4B82-8D6D-3B8E5CE9EE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7061A3A-2DAF-4B82-8D6D-3B8E5CE9EE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7061A3A-2DAF-4B82-8D6D-3B8E5CE9EE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7061A3A-2DAF-4B82-8D6D-3B8E5CE9EE27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

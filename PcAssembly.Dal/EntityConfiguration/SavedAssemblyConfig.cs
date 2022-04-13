@@ -13,10 +13,10 @@ namespace PcAssembly.Dal.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<SavedAssemblies> builder)
         {
-            builder.HasKey(t => new { t.UserId, t.AssemblyId });
+            builder.HasKey(t => new { t.UserId, t.Id });
             builder.HasOne(t => t.Assembly)
                 .WithMany(t => t.SavedAssemblies)
-                .HasForeignKey(t => t.AssemblyId)
+                .HasForeignKey(t => t.Id)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(t => t.User)

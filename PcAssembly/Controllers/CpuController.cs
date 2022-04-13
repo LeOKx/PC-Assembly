@@ -29,7 +29,7 @@ namespace PcAssembly.Controllers
 
         // GET api/<CpuController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetCpuDto>>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetCpuDto>>> GetSingle(Guid id)
         {
             //return cpuList.FirstOrDefault(cpu => cpu.Id == id);
             return Ok(await _cpuService.GetCpuById(id));
@@ -44,7 +44,7 @@ namespace PcAssembly.Controllers
 
         // PUT api/<CpuController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<ServiceResponse<List<GetCpuDto>>>> UpdateCPU(int id, [FromBody] UpdateCpuDto updatedCPU)
+        public async Task<ActionResult<ServiceResponse<List<GetCpuDto>>>> UpdateCPU(Guid id, [FromBody] UpdateCpuDto updatedCPU)
         {
 
             var response = await _cpuService.UpdateCPU(id,updatedCPU);
@@ -58,7 +58,7 @@ namespace PcAssembly.Controllers
 
         // DELETE api/<CpuController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ServiceResponse<List<GetCpuDto>>>> Delete(int id)
+        public async Task<ActionResult<ServiceResponse<List<GetCpuDto>>>> Delete(Guid id)
         {
             var response = await _cpuService.DeleteCPU(id);
             if (response.Data == null)

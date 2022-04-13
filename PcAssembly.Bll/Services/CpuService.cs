@@ -37,7 +37,7 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCpuDto>> DeleteCPU(int id)
+        public async Task<ServiceResponse<GetCpuDto>> DeleteCPU(Guid id)
         {
             var serviceResponse = new ServiceResponse<GetCpuDto>();
             try
@@ -73,7 +73,7 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCpuDto>> GetCpuById(int id)
+        public async Task<ServiceResponse<GetCpuDto>> GetCpuById(Guid id)
         {
             var serviceResponse = new ServiceResponse<GetCpuDto>();
             try
@@ -90,7 +90,7 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCpuDto>> UpdateCPU(int id,UpdateCpuDto updatedCPU)
+        public async Task<ServiceResponse<GetCpuDto>> UpdateCPU(Guid id,UpdateCpuDto updatedCPU)
         {
 
             var serviceResponse = new ServiceResponse<GetCpuDto>();

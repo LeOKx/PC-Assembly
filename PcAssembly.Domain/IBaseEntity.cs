@@ -8,6 +8,6 @@ namespace PcAssembly.Domain
 {
     public interface IBaseEntity<TId>
     {
-        TId Id { get; set; }
+        Guid Id { get; set; }
     }
 }

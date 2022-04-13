@@ -12,8 +12,8 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220406144238_ChangeTPH")]
-    partial class ChangeTPH
+    [Migration("20220407153203_NewGuidId")]
+    partial class NewGuidId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,20 +26,18 @@ namespace PcAssembly.Migrations
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CpuId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CpuId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("Date");
 
-                    b.Property<int>("GraphicCardId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("GraphicCardId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,8 +46,8 @@ namespace PcAssembly.Migrations
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -64,11 +62,9 @@ namespace PcAssembly.Migrations
 
             modelBuilder.Entity("PcAssembly.Domain.Auth.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -91,8 +87,8 @@ namespace PcAssembly.Migrations
 
             modelBuilder.Entity("PcAssembly.Domain.Auth.UserProfile", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("About")
                         .IsRequired()
@@ -109,18 +105,12 @@ namespace PcAssembly.Migrations
 
             modelBuilder.Entity("PcAssembly.Domain.Components.Component", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Company")
                         .HasColumnType("int");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -140,21 +130,19 @@ namespace PcAssembly.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Components");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Component");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AssemblyId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId", "AssemblyId");
+                    b.HasKey("UserId", "Id");
 
-                    b.HasIndex("AssemblyId");
+                    b.HasIndex("Id");
 
                     b.ToTable("SavedAssemblies");
                 });
@@ -181,7 +169,7 @@ namespace PcAssembly.Migrations
                     b.Property<int>("Threads")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("CPU");
+                    b.ToTable("CPUs", (string)null);
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
@@ -199,7 +187,7 @@ namespace PcAssembly.Migrations
                     b.Property<int>("SgRamType")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("GraphicCard");
+                    b.ToTable("GraphicCards", (string)null);
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
@@ -244,7 +232,7 @@ namespace PcAssembly.Migrations
                 {
                     b.HasOne("PcAssembly.Domain.Assembly", "Assembly")
                         .WithMany("SavedAssemblies")
-                        .HasForeignKey("AssemblyId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -257,6 +245,24 @@ namespace PcAssembly.Migrations
                     b.Navigation("Assembly");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.CPU", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.CPU", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.GraphicCard", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.GraphicCard", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>

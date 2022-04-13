@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PcAssembly.Domain
 {
-    public class SavedAssemblies
+    public class SavedAssemblies:BaseEntity
     {
-        public int AssemblyId { get; set; }
+        //public int AssemblyId { get; set; }
         public Assembly Assembly { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
     }
 }

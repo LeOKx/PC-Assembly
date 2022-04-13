@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace PcAssembly.Dal.Interfaces
 {
     public interface IGenericRepository<TEntity, TId> where TEntity : class, IBaseEntity<TId>
-        where TId : class
     {
         Task<TEntity> Insert(TEntity newEntity);
         Task<TEntity> Delete(TEntity deleteEntity);

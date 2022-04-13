@@ -12,7 +12,7 @@ namespace PcAssembly.Domain.Auth
     {
         [Key]
         [ForeignKey(nameof(User))]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
         [Column(TypeName = "Date")]
         public DateTime Birthday { get; set; }
