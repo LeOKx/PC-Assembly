@@ -13,10 +13,10 @@ namespace PcAssembly.Domain.Auth
         [Key]
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
         [Column(TypeName = "Date")]
         public DateTime Birthday { get; set; }
         [StringLength(500)]
-        public string About { get; set; }
+        public string? About { get; set; }
     }
 }

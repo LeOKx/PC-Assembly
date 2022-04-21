@@ -5,24 +5,19 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PcAssembly.Migrations
 {
-    public partial class NewGuidId : Migration
+    public partial class FromEnumToClass : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Components",
+                name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Company = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    PowerConsumption = table.Column<int>(type: "int", nullable: false)
+                    CompanyName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Components", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.CompanyName);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,12 +26,53 @@ namespace PcAssembly.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Components",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: true),
+                    PowerConsumption = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Components", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Components_Companies_CompanyName",
+                        column: x => x.CompanyName,
+                        principalTable: "Companies",
+                        principalColumn: "CompanyName",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsersProfiles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Birthday = table.Column<DateTime>(type: "Date", nullable: false),
+                    About = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersProfiles", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_UsersProfiles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,11 +81,11 @@ namespace PcAssembly.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Socket = table.Column<int>(type: "int", nullable: false),
-                    Family = table.Column<int>(type: "int", nullable: false),
-                    Generation = table.Column<int>(type: "int", nullable: false),
-                    Cores = table.Column<int>(type: "int", nullable: false),
-                    Threads = table.Column<int>(type: "int", nullable: false),
-                    Frequency = table.Column<float>(type: "real", nullable: false)
+                    Family = table.Column<int>(type: "int", nullable: true),
+                    Generation = table.Column<int>(type: "int", nullable: true),
+                    Cores = table.Column<int>(type: "int", nullable: true),
+                    Threads = table.Column<int>(type: "int", nullable: true),
+                    Frequency = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,7 +104,7 @@ namespace PcAssembly.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SgRamType = table.Column<int>(type: "int", nullable: false),
                     SgRamSize = table.Column<int>(type: "int", nullable: false),
-                    About = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false)
+                    About = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,25 +114,6 @@ namespace PcAssembly.Migrations
                         column: x => x.Id,
                         principalTable: "Components",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UsersProfiles",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Birthday = table.Column<DateTime>(type: "Date", nullable: false),
-                    About = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsersProfiles", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_UsersProfiles_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +187,11 @@ namespace PcAssembly.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Components_CompanyName",
+                table: "Components",
+                column: "CompanyName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SavedAssemblies_Id",
                 table: "SavedAssemblies",
                 column: "Id");
@@ -197,6 +219,9 @@ namespace PcAssembly.Migrations
 
             migrationBuilder.DropTable(
                 name: "Components");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
         }
     }
 }

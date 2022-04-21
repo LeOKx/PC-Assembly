@@ -10,8 +10,8 @@ namespace PcAssembly.Domain
     public class SavedAssemblies:BaseEntity
     {
         //public int AssemblyId { get; set; }
-        public Assembly Assembly { get; set; }
+        public Assembly? Assembly { get; set; }
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

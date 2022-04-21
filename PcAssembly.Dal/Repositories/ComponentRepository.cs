@@ -28,6 +28,21 @@ namespace PcAssembly.Dal.Repositories
                 return true;
             }
         }
+        public async Task<TComponent> DeleteComponentWithTheModel(string model)
+        {
+            var component = await _dbSet
+                .FirstOrDefaultAsync(c => c.Model == model);
+
+            if (component != null)
+            {
+                await Delete(component);
+                return component;
+            }
+            else
+            {
+                throw new Exception("Haven't component with this model in Data Base");
+            }
+        }
 
     }
 }
