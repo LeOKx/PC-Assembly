@@ -5,7 +5,7 @@ using PcAssembly.Domain.Components;
 
 namespace PcAssembly.Dal.Interfaces
 {
-    public interface ICpuRepository: IComponentRepository<CPU, Guid>
+    public interface ICpuRepository: IComponentRepository<CPU>
     {
  
     }

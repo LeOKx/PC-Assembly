@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddScoped(typeof(IBaseEntity<>), typeof(BaseEntity));
 //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-//builder.Services.AddScoped(typeof(IComponentRepository<>), typeof(ComponentRepository<>));
+builder.Services.AddScoped(typeof(IComponentRepository<>), typeof(ComponentRepository<>));
 builder.Services.AddScoped<ICpuService, CpuService>();
 builder.Services.AddScoped<ICpuRepository, CpuRepository>();
 

@@ -13,7 +13,7 @@ namespace PcAssembly.TestPolygon
             await Seed.SeedGraphicCards(dbContext);
             //await Queries.GetAllComponents(dbContext);
             //await Queries.GetAllCpus(dbContext);
-            await Queries.Group(dbContext);
+            //await Queries.Group(dbContext);
         }
 
         

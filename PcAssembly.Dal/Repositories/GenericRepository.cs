@@ -49,7 +49,7 @@ namespace PcAssembly.Dal.Repositories
             {
                 newEntity.Id = newEntity.Id == Guid.Empty ? Guid.NewGuid() : newEntity.Id;
                 _dbSet.Add(newEntity);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); 
                 return newEntity;
             }
             catch (Exception ex)

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PcAssembly.Domain.Components
 {
-    public abstract class Component : BaseEntity
+    public class Component : BaseEntity
     {
         [Required]
         [MaxLength(50)]

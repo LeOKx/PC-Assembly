@@ -12,8 +12,13 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
+<<<<<<<< HEAD:PcAssembly/Migrations/20220421133158_AddForeignKey.Designer.cs
     [Migration("20220421133158_AddForeignKey")]
     partial class AddForeignKey
+========
+    [Migration("20220422064335_InitMigration")]
+    partial class InitMigration
+>>>>>>>> master:PcAssembly/Migrations/20220422064335_InitMigration.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
