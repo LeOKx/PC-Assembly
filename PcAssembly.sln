@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Dal", "PcAssembl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.TestPolygon", "PcAssembly.TestPolygon\PcAssembly.TestPolygon.csproj", "{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Dal.Test", "..\PcAssembly.Dal.Test\PcAssembly.Dal.Test.csproj", "{9F0A165E-AAD8-46D1-9577-0867346F0382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcAssembly.Angular", "PcAssembly.Angular\PcAssembly.Angular.csproj", "{65376BA6-93A5-429C-8FF5-DF4E51328B7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65376BA6-93A5-429C-8FF5-DF4E51328B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65376BA6-93A5-429C-8FF5-DF4E51328B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65376BA6-93A5-429C-8FF5-DF4E51328B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65376BA6-93A5-429C-8FF5-DF4E51328B7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
