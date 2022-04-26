@@ -47,7 +47,7 @@ namespace PcAssembly.Dal.Repositories
         {
             try
             {
-                newEntity.Id = newEntity.Id == null ? Guid.NewGuid() : newEntity.Id;
+                newEntity.Id = newEntity.Id == Guid.Empty ? Guid.NewGuid() : newEntity.Id;
                 _dbSet.Add(newEntity);
                 await _context.SaveChangesAsync(); 
                 return newEntity;
@@ -88,7 +88,7 @@ namespace PcAssembly.Dal.Repositories
         {
             try
             {
-                TEntity existing = await _dbSet.FindAsync(id);
+                TEntity? existing = await _dbSet.FindAsync(id);
                 _dbSet.Remove(existing);
                 await _context.SaveChangesAsync();
                 return existing;

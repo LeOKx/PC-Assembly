@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PcAssembly.Bll.Exeptions;
+using PcAssembly.Bll.Filters;
 using PcAssembly.Bll.Interfaces;
 using PcAssembly.Common.Dtos.CPU;
 using PcAssembly.Dal.Interfaces;
@@ -64,12 +66,45 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCpuDto>>> GetAllCPUs()
+        public async Task<ServiceResponse<List<GetCpuDto>>> GetCPUs(SearchOptions searchOption)
         {
             var serviceResponse = new ServiceResponse<List<GetCpuDto>>();
-            var dbCPU = await _repository.GetAll();
-            serviceResponse.Data = dbCPU.Select(c => _mapper.Map<GetCpuDto>(c)).ToList();
+            try
+            {
+                var dbCPU = await _repository.GetAll();
+                //if (!string.IsNullOrWhiteSpace(searchOption.SearchType))
+                //{
+                //    dbCPU = dbCPU.FindAll(e => e.Generation.ToString().Contains(searchOption.SearchType));
+                //}
+                serviceResponse.Message = "All Cpu";
+                if (!string.IsNullOrWhiteSpace(searchOption.SearchWord))
+                {
+                    dbCPU = dbCPU.FindAll(e => e.Model.ToString().Contains(searchOption.SearchWord));
+                    serviceResponse.Message += $" with model {searchOption.SearchWord}";
+                }
+                if (searchOption.MinPrice.HasValue)
+                {
+                    dbCPU = dbCPU.FindAll(e => e.Price >= searchOption.MinPrice);
+                    serviceResponse.Message += $" with minimum price {searchOption.MinPrice}";
+                }
+                if (searchOption.MaxPrice.HasValue)
+                {
+                    dbCPU = dbCPU.FindAll(e => e.Price <= searchOption.MaxPrice);
+                    serviceResponse.Message += $" with maximum price {searchOption.MaxPrice}";
+                }
 
+                serviceResponse.Data = dbCPU.Select(c => _mapper.Map<GetCpuDto>(c)).ToList();
+                if(serviceResponse.Data is null)
+                {
+                    serviceResponse.Message = "We haven't find components with youre requirements";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
             return serviceResponse;
         }
 
@@ -96,11 +131,45 @@ namespace PcAssembly.Bll.Services
             var serviceResponse = new ServiceResponse<GetCpuDto>();
             try
             {
+                
                 var dbCPU = await _repository.GetById(id);
                 if(dbCPU != null) 
                 {
-                _mapper.Map(updatedCPU, dbCPU);
-                dbCPU.Id = id;
+                    if(!string.IsNullOrWhiteSpace(updatedCPU.Model)
+                        && dbCPU.Model != updatedCPU.Model)
+                    {
+                        if(await _repository.ExistComponentWithTheModel(updatedCPU.Model))
+                        {
+                            throw new ComponentAlreadyExistsException("Component With The Same Model AlreadyExists");
+                        }
+
+                        dbCPU.Model = updatedCPU.Model;
+                    }
+                        
+                    //if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
+                    if (updatedCPU.Company != null)
+                        dbCPU.Company = updatedCPU.Company;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Frequency.ToString()))
+                        dbCPU.Frequency = updatedCPU.Frequency;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Socket.ToString()))
+                        dbCPU.Socket = updatedCPU.Socket;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Generation.ToString()))
+                        dbCPU.Generation = updatedCPU.Generation;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.PowerConsumption.ToString()))
+                        dbCPU.PowerConsumption = updatedCPU.PowerConsumption;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Family.ToString()))
+                        dbCPU.Family = updatedCPU.Family;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Cores.ToString()))
+                        dbCPU.Cores = updatedCPU.Cores;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Threads.ToString()))
+                        dbCPU.Threads = updatedCPU.Threads;
+                    if(!string.IsNullOrWhiteSpace(updatedCPU.Type.ToString()))
+                        dbCPU.Type = updatedCPU.Type;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Price.ToString()))
+                        dbCPU.Price = updatedCPU.Price;
+
+                   /* _mapper.Map(updatedCPU, dbCPU);
+                dbCPU.Id = id;*/
                 await _repository.Update(dbCPU);
                 await _repository.SaveChangesAsync();
 

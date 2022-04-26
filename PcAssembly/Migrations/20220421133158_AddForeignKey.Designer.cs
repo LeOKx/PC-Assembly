@@ -12,8 +12,13 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
+<<<<<<<< HEAD:PcAssembly/Migrations/20220421133158_AddForeignKey.Designer.cs
+    [Migration("20220421133158_AddForeignKey")]
+    partial class AddForeignKey
+========
     [Migration("20220422064335_InitMigration")]
     partial class InitMigration
+>>>>>>>> master:PcAssembly/Migrations/20220422064335_InitMigration.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,11 +72,9 @@ namespace PcAssembly.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
@@ -91,7 +94,6 @@ namespace PcAssembly.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("About")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -109,18 +111,19 @@ namespace PcAssembly.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Company")
-                        .HasColumnType("int");
+                    b.Property<string>("CompanyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("PowerConsumption")
+                    b.Property<int?>("PowerConsumption")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
+                    b.Property<double?>("Price")
                         .IsConcurrencyToken()
                         .HasColumnType("float");
 
@@ -129,7 +132,19 @@ namespace PcAssembly.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.ToTable("Components");
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Lists.CompanyList", b =>
+                {
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CompanyName");
+
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>
@@ -151,22 +166,22 @@ namespace PcAssembly.Migrations
                 {
                     b.HasBaseType("PcAssembly.Domain.Components.Component");
 
-                    b.Property<int>("Cores")
+                    b.Property<int?>("Cores")
                         .HasColumnType("int");
 
-                    b.Property<int>("Family")
+                    b.Property<int?>("Family")
                         .HasColumnType("int");
 
-                    b.Property<float>("Frequency")
+                    b.Property<float?>("Frequency")
                         .HasColumnType("real");
 
-                    b.Property<int>("Generation")
+                    b.Property<int?>("Generation")
                         .HasColumnType("int");
 
                     b.Property<int>("Socket")
                         .HasColumnType("int");
 
-                    b.Property<int>("Threads")
+                    b.Property<int?>("Threads")
                         .HasColumnType("int");
 
                     b.ToTable("CPUs", (string)null);
@@ -177,7 +192,6 @@ namespace PcAssembly.Migrations
                     b.HasBaseType("PcAssembly.Domain.Components.Component");
 
                     b.Property<string>("About")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
@@ -228,6 +242,17 @@ namespace PcAssembly.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PcAssembly.Domain.Components.Component", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Lists.CompanyList", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>
                 {
                     b.HasOne("PcAssembly.Domain.Assembly", "Assembly")
@@ -274,8 +299,7 @@ namespace PcAssembly.Migrations
                 {
                     b.Navigation("SavedAssemblies");
 
-                    b.Navigation("UserProfile")
-                        .IsRequired();
+                    b.Navigation("UserProfile");
                 });
 #pragma warning restore 612, 618
         }

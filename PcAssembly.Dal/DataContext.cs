@@ -24,6 +24,7 @@ namespace PcAssembly.Dal
         public DbSet<Assembly> Assemblies{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UsersProfiles { get; set; }
+        //public DbSet<CompanyList> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

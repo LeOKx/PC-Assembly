@@ -13,10 +13,10 @@ namespace PcAssembly.Domain.Auth
         [Required]
         [ConcurrencyCheck]
         [MinLength(8), MaxLength(32)]
-        public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-        public UserProfile UserProfile { get; set; }
-        public ICollection<SavedAssemblies> SavedAssemblies { get; set; }
+        public string? Username { get; set; }
+        public byte[]? PasswordHash { get; set; }
+        public byte[]? PasswordSalt { get; set; }
+        public UserProfile? UserProfile { get; set; }
+        public ICollection<SavedAssemblies>? SavedAssemblies { get; set; }
     }
 }

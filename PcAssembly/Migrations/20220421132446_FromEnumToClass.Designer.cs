@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PcAssembly.Dal;
 
@@ -11,9 +12,10 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220421132446_FromEnumToClass")]
+    partial class FromEnumToClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +106,7 @@ namespace PcAssembly.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyId")
+                    b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -125,7 +127,7 @@ namespace PcAssembly.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("CompanyName");
 
                     b.ToTable("Components");
                 });
@@ -239,7 +241,7 @@ namespace PcAssembly.Migrations
                 {
                     b.HasOne("PcAssembly.Domain.Lists.CompanyList", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
+                        .HasForeignKey("CompanyName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
