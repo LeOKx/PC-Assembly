@@ -12,8 +12,8 @@ using PcAssembly.Dal;
 namespace PcAssembly.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220407153203_NewGuidId")]
-    partial class NewGuidId
+    [Migration("20220422064335_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

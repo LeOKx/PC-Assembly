@@ -5,8 +5,8 @@ using PcAssembly.Domain.Components;
 
 namespace PcAssembly.Dal.Interfaces
 {
-    public interface IComponentRepository<TComponent, TId> : 
-        IGenericRepository<TComponent, TId> where TComponent : Component, IBaseEntity<TId>
+    public interface IComponentRepository<TComponent> : 
+        IGenericRepository<TComponent, Guid> where TComponent : Component, IBaseEntity<Guid>
 
     {
         public Task<bool> ExistComponentWithTheModel(string model);
