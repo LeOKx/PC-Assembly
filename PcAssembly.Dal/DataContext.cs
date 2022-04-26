@@ -3,7 +3,6 @@ using PcAssembly.Dal.EntityConfiguration;
 using PcAssembly.Domain;
 using PcAssembly.Domain.Auth;
 using PcAssembly.Domain.Components;
-using PcAssembly.Domain.Lists;
 
 namespace PcAssembly.Dal
 {
@@ -25,7 +24,7 @@ namespace PcAssembly.Dal
         public DbSet<Assembly> Assemblies{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UsersProfiles { get; set; }
-        public DbSet<CompanyList> Companies { get; set; }
+        //public DbSet<CompanyList> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
