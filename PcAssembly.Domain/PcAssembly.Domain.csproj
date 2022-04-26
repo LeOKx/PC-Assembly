@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
+    <Compile Remove="Lists\**" />
+    <EmbeddedResource Remove="Lists\**" />
+    <None Remove="Lists\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Lists\" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
   </ItemGroup>
 
 </Project>
