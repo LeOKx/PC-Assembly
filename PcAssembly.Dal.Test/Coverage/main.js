@@ -225,15 +225,15 @@ var assemblies = [
   {
     "name": "PcAssembly.Dal",
     "classes": [
-      { "name": "PcAssembly.Dal.DataContext", "rp": "PcAssembly.Dal_DataContext.html", "cl": 15, "ucl": 3, "cal": 18, "tl": 49, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "PcAssembly.Dal.DataContext", "rp": "PcAssembly.Dal_DataContext.html", "cl": 15, "ucl": 3, "cal": 18, "tl": 50, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "PcAssembly.Dal.EntityConfiguration.AssemblyConfig", "rp": "PcAssembly.Dal_AssemblyConfig.html", "cl": 10, "ucl": 0, "cal": 10, "tl": 29, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "PcAssembly.Dal.EntityConfiguration.ComponentConfig", "rp": "PcAssembly.Dal_ComponentConfig.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 29, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "PcAssembly.Dal.EntityConfiguration.SavedAssemblyConfig", "rp": "PcAssembly.Dal_SavedAssemblyConfig.html", "cl": 11, "ucl": 0, "cal": 11, "tl": 29, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "PcAssembly.Dal.EntityConfiguration.UserProfileConfig", "rp": "PcAssembly.Dal_UserProfileConfig.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 24, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "PcAssembly.Dal.Program", "rp": "PcAssembly.Dal_Program.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 19, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
-      { "name": "PcAssembly.Dal.Repositories.ComponentRepository<T>", "rp": "PcAssembly.Dal_ComponentRepository_1.html", "cl": 12, "ucl": 0, "cal": 12, "tl": 33, "ct": "LineCoverage", "cbm": "-", "cb": 2, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "PcAssembly.Dal.Repositories.ComponentRepository<T>", "rp": "PcAssembly.Dal_ComponentRepository_1.html", "cl": 12, "ucl": 24, "cal": 36, "tl": 71, "ct": "LineCoverage", "cbm": "-", "cb": 2, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
       { "name": "PcAssembly.Dal.Repositories.CpuRepository", "rp": "PcAssembly.Dal_CpuRepository.html", "cl": 3, "ucl": 0, "cal": 3, "tl": 17, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
-      { "name": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "rp": "PcAssembly.Dal_GenericRepository_2.html", "cl": 5, "ucl": 44, "cal": 49, "tl": 108, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
+      { "name": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "rp": "PcAssembly.Dal_GenericRepository_2.html", "cl": 5, "ucl": 44, "cal": 49, "tl": 108, "ct": "LineCoverage", "cbm": "-", "cb": 0, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [] },
     ]},
   {
     "name": "PcAssembly.Domain",
@@ -259,11 +259,32 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
+    "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.ComponentRepository<T>", "reportPath": "PcAssembly.Dal_ComponentRepository_1.html", "methodName": "DeleteComponentWithTheModel()", "methodShortName": "DeleteComponentWithTheModel()", "fileIndex": 0, "line": 32,
+    "metrics": [
+      { "value": 6, "exceeded": false },
+      { "value": 2, "exceeded": false },
+      { "value": 42, "exceeded": true },
+    ]},
+  {
+    "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.ComponentRepository<T>", "reportPath": "PcAssembly.Dal_ComponentRepository_1.html", "methodName": "GetAll()", "methodShortName": "GetAll()", "fileIndex": 0, "line": 48,
+    "metrics": [
+      { "value": 6, "exceeded": false },
+      { "value": 8, "exceeded": false },
+      { "value": 42, "exceeded": true },
+    ]},
+  {
     "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "reportPath": "PcAssembly.Dal_GenericRepository_2.html", "methodName": "Delete()", "methodShortName": "Delete()", "fileIndex": 0, "line": 88,
     "metrics": [
       { "value": 6, "exceeded": false },
       { "value": 0, "exceeded": false },
       { "value": 42, "exceeded": true },
+    ]},
+  {
+    "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "reportPath": "PcAssembly.Dal_GenericRepository_2.html", "methodName": "Insert()", "methodShortName": "Insert()", "fileIndex": 0, "line": 47,
+    "metrics": [
+      { "value": 5, "exceeded": false },
+      { "value": 2, "exceeded": false },
+      { "value": 30, "exceeded": true },
     ]},
   {
     "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "reportPath": "PcAssembly.Dal_GenericRepository_2.html", "methodName": "Delete()", "methodShortName": "Delete()", "fileIndex": 0, "line": 74,
@@ -274,13 +295,6 @@ var riskHotspots = [
     ]},
   {
     "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "reportPath": "PcAssembly.Dal_GenericRepository_2.html", "methodName": "GetById()", "methodShortName": "GetById()", "fileIndex": 0, "line": 30,
-    "metrics": [
-      { "value": 4, "exceeded": false },
-      { "value": 0, "exceeded": false },
-      { "value": 20, "exceeded": true },
-    ]},
-  {
-    "assembly": "PcAssembly.Dal", "class": "PcAssembly.Dal.Repositories.GenericRepository<T1, T2>", "reportPath": "PcAssembly.Dal_GenericRepository_2.html", "methodName": "Insert()", "methodShortName": "Insert()", "fileIndex": 0, "line": 47,
     "metrics": [
       { "value": 4, "exceeded": false },
       { "value": 0, "exceeded": false },

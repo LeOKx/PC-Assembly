@@ -104,9 +104,8 @@ namespace PcAssembly.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Company")
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -125,19 +124,7 @@ namespace PcAssembly.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.ToTable("Components");
-                });
-
-            modelBuilder.Entity("PcAssembly.Domain.Lists.CompanyList", b =>
-                {
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CompanyName");
-
-                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>
@@ -233,17 +220,6 @@ namespace PcAssembly.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PcAssembly.Domain.Components.Component", b =>
-                {
-                    b.HasOne("PcAssembly.Domain.Lists.CompanyList", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.SavedAssemblies", b =>

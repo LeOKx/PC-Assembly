@@ -13,7 +13,7 @@ namespace PcAssembly.Dal.Repositories
         IGenericRepository<TEntity, TId> where TEntity : class, IBaseEntity<TId>
     {
         protected readonly DataContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
+        protected DbSet<TEntity> DbSet => _context.Set<TEntity>();
 
         //public GenericRepository()
         //{
@@ -23,14 +23,14 @@ namespace PcAssembly.Dal.Repositories
         public GenericRepository(DataContext _context)
         {
             this._context = _context;
-            _dbSet = _context.Set<TEntity>();
+            //_dbSet = _context.Set<TEntity>();
         }
 
         public async Task<TEntity> GetById(TId id)
         {
             try
             {
-                return await _dbSet.FindAsync(id);
+                return await DbSet.FindAsync(id);
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace PcAssembly.Dal.Repositories
 
         public async Task<List<TEntity>> GetAll()
         {
-            return await _dbSet.ToListAsync();
+            return await DbSet.ToListAsync();
         }
 
         public async Task<TEntity> Insert(TEntity newEntity)
@@ -48,7 +48,7 @@ namespace PcAssembly.Dal.Repositories
             try
             {
                 newEntity.Id = newEntity.Id == Guid.Empty ? Guid.NewGuid() : newEntity.Id;
-                _dbSet.Add(newEntity);
+                DbSet.Add(newEntity);
                 await _context.SaveChangesAsync(); 
                 return newEntity;
             }
@@ -61,7 +61,7 @@ namespace PcAssembly.Dal.Repositories
         {
             try
             {
-                _dbSet.Update(updatedEntity);
+                DbSet.Update(updatedEntity);
                 await _context.SaveChangesAsync();
                 return updatedEntity;
             }
@@ -74,7 +74,7 @@ namespace PcAssembly.Dal.Repositories
         {
             try
             {
-                _dbSet.Remove(deleteEntity);
+                DbSet.Remove(deleteEntity);
                 await _context.SaveChangesAsync();
                 return deleteEntity;
             }
@@ -88,8 +88,8 @@ namespace PcAssembly.Dal.Repositories
         {
             try
             {
-                TEntity? existing = await _dbSet.FindAsync(id);
-                _dbSet.Remove(existing);
+                TEntity? existing = await DbSet.FindAsync(id);
+                DbSet.Remove(existing);
                 await _context.SaveChangesAsync();
                 return existing;
             }

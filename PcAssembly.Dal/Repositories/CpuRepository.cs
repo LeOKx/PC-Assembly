@@ -11,7 +11,7 @@ namespace PcAssembly.Dal.Repositories
         public CpuRepository(DataContext context) : base(context)
         {
         }
-
+        
  
     }
 }

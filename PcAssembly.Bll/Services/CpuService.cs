@@ -71,7 +71,7 @@ namespace PcAssembly.Bll.Services
             var serviceResponse = new ServiceResponse<List<GetCpuDto>>();
             try
             {
-                var dbCPU = await _repository.GetAll();
+                //var dbCPU = await _repository.GetAll();
                 //if (!string.IsNullOrWhiteSpace(searchOption.SearchType))
                 //{
                 //    dbCPU = dbCPU.FindAll(e => e.Generation.ToString().Contains(searchOption.SearchType));
@@ -79,20 +79,17 @@ namespace PcAssembly.Bll.Services
                 serviceResponse.Message = "All Cpu";
                 if (!string.IsNullOrWhiteSpace(searchOption.SearchWord))
                 {
-                    dbCPU = dbCPU.FindAll(e => e.Model.ToString().Contains(searchOption.SearchWord));
                     serviceResponse.Message += $" with model {searchOption.SearchWord}";
                 }
                 if (searchOption.MinPrice.HasValue)
                 {
-                    dbCPU = dbCPU.FindAll(e => e.Price >= searchOption.MinPrice);
                     serviceResponse.Message += $" with minimum price {searchOption.MinPrice}";
                 }
                 if (searchOption.MaxPrice.HasValue)
                 {
-                    dbCPU = dbCPU.FindAll(e => e.Price <= searchOption.MaxPrice);
                     serviceResponse.Message += $" with maximum price {searchOption.MaxPrice}";
                 }
-
+                var dbCPU = await _repository.GetAll(searchOption.SearchWord, searchOption.MinPrice, searchOption.MaxPrice);
                 serviceResponse.Data = dbCPU.Select(c => _mapper.Map<GetCpuDto>(c)).ToList();
                 if(serviceResponse.Data is null)
                 {

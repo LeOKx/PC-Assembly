@@ -17,7 +17,7 @@ namespace PcAssembly.Dal.Repositories
 
         public async Task<bool> ExistComponentWithTheModel(string model)
         {
-            var component = await _dbSet
+            var component = await DbSet
                 .FirstOrDefaultAsync(c => c.Model == model);
             if (component == null)
             {
@@ -30,7 +30,7 @@ namespace PcAssembly.Dal.Repositories
         }
         public async Task<TComponent> DeleteComponentWithTheModel(string model)
         {
-            var component = await _dbSet
+            var component = await DbSet
                 .FirstOrDefaultAsync(c => c.Model == model);
 
             if (component != null)
@@ -42,6 +42,29 @@ namespace PcAssembly.Dal.Repositories
             {
                 throw new Exception("Haven't component with this model in Data Base");
             }
+        }
+
+        public async Task<List<TComponent>> GetAll(string? searchWord, double? minPrice, double? maxPrice)
+        {
+            IQueryable<TComponent> components = DbSet;
+
+            if (!string.IsNullOrWhiteSpace(searchWord))
+            {
+                //components = components.Where(
+                //    e => EF.Functions.Like(e.Model.ToString(), searchWord));
+                components = components.Where(
+                    e => e.Model.Contains(searchWord));
+            }
+            if (minPrice.HasValue)
+            {
+                components = components.Where(e => e.Price >= minPrice);
+            }
+            if (maxPrice.HasValue)
+            {
+                components = components.Where(e => e.Price <= maxPrice);
+            }
+
+            return await components.ToListAsync();
         }
 
     }
