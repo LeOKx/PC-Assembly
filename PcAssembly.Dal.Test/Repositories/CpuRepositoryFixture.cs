@@ -29,84 +29,84 @@ namespace PcAssembly.Dal.Test.Repositories
             //var context = new DataContext(options);
             //this.mockRepo = new Mock<CpuRepository>();
 
-            this._repo = new CpuRepository(new DataContext(options));
+            this._repo = new CpuRepository(this.mockContext.Object);
         }
 
-        private async Task<List<CPU>> GetTestCPUs()
-        {
-            return await Task.FromResult(new List<CPU>
-            {
-                new CPU()
-                {
-                    Model = "Intel Core i7-8700K",
-                    Company = Domain.Enums.Company.Intel,
-                    Type = Domain.Enums.TypeComponent.CPU,
-                    Price = 10000,
-                    PowerConsumption = 180,
-                    Socket = Domain.Enums.Socket.Socket_1151,
-                    Family = Domain.Enums.CpuFamily.Core_i7,
-                    Generation = Domain.Enums.CpuGeneration.CoffeLake,
-                    Cores = 6,
-                    Threads = 12,
-                    Frequency = 4.7f,
-                },
-                new CPU()
-                {
-                    Model = "Intel Core i7-10700K",
-                    Company = Domain.Enums.Company.Intel,
-                    Type = Domain.Enums.TypeComponent.CPU,
-                    Price = 11000,
-                    PowerConsumption = 200,
-                    Socket = Domain.Enums.Socket.Socket_1151_V2,
-                    Family = Domain.Enums.CpuFamily.Core_i7,
-                    Generation = Domain.Enums.CpuGeneration.CoffeLakeRefresh,
-                    Cores = 8,
-                    Threads = 8,
-                    Frequency = 4.9f
-                }
-            });
-        }
+        // private async Task<List<CPU>> GetTestCPUs()
+        // {
+        //     return await Task.FromResult(new List<CPU>
+        //     {
+        //         new CPU()
+        //         {
+        //             Model = "Intel Core i7-8700K",
+        //             Company = Domain.Enums.Company.Intel,
+        //             Type = Domain.Enums.TypeComponent.CPU,
+        //             Price = 10000,
+        //             PowerConsumption = 180,
+        //             Socket = Domain.Enums.Socket.Socket_1151,
+        //             Family = Domain.Enums.CpuFamily.Core_i7,
+        //             Generation = Domain.Enums.CpuGeneration.CoffeLake,
+        //             Cores = 6,
+        //             Threads = 12,
+        //             Frequency = 4.7f,
+        //         },
+        //         new CPU()
+        //         {
+        //             Model = "Intel Core i7-10700K",
+        //             Company = Domain.Enums.Company.Intel,
+        //             Type = Domain.Enums.TypeComponent.CPU,
+        //             Price = 11000,
+        //             PowerConsumption = 200,
+        //             Socket = Domain.Enums.Socket.Socket_1151_V2,
+        //             Family = Domain.Enums.CpuFamily.Core_i7,
+        //             Generation = Domain.Enums.CpuGeneration.CoffeLakeRefresh,
+        //             Cores = 8,
+        //             Threads = 8,
+        //             Frequency = 4.9f
+        //         }
+        //     });
+        // }
 
         [Fact]
         public async Task ExistComponentWithTheModel_Found()
         {
             string model = "Intel Core i7-8700K";
 
-            //List<CPU> cpus = new List<CPU>()
-            //{
-            //    new CPU()
-            //    {
-            //        Model = "Intel Core i7-8700K",
-            //        Company = Domain.Enums.Company.Intel,
-            //        Type = Domain.Enums.TypeComponent.CPU,
-            //        Price = 10000,
-            //        PowerConsumption = 180,
-            //        Socket = Domain.Enums.Socket.Socket_1151,
-            //        Family = Domain.Enums.CpuFamily.Core_i7,
-            //        Generation = Domain.Enums.CpuGeneration.CoffeLake,
-            //        Cores = 6,
-            //        Threads = 12,
-            //        Frequency = 4.7f,
-            //    },
-            //    new CPU()
-            //    {
-            //        Model = "Intel Core i7-10700K",
-            //        Company = Domain.Enums.Company.Intel,
-            //        Type = Domain.Enums.TypeComponent.CPU,
-            //        Price = 11000,
-            //        PowerConsumption = 200,
-            //        Socket = Domain.Enums.Socket.Socket_1151_V2,
-            //        Family = Domain.Enums.CpuFamily.Core_i7,
-            //        Generation = Domain.Enums.CpuGeneration.CoffeLakeRefresh,
-            //        Cores = 8,
-            //        Threads = 8,
-            //        Frequency = 4.9f
-            //    }
+            List<CPU> cpus = new List<CPU>()
+            {
+               new CPU()
+               {
+                   Model = "Intel Core i7-8700K",
+                   Company = Domain.Enums.Company.Intel,
+                   Type = Domain.Enums.TypeComponent.CPU,
+                   Price = 10000,
+                   PowerConsumption = 180,
+                   Socket = Domain.Enums.Socket.Socket_1151,
+                   Family = Domain.Enums.CpuFamily.Core_i7,
+                   Generation = Domain.Enums.CpuGeneration.CoffeLake,
+                   Cores = 6,
+                   Threads = 12,
+                   Frequency = 4.7f,
+               },
+               new CPU()
+               {
+                   Model = "Intel Core i7-10700K",
+                   Company = Domain.Enums.Company.Intel,
+                   Type = Domain.Enums.TypeComponent.CPU,
+                   Price = 11000,
+                   PowerConsumption = 200,
+                   Socket = Domain.Enums.Socket.Socket_1151_V2,
+                   Family = Domain.Enums.CpuFamily.Core_i7,
+                   Generation = Domain.Enums.CpuGeneration.CoffeLakeRefresh,
+                   Cores = 8,
+                   Threads = 8,
+                   Frequency = 4.9f
+               }
 
-            //};
+            };
             //var cpus = await GetTestCPUs();
-            //var mock = cpus.AsDbSetMock();
-            //this.mockContext.Setup(cpu => cpu.CPUs).Returns(mock.Object).Verifiable();
+            var mock = cpus.AsDbSetMock();
+            this.mockContext.Setup(cpu => cpu.Set<CPU>()).Returns(mock.Object).Verifiable();
             //this.mockRepo.Setup(repo => repo.GetAll()).Returns(GetTestCPUs());
 
             var result = await this._repo.ExistComponentWithTheModel(model);

@@ -11,9 +11,8 @@ namespace PcAssembly.Domain.Components
     public class GraphicCard : Component
     {
         [Required]
-        public SgRamType SgRamType { get; set; }
-        public int SgRamSize { get; set; }
-        [MaxLength(250)]
-        public string? About { get; set; }
+        public string? SgRamType { get; set; }
+        public int? SgRamSize { get; set; }
+        
     }
 }

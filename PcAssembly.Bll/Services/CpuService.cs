@@ -144,8 +144,10 @@ namespace PcAssembly.Bll.Services
                     }
                         
                     //if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
-                    if (updatedCPU.Company != null)
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
                         dbCPU.Company = updatedCPU.Company;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.InfoAbout.ToString()))
+                        dbCPU.InfoAbout = updatedCPU.InfoAbout;
                     if (!string.IsNullOrWhiteSpace(updatedCPU.Frequency.ToString()))
                         dbCPU.Frequency = updatedCPU.Frequency;
                     if (!string.IsNullOrWhiteSpace(updatedCPU.Socket.ToString()))

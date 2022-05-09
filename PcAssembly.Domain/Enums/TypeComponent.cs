@@ -5,10 +5,10 @@ namespace PcAssembly.Domain.Enums
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TypeComponent
     {
-        GraphicCard,
         CPU,
-        RAM,
+        GraphicCard,
         Motherboard,
+        RAM,
         Cooler,
         PowerSupply
     }

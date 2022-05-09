@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.TestPolygon", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Dal.Test", "..\PcAssembly.Dal.Test\PcAssembly.Dal.Test.csproj", "{9F0A165E-AAD8-46D1-9577-0867346F0382}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Angular", "..\PcAssembly.Angular\PcAssembly.Angular.csproj", "{E701C7AD-020B-44F5-8802-9F1128FF8AFD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E701C7AD-020B-44F5-8802-9F1128FF8AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E701C7AD-020B-44F5-8802-9F1128FF8AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E701C7AD-020B-44F5-8802-9F1128FF8AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E701C7AD-020B-44F5-8802-9F1128FF8AFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

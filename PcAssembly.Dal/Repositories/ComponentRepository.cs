@@ -52,8 +52,7 @@ namespace PcAssembly.Dal.Repositories
             {
                 //components = components.Where(
                 //    e => EF.Functions.Like(e.Model.ToString(), searchWord));
-                components = components.Where(
-                    e => e.Model.Contains(searchWord));
+                components = components.Where(e => e.Model.Contains(searchWord));
             }
             if (minPrice.HasValue)
             {

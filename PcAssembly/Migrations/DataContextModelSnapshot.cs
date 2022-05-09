@@ -28,6 +28,9 @@ namespace PcAssembly.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CoolersCount")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("CpuId")
                         .HasColumnType("uniqueidentifier");
 
@@ -37,9 +40,25 @@ namespace PcAssembly.Migrations
                     b.Property<Guid>("GraphicCardId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("MotherboardId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("PowerSupplyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
@@ -52,6 +71,12 @@ namespace PcAssembly.Migrations
                     b.HasIndex("CpuId");
 
                     b.HasIndex("GraphicCardId");
+
+                    b.HasIndex("MotherboardId");
+
+                    b.HasIndex("PowerSupplyId");
+
+                    b.HasIndex("RamId");
 
                     b.HasIndex("UserId");
 
@@ -104,8 +129,17 @@ namespace PcAssembly.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Company")
-                        .HasColumnType("int");
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InfoAbout")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Model")
                         .IsRequired()
@@ -149,17 +183,21 @@ namespace PcAssembly.Migrations
                     b.Property<int?>("Cores")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Family")
-                        .HasColumnType("int");
+                    b.Property<string>("Family")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<float?>("Frequency")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Generation")
-                        .HasColumnType("int");
+                    b.Property<string>("Generation")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("Socket")
-                        .HasColumnType("int");
+                    b.Property<string>("Socket")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int?>("Threads")
                         .HasColumnType("int");
@@ -171,17 +209,71 @@ namespace PcAssembly.Migrations
                 {
                     b.HasBaseType("PcAssembly.Domain.Components.Component");
 
-                    b.Property<string>("About")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<int>("SgRamSize")
+                    b.Property<int?>("SgRamSize")
                         .HasColumnType("int");
 
-                    b.Property<int>("SgRamType")
-                        .HasColumnType("int");
+                    b.Property<string>("SgRamType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.ToTable("GraphicCards", (string)null);
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.Motherboard", b =>
+                {
+                    b.HasBaseType("PcAssembly.Domain.Components.Component");
+
+                    b.Property<string>("Chipset")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("FormFactor")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int?>("RamSlots")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("RamType")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("Socket")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.ToTable("Motherboards", (string)null);
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.PowerSupply", b =>
+                {
+                    b.HasBaseType("PcAssembly.Domain.Components.Component");
+
+                    b.Property<int?>("Power")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.ToTable("PowerSupplyes", (string)null);
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.Ram", b =>
+                {
+                    b.HasBaseType("PcAssembly.Domain.Components.Component");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RamSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RamType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Rams", (string)null);
                 });
 
             modelBuilder.Entity("PcAssembly.Domain.Assembly", b =>
@@ -198,6 +290,24 @@ namespace PcAssembly.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("PcAssembly.Domain.Components.Motherboard", "Motherboard")
+                        .WithMany()
+                        .HasForeignKey("MotherboardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PcAssembly.Domain.Components.PowerSupply", "PowerSupply")
+                        .WithMany()
+                        .HasForeignKey("PowerSupplyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PcAssembly.Domain.Components.Ram", "Ram")
+                        .WithMany()
+                        .HasForeignKey("RamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PcAssembly.Domain.Auth.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -207,6 +317,12 @@ namespace PcAssembly.Migrations
                     b.Navigation("Cpu");
 
                     b.Navigation("GraphicCard");
+
+                    b.Navigation("Motherboard");
+
+                    b.Navigation("PowerSupply");
+
+                    b.Navigation("Ram");
 
                     b.Navigation("User");
                 });
@@ -255,6 +371,33 @@ namespace PcAssembly.Migrations
                     b.HasOne("PcAssembly.Domain.Components.Component", null)
                         .WithOne()
                         .HasForeignKey("PcAssembly.Domain.Components.GraphicCard", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.Motherboard", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.Motherboard", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.PowerSupply", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.PowerSupply", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PcAssembly.Domain.Components.Ram", b =>
+                {
+                    b.HasOne("PcAssembly.Domain.Components.Component", null)
+                        .WithOne()
+                        .HasForeignKey("PcAssembly.Domain.Components.Ram", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
