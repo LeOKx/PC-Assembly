@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Bll", "PcAssembl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Dal", "PcAssembly.Dal\PcAssembly.Dal.csproj", "{1FF98A03-BF59-4882-9BC9-65C9C4BCA3CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.TestPolygon", "PcAssembly.TestPolygon\PcAssembly.TestPolygon.csproj", "{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PcAssembly.Dal.Test", "..\PcAssembly.Dal.Test\PcAssembly.Dal.Test.csproj", "{9F0A165E-AAD8-46D1-9577-0867346F0382}"
 EndProject
 Global
@@ -43,10 +41,6 @@ Global
 		{1FF98A03-BF59-4882-9BC9-65C9C4BCA3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FF98A03-BF59-4882-9BC9-65C9C4BCA3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FF98A03-BF59-4882-9BC9-65C9C4BCA3CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2D52FB8-3A2C-4469-AABF-8E6D387A2D27}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F0A165E-AAD8-46D1-9577-0867346F0382}.Release|Any CPU.ActiveCfg = Release|Any CPU

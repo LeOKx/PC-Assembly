@@ -47,8 +47,6 @@ namespace PcAssembly.Dal
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(
-                @"Server=1080TI-I7-8700K\SQLEXPRESS;Database=pc-assembly;Trusted_Connection=True; MultipleActiveResultSets = true");
         }
 
     }
