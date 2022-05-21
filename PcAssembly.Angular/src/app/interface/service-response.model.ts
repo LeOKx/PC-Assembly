@@ -1,7 +1,7 @@
 
 
-export interface ServiceResponse{
-    data: [];
+export interface ServiceResponse<T>{
+    data: T [];
     message: string;
     success: boolean;
 }

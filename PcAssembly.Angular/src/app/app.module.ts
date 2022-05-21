@@ -6,17 +6,34 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../material.module';
 import {MatNativeDateModule} from '@angular/material/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { SidenavResponsiveModule } from './sidenav-responsive/sidenav-responsive.module';
 import { PowerPipeModule } from './pipes/power.pipe.module';
-import { OwnerModule } from './owner/owner.module';
-import { CpuModule } from './cpu/cpu.module';
+import { ErrorHandlerService } from './shared/services/error-handler.service';
+import { LayoutComponent } from './layout/layout.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { JwtModule } from "@auth0/angular-jwt";
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { GraphicCardModule } from './assembly-components/graphic-card/graphic-card.module';
+import { CpuModule } from './assembly-components/cpu/cpu.module';
+import { MotherboardModule } from './assembly-components/motherboard/motherboard.module';
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LayoutComponent,
+    HomeComponent,
+    HeaderComponent,
+    SidenavListComponent,
+    ForbiddenComponent,
   ],
   imports: [
     FormsModule,
@@ -24,15 +41,31 @@ import { CpuModule } from './cpu/cpu.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FlexLayoutModule,
     MatNativeDateModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SidenavResponsiveModule,
     PowerPipeModule,
-    OwnerModule,
-    CpuModule
+    CpuModule,
+    GraphicCardModule,
+    MotherboardModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        
+      }
+    })
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerService,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent],
+  exports: [
+  ]
 })
 export class AppModule { }

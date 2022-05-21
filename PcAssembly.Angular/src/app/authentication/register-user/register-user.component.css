@@ -1,0 +1,33 @@
+div {
+    text-align: center;
+
+  }
+em{
+    color: #e71515;
+    /* font-weight: bold; */
+}
+.ng-invalid.ng-touched{
+    border-color: red;
+}
+.card{
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    /* display: flex;
+    justify-content: center; */
+    margin-top: 10px;
+    background-color: #454545;
+    box-shadow: 1px 1px 1px #A2A2A2;
+    padding: 10px;
+}
+.full-width{
+    width: 100%;
+}
+td {
+    padding-right: 8px;
+  }
+.register-btn{
+    /* display: flex;
+    align-self: center; */
+    background-color: rgb(81, 180, 81);
+}

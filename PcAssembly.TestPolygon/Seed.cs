@@ -162,5 +162,43 @@ namespace PcAssembly.TestPolygon
                 await context.SaveChangesAsync();
             }
         }
+        public static async Task SeedRams(DataContext context)
+        {
+            if (!context.Rams.Any())
+            {
+                var ram_1 = new Ram()
+                {
+                    Model = "GSkill-3600-cl16",
+                    Company = "GSkill",
+                    Type = Domain.Enums.TypeComponent.RAM,
+                    Price = 9500,
+                    PowerConsumption = 5,
+                    InfoAbout = "",
+                    Count = 2,
+                    RamSize = 16,
+                    RamType = "DDR4"
+                };
+                context.Rams.Add(ram_1);
+                await context.SaveChangesAsync();
+            }
+        }
+        public static async Task SeedPowerSupplies(DataContext context)
+        {
+            if (!context.PowerSupplies.Any())
+            {
+                var powerSupply_1= new PowerSupply()
+                {
+                    Model = "Seasonic-1000W",
+                    Company = "Seasonic",
+                    Type = Domain.Enums.TypeComponent.PowerSupply,
+                    Price = 12000,
+                    PowerConsumption = 1000,
+                    InfoAbout = "",
+                    Power = 1000
+                };
+                context.PowerSupplies.Add(powerSupply_1);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

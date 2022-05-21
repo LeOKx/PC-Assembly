@@ -10,14 +10,19 @@ namespace PcAssembly.Domain
         [Required]
         [MaxLength(100)]
         public string? Name { get; set; }
+        [Required]
         public Guid CpuId { get; set; }
         public CPU? Cpu { get; set; }
+        [Required]
         public Guid GraphicCardId { get; set; }
         public GraphicCard? GraphicCard { get; set; }
+        [Required]
         public Guid MotherboardId { get; set; }
         public Motherboard? Motherboard { get; set; }
+        [Required]
         public Guid RamId { get; set; }
         public Ram? Ram { get; set; }
+        [Required]
         public Guid PowerSupplyId { get; set; }
         public PowerSupply? PowerSupply { get; set; }
         public int? CoolersCount { get; set; }

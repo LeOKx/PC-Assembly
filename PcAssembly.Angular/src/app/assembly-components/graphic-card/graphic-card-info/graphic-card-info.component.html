@@ -1,0 +1,33 @@
+<div class="info-container">
+    <table>
+        <tr>
+            <div>
+                <img class="image-prewiev" src="{{graphicCardData.imageUrl}}">
+            </div>
+        </tr>
+        <tr>
+            <div class="info">
+                <p>Model: {{graphicCardData.model}}</p>
+                <p>Company: {{graphicCardData.company}}</p>
+                <p>Type of Component: {{graphicCardData.type}}</p>
+                <p>SgRam Type: {{graphicCardData.sgRamType}}</p>
+                <p>SgRam Size: {{graphicCardData.sgRamSize}}</p>
+                <p>Power Consumption: {{graphicCardData.powerConsumption}}</p>
+                <p>About:</p>
+                <p>{{graphicCardData.infoAbout}}</p>
+            </div>
+        </tr>
+        <tr>
+            <div>
+                <p>
+                    <button mat-raised-button class="return" (click)="back()">Return</button>
+                </p>
+            </div>
+            <div class="price">
+                <p>
+                    Price: {{graphicCardData.price | currency:"₴"}}
+                </p>
+            </div>
+        </tr>
+    </table>
+</div>

@@ -11,7 +11,7 @@ namespace PcAssembly.Domain
     {
         //public int AssemblyId { get; set; }
         public Assembly? Assembly { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public User? User { get; set; }
     }
 }

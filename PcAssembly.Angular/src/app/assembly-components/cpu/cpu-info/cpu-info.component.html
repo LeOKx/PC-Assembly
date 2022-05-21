@@ -1,0 +1,36 @@
+<div class="info-container">
+    <table>
+        <tr>
+            <div>
+                <img class="image-prewiev" [src]="[cpuData?.imageUrl]">
+            </div>
+        </tr>
+        <tr>
+            <div class="info">
+                <p>Model: {{cpuData?.model}}</p>
+                <p>Company: {{cpuData?.company}}</p>
+                <p>Type of Component: {{cpuData?.type}}</p>
+                <p>Family: {{cpuData?.family}}</p>
+                <p>Generation: {{cpuData?.generation}}</p>
+                <p>Frequency: {{cpuData?.frequency}}</p>
+                <p>Cores: {{cpuData?.cores}}</p>
+                <p>Threads: {{cpuData?.threads}}</p>
+                <p>Power Consumption: {{cpuData?.powerConsumption}}</p>
+                <p>About:</p>
+                <p>{{cpuData?.infoAbout}}</p>
+            </div>
+        </tr>
+        <tr>
+            <div>
+                <p>
+                    <button mat-raised-button class="return" (click)="back()">Return</button>
+                </p>
+            </div>
+            <div class="price">
+                <p>
+                    Price: {{cpuData?.price | currency:"₴"}}
+                </p>
+            </div>
+        </tr>
+    </table>
+</div>

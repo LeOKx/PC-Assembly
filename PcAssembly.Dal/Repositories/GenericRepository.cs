@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using PcAssembly.Common.Models.PagedRequest;
+using PcAssembly.Dal.Extensions;
 using PcAssembly.Dal.Interfaces;
 using PcAssembly.Domain;
 using System;
@@ -13,16 +16,13 @@ namespace PcAssembly.Dal.Repositories
         IGenericRepository<TEntity, TId> where TEntity : class, IBaseEntity<TId>
     {
         protected readonly DataContext _context;
+        protected readonly IMapper _mapper;
         protected DbSet<TEntity> DbSet => _context.Set<TEntity>();
 
-        //public GenericRepository()
-        //{
-        //    this._context = new DataContext();
-        //    table = _context.Set<TEntity>();
-        //}
-        public GenericRepository(DataContext _context)
+        public GenericRepository(DataContext context, IMapper mapper)
         {
-            this._context = _context;
+            this._context = context;
+            this._mapper = mapper;
             //_dbSet = _context.Set<TEntity>();
         }
 
@@ -41,6 +41,12 @@ namespace PcAssembly.Dal.Repositories
         public async Task<List<TEntity>> GetAll()
         {
             return await DbSet.ToListAsync();
+        }
+        public async Task<PaginatedResult<TDto>> GetPagedData<TEntity, TDto>(PagedRequest pagedRequest)
+            where TEntity : BaseEntity
+            where TDto : class
+        {
+            return await _context.Set<TEntity>().CreatePaginatedResultAsync<TEntity, TDto>(pagedRequest, _mapper);
         }
 
         public async Task<TEntity> Insert(TEntity newEntity)

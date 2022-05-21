@@ -12,6 +12,8 @@ namespace PcAssembly.TestPolygon
             await Seed.SeedCPUs(dbContext);
             await Seed.SeedGraphicCards(dbContext);
             await Seed.SeedMotherboards(dbContext);
+            await Seed.SeedRams(dbContext);
+            await Seed.SeedPowerSupplies(dbContext);
             //await Queries.GetAllComponents(dbContext);
             //await Queries.GetAllCpus(dbContext);
             //await Queries.Group(dbContext);

@@ -8,8 +8,10 @@ namespace PcAssembly.Dal.Repositories
 {
     public class CpuRepository: ComponentRepository<CPU>, ICpuRepository
     {
-        public CpuRepository(DataContext context) : base(context)
+        public CpuRepository(DataContext _context, IMapper _mapper) : base(_context, _mapper)
         {
+
+
         }
         
  

@@ -1,4 +1,5 @@
-﻿using PcAssembly.Domain.Components;
+﻿using Microsoft.AspNetCore.Identity;
+using PcAssembly.Domain.Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,14 +9,13 @@ using System.Threading.Tasks;
 
 namespace PcAssembly.Domain.Auth
 {
-    public class User:BaseEntity
+    public class User:IdentityUser
     {
         [Required]
         [ConcurrencyCheck]
         [MinLength(8), MaxLength(32)]
-        public string? Username { get; set; }
-        public byte[]? PasswordHash { get; set; }
-        public byte[]? PasswordSalt { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public UserProfile? UserProfile { get; set; }
         public ICollection<SavedAssemblies>? SavedAssemblies { get; set; }
     }

@@ -1,0 +1,28 @@
+<mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <div>
+        <a routerLink="/home">PcAssembly</a>
+    </div>
+    <form fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+        <ul *ngIf='!isUserAuthenticated' fxLayout fxLayoutGap="15px" class="navigation-items">
+            <li>
+                <a [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Login
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['/authentication/register']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    Register
+                </a>
+            </li>
+        </ul>
+        <button *ngIf='isUserAuthenticated' mat-icon-button [matMenuTriggerFor]="menuProfile" ><mat-icon>account_circle</mat-icon></button>
+            <mat-menu class="user-menu" #menuProfile="matMenu">
+                <a mat-menu-item href="#Profile"><mat-icon>person</mat-icon>Profile</a>
+                <a class = "logout-btn" mat-menu-item (click)="logout()" ><mat-icon>logout</mat-icon>Logout</a>
+            </mat-menu>
+    </form>
+    
+  </mat-toolbar>

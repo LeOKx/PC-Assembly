@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PcAssembly.Dal.EntityConfiguration;
 using PcAssembly.Domain;
 using PcAssembly.Domain.Auth;
@@ -6,7 +7,7 @@ using PcAssembly.Domain.Components;
 
 namespace PcAssembly.Dal
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         public DataContext()
         {
@@ -25,19 +26,17 @@ namespace PcAssembly.Dal
         public DbSet<PowerSupply> PowerSupplies { get; set; }
         //public DbSet<ManufacturerInfo> ManufacturerInfos { get; set; }
         public DbSet<Assembly> Assemblies{ get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UsersProfiles { get; set; }
         //public DbSet<CompanyList> Companies { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new AssemblyConfig());
             modelBuilder.ApplyConfiguration(new SavedAssemblyConfig());
-
-            //modelBuilder.ApplyConfiguration(new ComponentConfig());
-            //modelBuilder.Entity<CPU>();
-            //modelBuilder.Entity<GraphicCard>();
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
             modelBuilder.Entity<CPU>().ToTable("CPUs");
             modelBuilder.Entity<GraphicCard>().ToTable("GraphicCards");

@@ -1,5 +1,5 @@
 ﻿
-
+using PcAssembly.Common.Models;
 using PcAssembly.Domain;
 using PcAssembly.Domain.Components;
 
@@ -11,6 +11,6 @@ namespace PcAssembly.Dal.Interfaces
     {
         public Task<bool> ExistComponentWithTheModel(string model);
         public Task<TComponent> DeleteComponentWithTheModel(string model);
-        public Task<List<TComponent>> GetAll(string? searchWord, double? minPrice, double? maxPrice);
+        public Task<List<TComponent>> GetAll(); 
     }
 }

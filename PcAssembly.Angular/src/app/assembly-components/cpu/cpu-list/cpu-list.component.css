@@ -1,0 +1,31 @@
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+}
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
+}
+.mat-cell{
+  padding: 5px;
+}
+.filterMenu{
+  width: 100%;
+  min-width: 1500px;
+}
+.search-panel{
+
+  margin-left: 0px;
+  margin-top: 80px;
+  height: 50%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+.searchForm{
+  justify-content: center;
+  justify-items: center;
+}

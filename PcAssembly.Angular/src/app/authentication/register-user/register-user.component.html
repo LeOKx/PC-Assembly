@@ -1,0 +1,65 @@
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">Register</h1>
+
+        <mat-error *ngIf="showError" role="alert">
+            <span [innerHTML]="errorMessage"></span>
+        </mat-error>
+        
+        <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser()">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label for="email">Email:</mat-label>
+                <input matInput id="email" formControlName="email">
+                <mat-error *ngIf="hasError('email', 'email')">Please provide a valid email</mat-error>
+                <mat-error *ngIf="hasError('email', 'required')">Email is required</mat-error>
+            </mat-form-field>
+            <table class="full-width" cellspacing="0"><tr>
+                <td>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label for="firstName">First Name:</mat-label>
+                        <input matInput id="firstName" formControlName="firstName">
+                        <mat-error *ngIf=" hasError('firstName', 'minlength')">Minimum 2 symbols</mat-error>
+                        <mat-error *ngIf=" hasError('firstName', 'maxlength')">Maximum 50 symbols</mat-error>
+                        <mat-error *ngIf=" hasError('firstName', 'required')">Name is required</mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label for="lastName">Last Name:</mat-label>
+                        <input matInput id="lastName" formControlName="lastName">
+                        <mat-error *ngIf="hasError('lastName', 'minlength')">Minimum 2 symbols</mat-error>
+                        <mat-error *ngIf="hasError('lastName', 'maxlength')">Maximum 50 symbols</mat-error>
+                        <mat-error *ngIf="hasError('lastName', 'required')">Surename is required</mat-error>
+                    </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <br>
+            <table class="full-width" cellspacing="0"><tr>
+                <td>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label for="password">Password</mat-label>
+                        <input type="password" matInput id="password" formControlName="password">
+                        <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label for="confirm">Confirm Password</mat-label>
+                        <input type="password" matInput id="confirm" formControlName="confirm">
+                        <mat-error *ngIf="hasError('confirm', 'required')">Confirmation is required</mat-error>
+                        <mat-error *ngIf="hasError('confirm', 'mustMatch')">Passwords must match</mat-error>
+                    </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <br>
+            <div class="form-group row">
+                <div >          
+                    <button class="register-btn" mat-raised-button type="submit" >Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

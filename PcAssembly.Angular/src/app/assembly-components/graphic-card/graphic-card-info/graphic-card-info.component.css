@@ -1,0 +1,20 @@
+.info-container{
+    display: flex;
+    justify-content: center;
+    border-style: groove;
+    max-width: 500px;
+    padding: 10px;
+    background-color: rgb(70, 67, 67);
+}
+
+.image-prewiev{
+    height: 200px;
+}
+.price{
+    text-align: right; 
+    color: rgb(5, 176, 5);
+    font-size: large;
+}
+.mat-raised-button{
+    background-color: green;
+}

@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PcAssembly.Bll.Exeptions;
-using PcAssembly.Bll.Filters;
 using PcAssembly.Bll.Interfaces;
 using PcAssembly.Common.Dtos.CPU;
+using PcAssembly.Common.Models;
+using PcAssembly.Common.Models.PagedRequest;
 using PcAssembly.Dal.Interfaces;
 using PcAssembly.Domain;
 using PcAssembly.Domain.Components;
@@ -14,7 +15,6 @@ namespace PcAssembly.Bll.Services
     public class CpuService : ICpuService
     {
         private readonly IMapper _mapper;
-        //private readonly IComponentRepository<CPU, int> _componentRepository;
         private readonly ICpuRepository _repository;
 
         public CpuService(IMapper mapper, ICpuRepository repository)
@@ -31,10 +31,12 @@ namespace PcAssembly.Bll.Services
                 CPU cpu = _mapper.Map<CPU>(newCPU);
                 serviceResponse.Data = _mapper.Map<GetCpuDto>(await _repository.Insert(cpu));
                 serviceResponse.Message = "CPU added to db";
+                serviceResponse.Success = true;
             }
             else
             {
                 serviceResponse.Message = "CPU with the same model already in DataBase";
+                serviceResponse.Success = false;
             }
             return serviceResponse;
         }
@@ -66,36 +68,18 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCpuDto>>> GetCPUs(SearchOptions searchOption)
+        public async Task<PaginatedResult<GetCpuDto>> GetPagedCpus(PagedRequest pagedRequest)
+        {
+            return await _repository.GetPagedData<CPU, GetCpuDto>(pagedRequest);
+        }
+
+        public async Task<ServiceResponse<List<GetCpuDto>>> GetCPUs()
         {
             var serviceResponse = new ServiceResponse<List<GetCpuDto>>();
             try
             {
-                //var dbCPU = await _repository.GetAll();
-                //if (!string.IsNullOrWhiteSpace(searchOption.SearchType))
-                //{
-                //    dbCPU = dbCPU.FindAll(e => e.Generation.ToString().Contains(searchOption.SearchType));
-                //}
-                serviceResponse.Message = "All Cpu";
-                if (!string.IsNullOrWhiteSpace(searchOption.SearchWord))
-                {
-                    serviceResponse.Message += $" with model {searchOption.SearchWord}";
-                }
-                if (searchOption.MinPrice.HasValue)
-                {
-                    serviceResponse.Message += $" with minimum price {searchOption.MinPrice}";
-                }
-                if (searchOption.MaxPrice.HasValue)
-                {
-                    serviceResponse.Message += $" with maximum price {searchOption.MaxPrice}";
-                }
-                var dbCPU = await _repository.GetAll(searchOption.SearchWord, searchOption.MinPrice, searchOption.MaxPrice);
+                var dbCPU = await _repository.GetAll();
                 serviceResponse.Data = dbCPU.Select(c => _mapper.Map<GetCpuDto>(c)).ToList();
-                if(serviceResponse.Data is null)
-                {
-                    serviceResponse.Message = "We haven't find components with youre requirements";
-                }
-
             }
             catch (Exception ex)
             {
@@ -105,21 +89,9 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCpuDto>> GetCpuById(Guid id)
+        public async Task<GetCpuDto> GetCpuById(Guid id)
         {
-            var serviceResponse = new ServiceResponse<GetCpuDto>();
-            try
-            {
-                var dbCPU = await _repository.GetById(id);
-                    serviceResponse.Data = _mapper.Map<GetCpuDto>(dbCPU);
-            }
-            catch (Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-
-            }
-            return serviceResponse;
+            return _mapper.Map<GetCpuDto>(await _repository.GetById(id));
         }
 
         public async Task<ServiceResponse<GetCpuDto>> UpdateCPU(Guid id,UpdateCpuDto updatedCPU)
@@ -146,6 +118,8 @@ namespace PcAssembly.Bll.Services
                     //if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
                     if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
                         dbCPU.Company = updatedCPU.Company;
+                    if (!string.IsNullOrWhiteSpace(updatedCPU.ImageUrl.ToString()))
+                        dbCPU.ImageUrl = updatedCPU.ImageUrl;
                     if (!string.IsNullOrWhiteSpace(updatedCPU.InfoAbout.ToString()))
                         dbCPU.InfoAbout = updatedCPU.InfoAbout;
                     if (!string.IsNullOrWhiteSpace(updatedCPU.Frequency.ToString()))
@@ -167,8 +141,6 @@ namespace PcAssembly.Bll.Services
                     if (!string.IsNullOrWhiteSpace(updatedCPU.Price.ToString()))
                         dbCPU.Price = updatedCPU.Price;
 
-                   /* _mapper.Map(updatedCPU, dbCPU);
-                dbCPU.Id = id;*/
                 await _repository.Update(dbCPU);
                 await _repository.SaveChangesAsync();
 

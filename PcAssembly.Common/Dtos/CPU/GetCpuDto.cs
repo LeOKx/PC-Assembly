@@ -11,6 +11,5 @@ namespace PcAssembly.Common.Dtos.CPU
         public int? Cores { get; set; } 
         public int? Threads { get; set; }
         public float? Frequency { get; set; }
-        //public List<RamType> SupportedRam { get; set; } = new List<RamType>() { RamType.DDR4 };
     }
 }

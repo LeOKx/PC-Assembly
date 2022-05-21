@@ -3,7 +3,7 @@ using PcAssembly.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 namespace PcAssembly.Domain.Components
 {
-    public class CPU:Component
+    public class CPU : Component
     {  
         [Required]
         [MaxLength(40)]

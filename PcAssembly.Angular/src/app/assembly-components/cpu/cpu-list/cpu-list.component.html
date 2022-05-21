@@ -1,0 +1,152 @@
+<mat-card class="filterMenu" style="height: 100%;">
+  <mat-card-header>
+    <mat-card-title class="view-card-title">
+      <h1>Cpus</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <mat-form-field>
+        <mat-placeholder>
+          <mat-icon>subject</mat-icon>
+          <b> Search</b>
+        </mat-placeholder>
+        <input matInput [formControl]="searchInput" (keyup.enter)="applySearch()">
+      </mat-form-field>
+      <span class="title-spacer"></span>
+      
+      <button *ngIf="isAdmin" mat-mini-fab style="margin-right:10px; background-color:#e07c9e" [routerLink]="['/editCpu', '']">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-mini-fab style="margin-right:10px; background-color:#a28b6e" (click)="sidenav.toggle()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-mini-fab style="margin-right:10px; background-color:darkgray" (click)="loadCpusFromApi()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+<mat-table #table [dataSource]="pagedCpus?.items" matSort matSortActive="model" matSortDirection="asc">
+  
+  <ng-container matColumnDef="model">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Model </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.model}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="company">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.company}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.price}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="socket">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Socket </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.socket}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="family">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Family </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.family}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="generation">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Generation </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.generation}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="cores">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Cores </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.cores}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="threads">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Threads </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.threads}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="frequency">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Frequency </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.frequency}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="powerConsumption">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> PowerConsumption </mat-header-cell>
+    <mat-cell *matCellDef="let cpu"> {{cpu.powerConsumption}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="imageUrl" style="min-width: 300px;">
+    <mat-header-cell *matHeaderCellDef>
+      Image
+    </mat-header-cell>
+    <mat-cell *matCellDef="let cpu" >
+      <img style="max-height: 100px; max-width: 300px;" src="" [src]="cpu.imageUrl">
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="id" >
+    <mat-header-cell *matHeaderCellDef>
+      <button mat-button style="color:white; margin-left: 40px; background-color:darkgrey" (click)="resetGrid()">Reset</button>
+    </mat-header-cell>
+    <mat-cell  *matCellDef="let cpu" >
+    <div *ngIf="isAdmin; then adminMenu else userMenu"></div>
+    <ng-template #adminMenu>
+      <button *ngIf="isAdmin" mat-mini-fab style="background-color:rgb(8, 199, 199); min-height: 30px; margin: 10px;" [routerLink]="['/editCpu', cpu.id]">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="isAdmin" mat-mini-fab style="background-color:rgb(248, 86, 86); min-height: 30px;  margin: 10px; margin-right: 100px;" (click)="openDialogForDeleting(cpu.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </ng-template>
+    <ng-template #userMenu>
+      <button *ngIf="!isAdmin" mat-mini-fab style="background-color:rgb(164, 8, 199); min-height: 30px;" [routerLink]="['/infoCpu', cpu.id]">
+        <mat-icon>menu_open</mat-icon>
+      </button>
+      <button *ngIf="select==='select'" mat-button style="background-color:rgb(8, 199, 56); min-height: 30px; text-align: left; margin-left: 5px;" (click)="selectCpu(cpu.id)">
+        <span style="text-align: left;">Select</span>
+      </button>
+    </ng-template>
+  </mat-cell>
+  </ng-container>
+
+  <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+<mat-paginator [length]="pagedCpus?.total" [pageSizeOptions]="[1, 2, 5, 10, 25, 50]" pageSize="5"></mat-paginator>
+
+</mat-card>
+
+<mat-sidenav class="search-panel" dark #sidenav mode="push" opened="false">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <div mat-card-avatar class="avatar"></div>
+      <mat-card-subtitle>
+        <button mat-raised-button style="color:lightgrey; background-color:darkgreen" (click)="filterCpusFromForm();sidenav.toggle()">
+          <mat-icon>search</mat-icon>Search </button>
+        <button mat-raised-button style="color:lightgrey; background-color:darkred" (click)="resetGrid(); sidenav.toggle()">
+          <mat-icon>refresh</mat-icon>Reset</button>
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+  <mat-nav-list style="margin-left:20px;">
+    <form class="searchForm" [formGroup]="filterForm" (ngSubmit)="sidenav.toggle()">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Model" style="width:200px;" formControlName="model" (keyup.enter)="filterCpusFromForm();sidenav.toggle()"  />
+      </mat-form-field> 
+      <br>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Company" style="width:200px;" formControlName="company" (keyup.enter)="filterCpusFromForm();sidenav.toggle()"  />
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Socket" style="width:200px;" formControlName="socket" (keyup.enter)="filterCpusFromForm();sidenav.toggle()"  />
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Family" style="width:200px;" formControlName="family" (keyup.enter)="filterCpusFromForm();sidenav.toggle()"  />
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Generation" style="width:200px;" formControlName="generation" (keyup.enter)="filterCpusFromForm();sidenav.toggle()"  />
+      </mat-form-field>
+      <br>
+    </form>
+  </mat-nav-list>
+</mat-sidenav>

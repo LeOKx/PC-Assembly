@@ -4,6 +4,9 @@ import { ConfirmDialogComponent } from './confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from 'src/material.module';
+import { MatDialog, MatDialogActions } from '@angular/material/dialog';
+import { MatButton } from '@angular/material/button';
+
 
 
 
@@ -15,7 +18,7 @@ import { MaterialModule } from 'src/material.module';
     CommonModule,
     FormsModule,
     BrowserModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [
     ConfirmDialogComponent
