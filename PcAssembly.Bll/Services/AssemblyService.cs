@@ -75,7 +75,7 @@ namespace PcAssembly.Bll.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetAssemblyDto>>> GetAssemblys()
+        public async Task<ServiceResponse<List<GetAssemblyDto>>> GetAssemblies()
         {
             var serviceResponse = new ServiceResponse<List<GetAssemblyDto>>();
             try

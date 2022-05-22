@@ -1,0 +1,79 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title class="view-card-title">
+        <h1>{{pageTitle}}</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <form novalidate [formGroup]="powerSupplyForm" (ngSubmit)="savePowerSupply()">
+      <mat-toolbar style ="background-color:#424242" >
+        <mat-toolbar-row>
+          <span class="title-spacer"></span>
+  
+          <mat-card-actions>
+            <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit" [disabled]='!powerSupplyForm.valid' >
+              <mat-icon>save</mat-icon>
+            </button>
+            <button mat-mini-fab class="" style="margin-right:10px; " [routerLink]="['/power-supplies']">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-card-actions>
+  
+        </mat-toolbar-row>
+      </mat-toolbar>
+  
+      <mat-card-content >
+
+        <div class="form-card">
+          <table>
+              <td>
+                <mat-form-field class="form-field-90">
+                    <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
+                  </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="form-field-30">
+                    <input matInput placeholder="Company"  type="text" placeholder="Company (required)" formControlName="company"/>
+                  </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="form-field-30">
+                    <input matInput placeholder="Power Consumption"  type="number" placeholder="Power Consumption (required)" formControlName="powerConsumption"/>
+                  </mat-form-field>
+                
+              </td>
+          </table>
+          <table>
+              <td>
+                <mat-form-field class="form-field-30">
+                    <input matInput placeholder="SgRamType"  type="text" placeholder="Ram Type (required)" formControlName="sgRamType"/>
+                  </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="form-field-30">
+                    <input matInput placeholder="SgRamSize"  type="number" placeholder="Ram Size (required)" formControlName="sgRamSize"/>
+                  </mat-form-field>
+              </td>
+          </table>
+          
+          <mat-form-field class="form-field-30">
+            <input matInput placeholder="Price"  type="number" placeholder="Price (required)" formControlName="price"/>
+          </mat-form-field>
+
+          
+          <mat-form-field style="width: 100%;">
+            <textarea matInput placeholder="Image Url" formControlName="imageUrl" matTextareaAutosize></textarea>
+          </mat-form-field>
+          
+
+          <mat-form-field style="width: 100%;">
+            <textarea matInput placeholder="Info About" formControlName="infoAbout" matTextareaAutosize></textarea>
+            <mat-error *ngIf="hasError('infoAbout', 'maxlength')">Maximum 500 symbols</mat-error>
+          </mat-form-field>
+          
+
+        </div>
+      </mat-card-content>
+      
+    </form>
+  </mat-card>
+

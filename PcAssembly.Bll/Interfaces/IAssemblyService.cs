@@ -11,6 +11,10 @@ namespace PcAssembly.Bll.Interfaces
     public interface IAssemblyService
     {
         Task<PaginatedResult<GetAssemblyDto>> GetPagedAssemblies(PagedRequest pagedRequest);
+        Task<ServiceResponse<GetAssemblyDto>> DeleteAssembly(Guid id);
         Task<ServiceResponse<GetAssemblyDto>> CreateAssembly(AddAssemblyDto assemblyDto);
+        Task<ServiceResponse<List<GetAssemblyDto>>> GetAssemblies();
+        Task<GetAssemblyDto> GetAssemblyById(Guid id);
+        Task<ServiceResponse<GetAssemblyDto>> UpdateAssembly(Guid id, UpdateAssemblyDto updatedAssembly);
     }
 }

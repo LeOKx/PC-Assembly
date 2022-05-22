@@ -1,0 +1,32 @@
+<div class="info-container">
+    <table>
+        <tr>
+            <div>
+                <img class="image-prewiev" src="{{powerSupplyData.imageUrl}}">
+            </div>
+        </tr>
+        <tr>
+            <div class="info">
+                <p>Model: {{powerSupplyData.model}}</p>
+                <p>Company: {{powerSupplyData.company}}</p>
+                <p>Type of Component: {{powerSupplyData.type}}</p>
+                <p>Power: {{powerSupplyData.power}}</p>
+                <p>Power Consumption: {{powerSupplyData.powerConsumption}}</p>
+                <p>About:</p>
+                <p>{{powerSupplyData.infoAbout}}</p>
+            </div>
+        </tr>
+        <tr>
+            <div>
+                <p>
+                    <button mat-raised-button class="return" (click)="back()">Return</button>
+                </p>
+            </div>
+            <div class="price">
+                <p>
+                    Price: {{powerSupplyData.price | currency:"₴"}}
+                </p>
+            </div>
+        </tr>
+    </table>
+</div>

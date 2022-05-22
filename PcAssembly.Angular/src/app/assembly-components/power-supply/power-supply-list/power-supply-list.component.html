@@ -1,0 +1,123 @@
+<mat-card class="filterMenu" style="height: 100%;">
+  <mat-card-header>
+    <mat-card-title class="view-card-title">
+      <h1>PowerSupplys</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <mat-form-field>
+        <mat-placeholder>
+          <mat-icon>subject</mat-icon>
+          <b> Search</b>
+        </mat-placeholder>
+        <input matInput [formControl]="searchInput" (keyup.enter)="applySearch()">
+      </mat-form-field>
+      <span class="title-spacer"></span>
+      
+      <button *ngIf="isAdmin" mat-mini-fab style="margin-right:10px; background-color:#e07c9e" [routerLink]="['/editPowerSupply', '']">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-mini-fab style="margin-right:10px; background-color:#a28b6e" (click)="sidenav.toggle()">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-mini-fab style="margin-right:10px; background-color:darkgray" (click)="loadPowerSupplysFromApi()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+<mat-table #table [dataSource]="pagedPowerSupplys?.items" matSort matSortActive="model" matSortDirection="asc">
+  
+  <ng-container matColumnDef="model">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Model </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.model}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="company">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.company}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.price}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="sgRamType">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> SgRam </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.sgRamType}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="sgRamSize">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> SgRam-size </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.sgRamSize}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="powerConsumption">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> PowerConsumption </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.powerConsumption}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="imageUrl" style="min-width: 250px;">
+    <mat-header-cell *matHeaderCellDef>
+      Image
+    </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply" >
+      <img style="height: 120px; max-width: 200px;" src="" [src]="powerSupply.imageUrl">
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="id" >
+    <mat-header-cell *matHeaderCellDef>
+      <button mat-button style="color:white; margin-left: 40px; background-color:darkgrey" (click)="resetGrid()">Reset</button>
+    </mat-header-cell>
+    <mat-cell  *matCellDef="let powerSupply" >
+    <div *ngIf="isAdmin; then adminMenu else userMenu"></div>
+    <ng-template #adminMenu>
+      <button *ngIf="isAdmin" mat-mini-fab style="background-color:rgb(8, 199, 199); min-height: 30px; margin: 10px;" [routerLink]="['/editPowerSupply', powerSupply.id]">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="isAdmin" mat-mini-fab style="background-color:rgb(248, 86, 86); min-height: 30px;  margin: 10px; margin-right: 100px;" (click)="openDialogForDeleting(powerSupply.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </ng-template>
+    <ng-template #userMenu>
+      <button *ngIf="!isAdmin" mat-mini-fab style="background-color:rgb(164, 8, 199); min-height: 30px;" [routerLink]="['/infoPowerSupply', powerSupply.id]">
+        <mat-icon>menu_open</mat-icon>
+      </button>
+      <button *ngIf="select==='select'" mat-button style="background-color:rgb(8, 199, 56); min-height: 30px; text-align: left; margin-left: 5px;" (click)="selectPowerSupply(powerSupply.id)">
+        <span style="text-align: left;">Select</span>
+      </button>
+    </ng-template>
+  </mat-cell>
+  </ng-container>
+
+  <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+<mat-paginator [length]="pagedPowerSupplys?.total" [pageSizeOptions]="[1, 2, 5, 10, 25, 50]" pageSize="5"></mat-paginator>
+
+</mat-card>
+
+<mat-sidenav class="search-panel" dark #sidenav mode="push" opened="false">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <div mat-card-avatar class="avatar"></div>
+      <mat-card-subtitle>
+        <button mat-raised-button style="color:lightgrey; background-color:darkgreen" (click)="filterPowerSupplysFromForm();sidenav.toggle()">
+          <mat-icon>search</mat-icon>Search </button>
+        <button mat-raised-button style="color:lightgrey; background-color:darkred" (click)="resetGrid(); sidenav.toggle()">
+          <mat-icon>refresh</mat-icon>Reset</button>
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+  <mat-nav-list style="margin-left:20px;">
+    <form class="searchForm" [formGroup]="filterForm" (ngSubmit)="sidenav.toggle()">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Model" style="width:200px;" formControlName="model" (keyup.enter)="filterPowerSupplysFromForm();sidenav.toggle()"  />
+      </mat-form-field> 
+      <br>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Company" style="width:200px;" formControlName="company" (keyup.enter)="filterPowerSupplysFromForm();sidenav.toggle()"  />
+      </mat-form-field>
+    </form>
+  </mat-nav-list>
+</mat-sidenav>

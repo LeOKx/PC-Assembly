@@ -20,6 +20,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { GraphicCardModule } from './assembly-components/graphic-card/graphic-card.module';
 import { CpuModule } from './assembly-components/cpu/cpu.module';
 import { MotherboardModule } from './assembly-components/motherboard/motherboard.module';
+import { PowerSupplyModule } from './assembly-components/power-supply/power-supply.module';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -49,6 +50,7 @@ export function tokenGetter() {
     CpuModule,
     GraphicCardModule,
     MotherboardModule,
+    PowerSupplyModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

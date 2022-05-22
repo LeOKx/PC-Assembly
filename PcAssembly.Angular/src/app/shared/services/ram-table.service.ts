@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Motherboard } from 'src/app/interface/pc-components/motherboard.model';
+import { Ram } from 'src/app/interface/pc-components/ram.model';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { RepositoryService } from './repository.service';
 
@@ -9,13 +9,13 @@ import { RepositoryService } from './repository.service';
 //   providedIn: 'root'
 // })
 @Injectable()
-export class MotherboardTableService extends RepositoryService<Motherboard>{
+export class RamTableService extends RepositoryService<Ram>{
 
-    protected override route = "Motherboards/";
-    saveMotherboard(motherboard: Motherboard): Observable<ServiceResponse<Motherboard>> {
-    if (motherboard.id != '') {
-      return super.update(motherboard.id, motherboard);
+    protected override route = "Rams/";
+    saveRam(ram: Ram): Observable<ServiceResponse<Ram>> {
+    if (ram.id != '') {
+      return super.update(ram.id, ram);
     }
-    return super.create(motherboard);
+    return super.create(ram);
   }
 }
