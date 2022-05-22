@@ -42,13 +42,9 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
     <mat-cell *matCellDef="let powerSupply"> {{powerSupply.price}} </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="sgRamType">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> SgRam </mat-header-cell>
-    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.sgRamType}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="sgRamSize">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> SgRam-size </mat-header-cell>
-    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.sgRamSize}} </mat-cell>
+  <ng-container matColumnDef="power">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Power </mat-header-cell>
+    <mat-cell *matCellDef="let powerSupply"> {{powerSupply.power}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="powerConsumption">
     <mat-header-cell *matHeaderCellDef mat-sort-header> PowerConsumption </mat-header-cell>
@@ -117,6 +113,10 @@
       <br>
       <mat-form-field>
         <input matInput type="text" placeholder="Company" style="width:200px;" formControlName="company" (keyup.enter)="filterPowerSupplysFromForm();sidenav.toggle()"  />
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Power" style="width:200px;" formControlName="power" (keyup.enter)="filterPowerSupplysFromForm();sidenav.toggle()"  />
       </mat-form-field>
     </form>
   </mat-nav-list>

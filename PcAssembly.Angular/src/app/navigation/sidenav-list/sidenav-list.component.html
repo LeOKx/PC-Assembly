@@ -10,7 +10,7 @@
           <!-- <a mat-menu-item [routerLink]="['/cpus']" [queryParams]="{record:dataCPU | json }">CPU</a> -->
           <a mat-menu-item [routerLink]="['/cpus', '']" (click)="onSidenavClose()"><mat-icon>memory</mat-icon>CPU</a>
           <a mat-menu-item [routerLink]="['/motherboards', '']" (click)="onSidenavClose()"><mat-icon svgIcon="motherboard"></mat-icon>Motherboard</a>
-          <a mat-menu-item href="#RAM" (click)="onSidenavClose()"><mat-icon svgIcon="ram"></mat-icon>RAM</a>
+          <a mat-menu-item [routerLink]="['/rams', '']" (click)="onSidenavClose()"><mat-icon svgIcon="ram"></mat-icon>RAM</a>
           <a mat-menu-item [routerLink]="['/power-supplies', '']" (click)="onSidenavClose()"><mat-icon svgIcon="power-supply"></mat-icon>PowerSupply</a>
         </mat-menu>
       </mat-nav-list>

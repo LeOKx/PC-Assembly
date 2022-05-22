@@ -24,12 +24,10 @@
       <mat-card-content >
 
         <div class="form-card">
+          <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
+          </mat-form-field>
           <table>
-              <td>
-                <mat-form-field class="form-field-90">
-                    <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
-                  </mat-form-field>
-              </td>
               <td>
                 <mat-form-field class="form-field-30">
                     <input matInput placeholder="Company"  type="text" placeholder="Company (required)" formControlName="company"/>

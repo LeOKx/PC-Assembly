@@ -21,6 +21,7 @@ import { GraphicCardModule } from './assembly-components/graphic-card/graphic-ca
 import { CpuModule } from './assembly-components/cpu/cpu.module';
 import { MotherboardModule } from './assembly-components/motherboard/motherboard.module';
 import { PowerSupplyModule } from './assembly-components/power-supply/power-supply.module';
+import { RamModule } from './assembly-components/ram/ram.module';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -51,6 +52,7 @@ export function tokenGetter() {
     GraphicCardModule,
     MotherboardModule,
     PowerSupplyModule,
+    RamModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

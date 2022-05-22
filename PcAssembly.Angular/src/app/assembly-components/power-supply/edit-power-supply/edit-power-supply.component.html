@@ -24,10 +24,13 @@
       <mat-card-content >
 
         <div class="form-card">
+          <mat-form-field style="width: 100%;">
+            <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
+          </mat-form-field>
           <table>
               <td>
                 <mat-form-field class="form-field-90">
-                    <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
+                    <input matInput placeholder="Power" type="text" placeholder="Power. (required)" formControlName="power"/>
                   </mat-form-field>
               </td>
               <td>
@@ -40,18 +43,6 @@
                     <input matInput placeholder="Power Consumption"  type="number" placeholder="Power Consumption (required)" formControlName="powerConsumption"/>
                   </mat-form-field>
                 
-              </td>
-          </table>
-          <table>
-              <td>
-                <mat-form-field class="form-field-30">
-                    <input matInput placeholder="SgRamType"  type="text" placeholder="Ram Type (required)" formControlName="sgRamType"/>
-                  </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field class="form-field-30">
-                    <input matInput placeholder="SgRamSize"  type="number" placeholder="Ram Size (required)" formControlName="sgRamSize"/>
-                  </mat-form-field>
               </td>
           </table>
           

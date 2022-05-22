@@ -1,0 +1,34 @@
+<div class="info-container">
+    <table>
+        <tr>
+            <div>
+                <img class="image-prewiev" src="{{ramData.imageUrl}}">
+            </div>
+        </tr>
+        <tr>
+            <div class="info">
+                <p>Model: {{ramData.model}}</p>
+                <p>Company: {{ramData.company}}</p>
+                <p>Type of Component: {{ramData.type}}</p>
+                <p>Ram Type: {{ramData.ramType}}</p>
+                <p>Ram Size: {{ramData.ramSize}}</p>
+                <p>Тumber of dies: {{ramData.count}}</p>
+                <p>Power Consumption: {{ramData.powerConsumption}}</p>
+                <p>About:</p>
+                <p>{{ramData.infoAbout}}</p>
+            </div>
+        </tr>
+        <tr>
+            <div>
+                <p>
+                    <button mat-raised-button class="return" (click)="back()">Return</button>
+                </p>
+            </div>
+            <div class="price">
+                <p>
+                    Price: {{ramData.price | currency:"₴"}}
+                </p>
+            </div>
+        </tr>
+    </table>
+</div>

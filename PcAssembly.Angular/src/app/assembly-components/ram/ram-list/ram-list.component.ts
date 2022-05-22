@@ -8,30 +8,36 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { merge } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
-import { PowerSupply } from 'src/app/interface/pc-components/power-supply.model';
+import { ConfirmDialogModule } from 'src/app/confirm-dialog/confirm-dialog.module';
+import { Ram } from 'src/app/interface/pc-components/ram.model';
+import { Motherboard } from 'src/app/interface/pc-components/motherboard.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { PowerSupplyTableService } from 'src/app/shared/services/power-supply-table.service';
+// import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { RamTableService } from 'src/app/shared/services/ram-table.service';
 import { Filter } from 'src/app/_infrastructure/models/Filter';
 import { FilterLogicalOperators } from 'src/app/_infrastructure/models/FilterLogicalOperators';
+// import { RepositoryService } from 'src/app/shared/services/repository.service';
 import { PagedResult } from 'src/app/_infrastructure/models/PagedResult';
 import { PaginatedRequest } from 'src/app/_infrastructure/models/PaginatedRequest';
 import { RequestFilters } from 'src/app/_infrastructure/models/RequestFilters';
 import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
 @Component({
-  selector: 'app-power-supply-list',
-  templateUrl: './power-supply-list.component.html',
-  styleUrls: ['./power-supply-list.component.css']
+  selector: 'app-ram-list',
+  templateUrl: './ram-list.component.html',
+  styleUrls: ['./ram-list.component.css']
 })
-export class PowerSupplyListComponent implements AfterViewInit, OnInit {
+export class RamListComponent implements AfterViewInit, OnInit {
 
-  pagedPowerSupplys: PagedResult<PowerSupply>;
+  pagedRams: PagedResult<Ram>;
 
   tableColumns: TableColumn[] = [
     { name: 'imageUrl', index: 'imageUrl', displayName: 'Image' },
     { name: 'model', index: 'model', displayName: 'Model', useInSearch: true },
     { name: 'company', index: 'company', displayName: 'Company', useInSearch: true },
     { name: 'price', index: 'price', displayName: 'Price' },
-    { name: 'power', index: 'Power', displayName: 'Power', useInSearch: true },
+    { name: 'ramType', index: 'ramType', displayName: 'RamType', useInSearch: true },
+    { name: 'ramSize', index: 'ramSize', displayName: 'RamSize', useInSearch: true  },
+    { name: 'count', index: 'count', displayName: 'Count', useInSearch: true  },
     { name: 'powerConsumption', index: 'powerConsumption', displayName: 'PowerConsumption' },
     { name: 'id', index: 'id', displayName: 'Id' },
   ];
@@ -49,49 +55,56 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false}) sort: MatSort;
 
-  public dataSource = new MatTableDataSource<PowerSupply>();
+  public dataSource = new MatTableDataSource<Ram>();
 
   constructor(
-    private powerSupplyService: PowerSupplyTableService,
+    private route: ActivatedRoute,
+    private ramService: RamTableService,
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar,
-    private route: ActivatedRoute,
+    public snackBar: MatSnackBar
     ) {
         this.displayedColumns = this.tableColumns.map(column => column.name);
         this.filterForm = this.formBuilder.group({
         model: [''],
         company: [''],
-        power: [''],
+        ramType: [''],
+        ramSize: [''],
+        count: ['']
       });
      }
      ngOnInit(): void {
-      let selectParam: string;
-      this.route.params.subscribe(params =>{
-        selectParam = params['select'];
-        if(selectParam !== 'select'){
-          this.isAdmin = this.authService.isUserAdmin();
-        }else {
-          this.select = selectParam;
-        }
-        });
-    }
-
-    ngAfterViewInit() {
-      this.loadPowerSupplysFromApi();
-      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-  
-      merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
-        this.loadPowerSupplysFromApi();
+     
+     let selectParam: string;
+    this.route.params.subscribe(params =>{
+      selectParam = params['select'];
+      if(selectParam !== 'select'){
+        this.isAdmin = this.authService.isUserAdmin();
+      }else {
+        this.select = selectParam;
+      }
       });
     }
 
-    loadPowerSupplysFromApi() {
+    ngAfterViewInit() {
+      if(this.select)
+        this.filterRamsFromForm();
+      else
+        this.loadRamsFromApi();
+      
+      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+  
+      merge(this.sort.sortChange, this.paginator.page).subscribe(() => {
+        this.loadRamsFromApi();
+      });
+    }
+
+    loadRamsFromApi() {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
-      this.powerSupplyService.getDataPaged(paginatedRequest)
-        .subscribe((pagedPowerSupplys: PagedResult<PowerSupply>) => {
-          this.pagedPowerSupplys = pagedPowerSupplys;
+      this.ramService.getDataPaged(paginatedRequest)
+        .subscribe((pagedRams: PagedResult<Ram>) => {
+          this.pagedRams = pagedRams;
         });
     }
 
@@ -104,9 +117,9 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
     
         dialogRef.afterClosed().subscribe(result => {
           if (result === dialogRef.componentInstance.ACTION_CONFIRM) {
-            this.powerSupplyService.delete(id).subscribe(
+            this.ramService.delete(id).subscribe(
               () => {
-                this.loadPowerSupplysFromApi();
+                this.loadRamsFromApi();
     
                 this.snackBar.open('The item has been deleted successfully.', 'Close', {
                   duration: 1500
@@ -119,18 +132,20 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
     }
 
     applySearch() {
+      this.filterFirst();
       this.createFiltersFromSearchInput();
-      this.loadPowerSupplysFromApi();
+      this.loadRamsFromApi();
     }
 
     resetGrid() {
       this.requestFilters = {filters: [], logicalOperator: FilterLogicalOperators.And};
-      this.loadPowerSupplysFromApi();
+      this.loadRamsFromApi();
     }
   
-    filterPowerSupplysFromForm() {
+    filterRamsFromForm() {
+      this.filterFirst();
       this.createFiltersFromForm();
-      this.loadPowerSupplysFromApi();
+      this.loadRamsFromApi();
     }
 
     private createFiltersFromForm() {
@@ -172,9 +187,16 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
       }
     }
 
-    selectPowerSupply(id: string): void{
-      this.powerSupplyService.getById(id).subscribe((powerSupplyObj: PowerSupply) => {
-        localStorage.setItem('power-supply', JSON.stringify(powerSupplyObj));
+    filterFirst(){
+      if(localStorage.getItem('motherboard')!==null){
+       let motherboard =  JSON.parse(localStorage.getItem('motherboard')) as Motherboard;
+       this.filterForm.controls['ramType'].setValue(motherboard.ramType);
+      }
+    }
+
+    selectRam(id: string): void{
+      this.ramService.getById(id).subscribe((ramObj: Ram) => {
+        localStorage.setItem('ram', JSON.stringify(ramObj));
       })
     }
 

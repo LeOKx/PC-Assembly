@@ -4,16 +4,16 @@
         <h1>{{pageTitle}}</h1>
       </mat-card-title>
     </mat-card-header>
-    <form novalidate [formGroup]="cpuForm" (ngSubmit)="saveCpu()">
+    <form novalidate [formGroup]="ramForm" (ngSubmit)="saveRam()">
       <mat-toolbar style ="background-color:#424242" >
         <mat-toolbar-row>
           <span class="title-spacer"></span>
   
           <mat-card-actions>
-            <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit" [disabled]='!cpuForm.valid' >
+            <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit" [disabled]='!ramForm.valid' >
               <mat-icon>save</mat-icon>
             </button>
-            <button mat-mini-fab class="" style="margin-right:10px; " [routerLink]="['/cpus','']">
+            <button mat-mini-fab class="" style="margin-right:10px; " [routerLink]="['/rams']">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-card-actions>
@@ -43,35 +43,17 @@
           <table>
               <td>
                 <mat-form-field class="form-field-30">
-                    <input matInput placeholder="Socket"  type="text" placeholder="Socket (required)" formControlName="socket"/>
+                    <input matInput placeholder="RamType"  type="text" placeholder="Ram Type (required)" formControlName="ramType"/>
                   </mat-form-field>
               </td>
               <td>
                 <mat-form-field class="form-field-30">
-                    <input matInput placeholder="Family"  type="text" placeholder="Family (required)" formControlName="family"/>
-                  </mat-form-field>
-                </td>
-            <td>
-                <mat-form-field class="form-field-30">
-                    <input matInput placeholder="Generation"  type="text" placeholder="Generation (required)" formControlName="generation"/>
-                  </mat-form-field>   
-            </td>
-          </table>
-
-          <table>
-              <td>
-                <mat-form-field class="form-field-30">
-                    <input matInput placeholder="Cores"  type="number" placeholder="Cores (required)" formControlName="cores"/>
+                    <input matInput placeholder="RamSize"  type="number" placeholder="Ram Size (required)" formControlName="ramSize"/>
                   </mat-form-field>
               </td>
               <td>
                 <mat-form-field class="form-field-30">
-                    <input matInput placeholder="Threads"  type="number" placeholder="Threads (required)" formControlName="threads"/>
-                  </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field class="form-field-30">
-                    <input matInput placeholder="Frequency"  type="number" placeholder="Frequency (required)" formControlName="frequency"/>
+                    <input matInput placeholder="Count"  type="number" placeholder="Number of Dies (required)" formControlName="count"/>
                   </mat-form-field>
               </td>
           </table>
@@ -84,10 +66,6 @@
           <mat-form-field style="width: 100%;">
             <textarea matInput placeholder="Image Url" formControlName="imageUrl" matTextareaAutosize></textarea>
           </mat-form-field>
-<!-- 
-          <div style="margin: 5px; margin-bottom: 50px;">
-            <app-image-upload></app-image-upload>
-          </div> -->
           
 
           <mat-form-field style="width: 100%;">
