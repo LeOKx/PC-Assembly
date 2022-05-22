@@ -1,35 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GraphicCardListComponent } from './graphic-card-list/graphic-card-list.component';
+import { PowerSupplyListComponent } from './power-supply-list/power-supply-list.component';
 import { MaterialModule } from 'src/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'src/app/image-upload/image-upload.module';
 import { PowerPipeModule } from 'src/app/pipes/power.pipe.module';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { GraphicCardTableService } from 'src/app/shared/services/graphic-card-table.service';
-import { GraphicCardInfoComponent } from './graphic-card-info/graphic-card-info.component';
-import { EditGraphicCardComponent } from './edit-graphic-card/edit-graphic-card.component';
-import { GraphicCardRoutingModule } from './graphic-card-routing/graphic-card-routing.module';
+import { PowerSupplyTableService } from 'src/app/shared/services/power-supply-table.service';
+import { PowerSupplyInfoComponent } from './power-supply-info/power-supply-info.component';
+import { EditPowerSupplyComponent } from './edit-power-supply/edit-power-supply.component';
+import { PowerSupplyRoutingModule } from './power-supply-routing/power-supply-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    GraphicCardListComponent,
-    EditGraphicCardComponent,
-    GraphicCardInfoComponent
+    PowerSupplyListComponent,
+    EditPowerSupplyComponent,
+    PowerSupplyInfoComponent
   ],
   imports: [
     CommonModule,
-    GraphicCardRoutingModule,
+    PowerSupplyRoutingModule,
     MaterialModule,
     PowerPipeModule,
     ReactiveFormsModule,
     ImageUploadModule
   ],
   providers: [
-    GraphicCardTableService,
+    PowerSupplyTableService,
     AuthenticationService
   ]
 })
-export class GraphicCardModule { }
+export class PowerSupplyModule { }
