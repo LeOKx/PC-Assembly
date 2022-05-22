@@ -46,10 +46,10 @@ export class EditRamComponent implements OnInit{
       price: ['', [Validators.required]],
       powerConsumption: ['', [Validators.required]],
       ramType: ['', [Validators.required]],
-      ramSize: ['', [Validators.required]],
+      ramSize: ['', [Validators.required]], 
       count: ['', [Validators.required]],
       imageUrl: null,
-      infoAbout: ['', Validators.maxLength(500)],
+      infoAbout: [''],
       
     });
   }

@@ -22,6 +22,7 @@ import { CpuModule } from './assembly-components/cpu/cpu.module';
 import { MotherboardModule } from './assembly-components/motherboard/motherboard.module';
 import { PowerSupplyModule } from './assembly-components/power-supply/power-supply.module';
 import { RamModule } from './assembly-components/ram/ram.module';
+import { AssemblyModule } from './assembly-components/assembly/assembly.module';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -53,6 +54,7 @@ export function tokenGetter() {
     MotherboardModule,
     PowerSupplyModule,
     RamModule,
+    AssemblyModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

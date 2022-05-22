@@ -51,7 +51,7 @@ export class EditMotherboardComponent implements OnInit{
       ramType: ['', [Validators.required]],
       ramSlots: ['', [Validators.required]],
       imageUrl: null,
-      infoAbout: ['', Validators.maxLength(500)],
+      infoAbout: [''],
       
     });
   }

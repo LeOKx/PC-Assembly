@@ -102,12 +102,16 @@ export class CpuListComponent implements AfterViewInit, OnInit {
         this.loadCpusFromApi();
       });
     }
+    noItems: boolean = false;
 
     loadCpusFromApi() {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
       this.cpuService.getDataPaged(paginatedRequest)
         .subscribe((pagedCpus: PagedResult<CPU>) => {
           this.pagedCpus = pagedCpus;
+          if(pagedCpus.items == null){
+            this.noItems = true;
+          }
         });
     }
 

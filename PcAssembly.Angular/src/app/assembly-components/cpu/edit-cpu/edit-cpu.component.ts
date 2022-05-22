@@ -52,7 +52,7 @@ export class EditCpuComponent implements OnInit{
       threads: ['', [Validators.required]],
       frequency: ['', [Validators.required]],
       imageUrl: null,
-      infoAbout: ['', Validators.maxLength(500)],
+      infoAbout: [''],
       
     });
   }

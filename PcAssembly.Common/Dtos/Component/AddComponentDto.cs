@@ -22,7 +22,6 @@ namespace PcAssembly.Common.Dtos.Component
         public int? PowerConsumption { get; set; }
         [Url]
         public string? ImageUrl { get; set; }
-        [StringLength(500)]
         public string? InfoAbout { get; set; }
     }
 }

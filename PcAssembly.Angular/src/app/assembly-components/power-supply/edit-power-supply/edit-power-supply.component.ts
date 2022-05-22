@@ -47,7 +47,7 @@ export class EditPowerSupplyComponent implements OnInit{
       powerConsumption: ['', [Validators.required]],
       power: ['', [Validators.required]],
       imageUrl: null,
-      infoAbout: ['', Validators.maxLength(500)],
+      infoAbout: [''],
       
     });
   }

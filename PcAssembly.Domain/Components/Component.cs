@@ -23,7 +23,6 @@ namespace PcAssembly.Domain.Components
         public int? PowerConsumption { get; set; }
         [Url]
         public string? ImageUrl { get; set; }
-        [MaxLength(500)]
         public string? InfoAbout { get; set; }
 
     }

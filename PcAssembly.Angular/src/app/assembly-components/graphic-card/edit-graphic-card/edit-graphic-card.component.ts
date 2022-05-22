@@ -48,7 +48,7 @@ export class EditGraphicCardComponent implements OnInit{
       sgRamType: ['', [Validators.required]],
       sgRamSize: ['', [Validators.required]],
       imageUrl: null,
-      infoAbout: ['', Validators.maxLength(500)],
+      infoAbout: [''],
       
     });
   }
