@@ -10,9 +10,7 @@ namespace PcAssembly.Dal
     {
         static async Task Main(string[] args)
         {
-            //await using var dbContext = new DataContext();
-            //dbContext.Database
-
+                        
 
         }
     }

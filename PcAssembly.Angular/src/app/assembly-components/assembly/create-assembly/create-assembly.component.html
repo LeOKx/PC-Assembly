@@ -1,1 +1,170 @@
-<p>create-assembly works!</p>
+<div class="container">
+
+<mat-card >
+    
+    <form novalidate [formGroup]="assemblyForm" (ngSubmit)="createAssembly()">
+
+        <mat-card-content >
+            <h1 #create *ngIf="!updateToggle" id = 'create' class="genHead">Create Your Own Assembly</h1>
+            <h1 #create *ngIf="updateToggle" id = 'create' class="genHead">Update Assembly</h1>
+        <mat-grid-list cols="8" rowHeight="80px" colum>
+            <mat-grid-tile #create id='create'></mat-grid-tile>
+            <mat-grid-tile ></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile 
+            [ngStyle]="{'border-color': componentInfo[0].id == '' ? 'red' : 'rgb(117, 191, 5)' }" 
+            сlass="component" 
+            style="background-image: url({{componentInfo[0].imageURl}});
+            border-bottom: 5px;
+            border-style: solid;
+            border-radius: 5px;" 
+            colspan="2" 
+            rowspan="2">
+                <button [disabled]="!componentInfo[0].delete" class="delete-menu-btn" mat-button (click)="deleteFromStorage('graphicCard')"><mat-icon>delete</mat-icon></button>
+                <button class="select-menu-btn" mat-button (click)="setSelectState('graphic-cards')">Select</button>
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile class="border-right"
+            [ngStyle]="{'border-color': componentInfo[0].id == '' ? 'red' : 'rgb(117, 191, 5)' }" ></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile 
+            [ngStyle]="{'border-color': componentInfo[1].id == '' ? 'red' : 'rgb(117, 191, 5)' }" 
+            сlass="component" 
+            style="background-image: url({{componentInfo[1].imageURl}});
+            border-right: 5px;
+            border-style: solid;
+            border-radius: 5px;" 
+            colspan="2" 
+            rowspan="2">
+                    <button [disabled]="!componentInfo[1].delete" class="delete-menu-btn" mat-button (click)="deleteFromStorage('ram')"><mat-icon>delete</mat-icon></button>
+                    <button class="select-menu-btn" mat-button (click)="setSelectState('rams')">Select</button>
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile 
+            [ngStyle]="{'border-color': componentInfo[2].id == '' ? 'red' : 'rgb(117, 191, 5)' }" 
+            сlass="component" 
+            style="background-image: url({{componentInfo[2].imageURl}});
+            border: 5px;
+            border-style: solid;
+            border-radius: 5px;" 
+            colspan="2" 
+            rowspan="2">
+                <button [disabled]="!componentInfo[2].delete" class="delete-menu-btn" mat-button (click)="deleteFromStorage('motherboard')"><mat-icon>delete</mat-icon></button>
+                <button class="select-menu-btn" mat-button (click)="setSelectState('motherboards')">Select</button>
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile 
+            [ngStyle]="{'border-color': componentInfo[3].id == '' ? 'red' : 'rgb(117, 191, 5)' }" 
+            сlass="component" 
+            style="background-image: url({{componentInfo[3].imageURl}});
+            border-left: 5px;
+            border-style: solid;
+            border-radius: 5px;" 
+            colspan="2" 
+            rowspan="2">
+                <button [disabled]="!componentInfo[3].delete" class="delete-menu-btn" mat-button (click)="deleteFromStorage('cpu')"><mat-icon>delete</mat-icon></button>
+                <button class="select-menu-btn" mat-button (click)="setSelectState('cpus')">Select</button>
+            </mat-grid-tile>
+            <mat-grid-tile class="border-top"
+            [ngStyle]="{'border-color': componentInfo[1].id == '' ? 'red' : 'rgb(117, 191, 5)' }" ></mat-grid-tile>
+            <mat-grid-tile class="border-top"
+            [ngStyle]="{'border-color': componentInfo[3].id == '' ? 'red' : 'rgb(117, 191, 5)' }" ></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile 
+            [ngStyle]="{'border-color': componentInfo[4].id == '' ? 'red' : 'rgb(117, 191, 5)' }" 
+            class="border-right">
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile 
+            [ngStyle]="{'border-color': componentInfo[4].id == '' ? 'red' : 'rgb(117, 191, 5)' }" 
+            сlass="component" 
+            style="
+            border: 5px;
+            border-bottom: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            background-image: url({{componentInfo[4].imageURl}});
+            border-style: solid;
+            border-radius: 5px;" 
+            colspan="2" 
+            rowspan="2">
+                <button [disabled]="!componentInfo[4].delete" class="delete-menu-btn" mat-button (click)="deleteFromStorage('powerSupply')"><mat-icon>delete</mat-icon></button>
+                <button class="select-menu-btn" mat-button (click)="setSelectState('power-supplies')">Select</button>
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-form-field style="width: 100%;" class="form-field-30">
+            <input matInput placeholder="Name"  type="text" placeholder="Name of Assembly (required)" formControlName="name"/>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;" class="form-field-30">
+            <input matInput placeholder="Coolers Count"  type="number" placeholder="Coolers Count (required)" formControlName="coolersCount"/>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;">
+            <textarea matInput placeholder="Image Url" formControlName="imageUrl" matTextareaAutosize></textarea>
+          </mat-form-field>
+          <div style=" margin-bottom: 50px; ">
+            <app-image-upload (urlImageUpload)="setUploadImage($event)"></app-image-upload> 
+          </div>
+          <table style="width: 100%;">
+            <tr style="text-align: center;">
+              <img style="height: 200px;"  [src]="[assemblyForm.controls['imageUrl'].value]">
+            </tr>
+          </table>
+          <mat-toolbar>
+            <mat-toolbar-row>
+                <label class = "total-price">Total Price: {{totalPriceWithCpu | currency:'₴ ':'symbol':'.0-1'}}</label>
+            </mat-toolbar-row>
+              <mat-toolbar-row>
+                  <button *ngIf="!updateToggle" mat-button type="submit" [disabled]="!assemblyForm.valid">Create Assembly</button>
+                  <button *ngIf="updateToggle" mat-button type="submit" [disabled]="!assemblyForm.valid">Update Assembly</button>
+                  <button mat-button class="clear-btn" (click)="clearLocalStorage()">Clear Assembly From Components</button>
+              </mat-toolbar-row>
+          </mat-toolbar>
+    </mat-card-content>
+    </form>
+
+</mat-card>
+<mat-card class="gen-assembly">
+        <mat-card-content>
+            <h1 class="genHead"> Genereate Assembly [Beta] </h1>
+            <mat-error *ngIf="showError" role="alert">
+                <span [innerHTML]="errorMessage"></span>
+            </mat-error>
+            <mat-form-field style="width: 100%;" class="form-field-30">
+                <input matInput placeholder="Price"  type="number" placeholder="Price (required)" [formControl]="searchByPrice"/>
+            </mat-form-field>
+            <button mat-button [disabled]="!searchByPrice.valid" (click)="generateAssembly()">Genereate Assembly [Beta]</button>
+        </mat-card-content>
+</mat-card>
+</div>

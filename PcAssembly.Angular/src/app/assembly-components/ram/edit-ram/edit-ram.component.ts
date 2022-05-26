@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
 import { Ram } from 'src/app/interface/pc-components/ram.model';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { RamTableService } from 'src/app/shared/services/ram-table.service';
+import { ImageDefault } from 'src/assets/defaultImg/defaultImg.enum';
 
 @Component({
   selector: 'app-edit-ram',
@@ -15,6 +17,8 @@ export class EditRamComponent implements OnInit{
 
   public pageTitle: string;
   public ramForm: FormGroup;
+  public showError: boolean = false;
+  public errorMessage: string;
 
   ramResp: ServiceResponse<Ram>;
   ram: Ram;
@@ -41,7 +45,7 @@ export class EditRamComponent implements OnInit{
     this.ramForm = this.formBuilder.group({
       id: [objectId],
       type: 'Ram',
-      model: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(200)]],
+      model: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       company: ['', [Validators.required, Validators.minLength(3)]],
       price: ['', [Validators.required]],
       powerConsumption: ['', [Validators.required]],
@@ -53,8 +57,6 @@ export class EditRamComponent implements OnInit{
       
     });
   }
-  // ramResponse: ServiceResponse<Ram>;
-  ramObj: Ram;
 
 
   getRam(id: string): void {
@@ -75,10 +77,11 @@ export class EditRamComponent implements OnInit{
        if(ramToSave.infoAbout == null){
          ramToSave.infoAbout = '';
        }
-       if(ramToSave.imageUrl == ''){
-        ramToSave.imageUrl = 'https://previews.123rf.com/images/lunarismemo/lunarismemo1610/lunarismemo161000184/64828178-ram-%E3%81%AE-labtop-%E8%87%AA%E3%82%89%E3%81%AE%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9-%E3%83%A1%E3%83%A2%E3%83%AA-4-gb-%E3%81%BE%E3%81%9F%E3%81%AF-8-gb-%E3%81%BE%E3%81%9F%E3%81%AF-16-gb%E3%80%82.jpg';
+       if(ramToSave.imageUrl == '' || ramToSave.imageUrl ==null ){
+        ramToSave.imageUrl = ImageDefault.ram;
       }
-       this.ramService.saveRam(ramToSave).subscribe(
+       this.ramService.saveRam(ramToSave)
+       .subscribe(
          () => this.onSaveComplete()
        );
     }
@@ -90,5 +93,7 @@ export class EditRamComponent implements OnInit{
     this.router.navigate(['/rams','']);
   }
 
-  
+  setUploadImage(url: string): void {
+    this.ramForm.controls['imageUrl'].setValue(url)
+  }
 }

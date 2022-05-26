@@ -5,18 +5,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModule } from 'src/app/confirm-dialog/confirm-dialog.module';
 import { Ram } from 'src/app/interface/pc-components/ram.model';
 import { Motherboard } from 'src/app/interface/pc-components/motherboard.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-// import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { Location } from '@angular/common';
 import { RamTableService } from 'src/app/shared/services/ram-table.service';
 import { Filter } from 'src/app/_infrastructure/models/Filter';
 import { FilterLogicalOperators } from 'src/app/_infrastructure/models/FilterLogicalOperators';
-// import { RepositoryService } from 'src/app/shared/services/repository.service';
 import { PagedResult } from 'src/app/_infrastructure/models/PagedResult';
 import { PaginatedRequest } from 'src/app/_infrastructure/models/PaginatedRequest';
 import { RequestFilters } from 'src/app/_infrastructure/models/RequestFilters';
@@ -29,6 +28,8 @@ import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
 export class RamListComponent implements AfterViewInit, OnInit {
 
   pagedRams: PagedResult<Ram>;
+  isLoading = true;
+  noItems = false;
 
   tableColumns: TableColumn[] = [
     { name: 'imageUrl', index: 'imageUrl', displayName: 'Image' },
@@ -38,7 +39,6 @@ export class RamListComponent implements AfterViewInit, OnInit {
     { name: 'ramType', index: 'ramType', displayName: 'RamType', useInSearch: true },
     { name: 'ramSize', index: 'ramSize', displayName: 'RamSize', useInSearch: true  },
     { name: 'count', index: 'count', displayName: 'Count', useInSearch: true  },
-    { name: 'powerConsumption', index: 'powerConsumption', displayName: 'PowerConsumption' },
     { name: 'id', index: 'id', displayName: 'Id' },
   ];
 
@@ -63,7 +63,9 @@ export class RamListComponent implements AfterViewInit, OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router,
+    private location: Location
     ) {
         this.displayedColumns = this.tableColumns.map(column => column.name);
         this.filterForm = this.formBuilder.group({
@@ -104,7 +106,12 @@ export class RamListComponent implements AfterViewInit, OnInit {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
       this.ramService.getDataPaged(paginatedRequest)
         .subscribe((pagedRams: PagedResult<Ram>) => {
+          this.noItems = false;
+          this.isLoading = false;
           this.pagedRams = pagedRams;
+          if(pagedRams.total == 0){
+            this.noItems = true;
+          }
         });
     }
 
@@ -197,7 +204,9 @@ export class RamListComponent implements AfterViewInit, OnInit {
     selectRam(id: string): void{
       this.ramService.getById(id).subscribe((ramObj: Ram) => {
         localStorage.setItem('ram', JSON.stringify(ramObj));
-      })
+        this.location.back();
+      });
+     
     }
 
 }

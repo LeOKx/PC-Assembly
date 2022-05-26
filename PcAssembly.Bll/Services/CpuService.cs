@@ -115,8 +115,7 @@ namespace PcAssembly.Bll.Services
                         dbCPU.Model = updatedCPU.Model;
                     }
                         
-                    //if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
-                    if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
+                                        if (!string.IsNullOrWhiteSpace(updatedCPU.Company.ToString()))
                         dbCPU.Company = updatedCPU.Company;
                     if (!string.IsNullOrWhiteSpace(updatedCPU.ImageUrl.ToString()))
                         dbCPU.ImageUrl = updatedCPU.ImageUrl;

@@ -17,12 +17,29 @@ namespace PcAssembly.Bll.Services
     {
         private readonly IMapper _mapper;
         private readonly IAssemblyRepository _repository;
+        private readonly ICpuRepository _cpuRepository;
+        private readonly IGraphicCardRepository _graphicCardRepository;
+        private readonly IMotherboardRepository _motherboardRepository;
+        private readonly IRamRepository _ramRepository;
+        private readonly IPowerSupplyRepository _powerSupplyRepository;
 
-        public AssemblyService(IMapper mapper, IAssemblyRepository repository)
+        public AssemblyService(IMapper mapper, 
+            IAssemblyRepository repository, 
+            ICpuRepository cpuRepository, 
+            IGraphicCardRepository graphicCardRepository, 
+            IMotherboardRepository motherboardRepository, 
+            IRamRepository ramRepository, 
+            IPowerSupplyRepository powerSupplyRepository)
         {
             _mapper = mapper;
             _repository = repository;
+            _cpuRepository = cpuRepository;
+            _graphicCardRepository = graphicCardRepository;
+            _motherboardRepository = motherboardRepository;
+            _ramRepository = ramRepository;
+            _powerSupplyRepository = powerSupplyRepository;
         }
+
         public async Task<ServiceResponse<GetAssemblyDto>> CreateAssembly(AddAssemblyDto assemblyDto)
         {
             var serviceResponse = new ServiceResponse<GetAssemblyDto>();
@@ -80,7 +97,7 @@ namespace PcAssembly.Bll.Services
             var serviceResponse = new ServiceResponse<List<GetAssemblyDto>>();
             try
             {
-                var dbAssembly = await _repository.GetAll();
+                var dbAssembly = await _repository.GetAllWithDetails();
                 serviceResponse.Data = dbAssembly.Select(c => _mapper.Map<GetAssemblyDto>(c)).ToList();
             }
             catch (Exception ex)
@@ -93,7 +110,7 @@ namespace PcAssembly.Bll.Services
 
         public async Task<GetAssemblyDto> GetAssemblyById(Guid id)
         {
-            return _mapper.Map<GetAssemblyDto>(await _repository.GetById(id));
+            return _mapper.Map<GetAssemblyDto>(await _repository.GetByIdWithDetails(id));
         }
 
         public async Task<ServiceResponse<GetAssemblyDto>> UpdateAssembly(Guid id, UpdateAssemblyDto updatedAssembly)
@@ -103,7 +120,7 @@ namespace PcAssembly.Bll.Services
             try
             {
 
-                var dbAssembly = await _repository.GetById(id);
+                var dbAssembly = await _repository.GetByIdWithDetails(id);
                 if (dbAssembly != null)
                 {
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.Name)
@@ -117,35 +134,35 @@ namespace PcAssembly.Bll.Services
                         dbAssembly.Name = updatedAssembly.Name;
                     }
 
-                    //if (!string.IsNullOrWhiteSpace(updatedAssembly.Company.ToString()))
-                    if (!string.IsNullOrWhiteSpace(updatedAssembly.Name.ToString()))
+                                        if (!string.IsNullOrWhiteSpace(updatedAssembly.Name.ToString()))
                         dbAssembly.Name = updatedAssembly.Name;
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.ImageUrl.ToString()))
                         dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.Rating.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.Rating = updatedAssembly.Rating;
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.CoolersCount.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.CoolersCount = updatedAssembly.CoolersCount;
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.Cpu.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        
+                        dbAssembly.Cpu = await _cpuRepository.GetById(updatedAssembly.Cpu);
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.Motherboard.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.Motherboard = await _motherboardRepository.GetById(updatedAssembly.Motherboard);
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.GraphicCard.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.GraphicCard = await _graphicCardRepository.GetById(updatedAssembly.GraphicCard);
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.Ram.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.Ram = await _ramRepository.GetById(updatedAssembly.Ram);
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.PowerSupply.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.PowerSupply = await _powerSupplyRepository.GetById(updatedAssembly.PowerSupply);
 
                     if (!string.IsNullOrWhiteSpace(updatedAssembly.TotalPrice.ToString()))
-                        dbAssembly.ImageUrl = updatedAssembly.ImageUrl;
+                        dbAssembly.TotalPrice = updatedAssembly.TotalPrice;
 
 
                     await _repository.Update(dbAssembly);
@@ -166,6 +183,18 @@ namespace PcAssembly.Bll.Services
 
             }
             return serviceResponse;
+        }
+
+        public async Task<GenerateAssemblyDto> GenerateAssembly(double price)
+        {
+            try
+            {
+                return _mapper.Map<GenerateAssemblyDto>(await _repository.GenereateAssembly(price));
+            }catch (Exception ex)
+            {
+                throw;
+            }
+            
         }
     }
 }

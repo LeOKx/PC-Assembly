@@ -31,10 +31,6 @@ namespace PcAssembly.Bll.Services
                 image = await _repo.Insert(image);
                 await _repo.SaveChangesAsync();
                 return $"{image.Id}";
-                //return CreatedAtAction(nameof(Get), new
-                //{
-                //    id = image.Id
-                //}, image.Id);
             }
         }
     }

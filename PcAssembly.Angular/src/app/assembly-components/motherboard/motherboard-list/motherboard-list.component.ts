@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModule } from 'src/app/confirm-dialog/confirm-dialog.module';
@@ -20,6 +20,7 @@ import { PagedResult } from 'src/app/_infrastructure/models/PagedResult';
 import { PaginatedRequest } from 'src/app/_infrastructure/models/PaginatedRequest';
 import { RequestFilters } from 'src/app/_infrastructure/models/RequestFilters';
 import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-motherboard-list',
   templateUrl: './motherboard-list.component.html',
@@ -28,6 +29,8 @@ import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
 export class MotherboardListComponent implements AfterViewInit, OnInit {
 
   pagedMotherboards: PagedResult<Motherboard>;
+  isLoading = true;
+  noItems = false;
 
   tableColumns: TableColumn[] = [
     { name: 'imageUrl', index: 'imageUrl', displayName: 'Image' },
@@ -65,6 +68,8 @@ export class MotherboardListComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
     ) {
         this.displayedColumns = this.tableColumns.map(column => column.name);
         this.filterForm = this.formBuilder.group({
@@ -105,7 +110,12 @@ export class MotherboardListComponent implements AfterViewInit, OnInit {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
       this.motherboardService.getDataPaged(paginatedRequest)
         .subscribe((pagedMotherboards: PagedResult<Motherboard>) => {
+          this.noItems = false;
+          this.isLoading = false;
           this.pagedMotherboards = pagedMotherboards;
+          if(pagedMotherboards.total == 0){
+            this.noItems = true;
+          }
         });
     }
 
@@ -191,7 +201,9 @@ export class MotherboardListComponent implements AfterViewInit, OnInit {
     selectMotherboard(id: string): void{
       this.motherboardService.getById(id).subscribe((motherboardObj: Motherboard) => {
         localStorage.setItem('motherboard', JSON.stringify(motherboardObj));
-      })
+        this.location.back();
+      });
+      
     }
     filterFirst(){
       if(localStorage.getItem('cpu')!==null){

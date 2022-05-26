@@ -8,13 +8,11 @@ using PcAssembly.Common.Dtos.User;
 using PcAssembly.Common.Models;
 using PcAssembly.Common.Models.PagedRequest;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PcAssembly.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize]
-    [ApiController]
+        [ApiController]
     public class PowerSuppliesController : ControllerBase
     {
         private readonly IPowerSupplyService _powerSupplyService;
@@ -25,14 +23,11 @@ namespace PcAssembly.Controllers
 
         }
 
-        // GET: api/<PowerSupplyController>
-        [HttpGet]
-        //[Authorize]
-        public async Task<ActionResult<ServiceResponse<List<GetPowerSupplyDto>>>> Get()
+                [HttpGet]
+                public async Task<ActionResult<ServiceResponse<List<GetPowerSupplyDto>>>> Get()
         {
 
-            //return powerSupplyList;
-            return Ok(await _powerSupplyService.GetPowerSupplies());
+                        return Ok(await _powerSupplyService.GetPowerSupplies());
         }
 
         [HttpPost("paginated-search")]
@@ -41,17 +36,14 @@ namespace PcAssembly.Controllers
             return await _powerSupplyService.GetPagedPowerSupplies(pagedRequest);
         }
 
-        // GET api/<PowerSupplyController>/5
-        [HttpGet("{id}")]
+                [HttpGet("{id}")]
         
         public async Task<ActionResult<GetPowerSupplyDto>> GetSingle(Guid id)
         {
-            //return powerSupplyList.FirstOrDefault(powerSupply => powerSupply.Id == id);
-            return Ok(await _powerSupplyService.GetPowerSupplyById(id));
+                        return Ok(await _powerSupplyService.GetPowerSupplyById(id));
         }
 
-        // POST api/<PowerSupplyController>
-        [HttpPost]
+                [HttpPost]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
         public async Task<ActionResult<ServiceResponse<List<GetPowerSupplyDto>>>> AddPowerSupply([FromBody] AddPowerSupplyDto newPowerSupply)
@@ -64,8 +56,7 @@ namespace PcAssembly.Controllers
             return Ok(response);
         }
 
-        // PUT api/<PowerSupplyController>/5
-        [HttpPut("{id}")]
+                [HttpPut("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
         public async Task<ActionResult<ServiceResponse<List<GetPowerSupplyDto>>>> UpdatePowerSupply(Guid id, [FromBody] UpdatePowerSupplyDto updatedPowerSupply)
@@ -95,8 +86,7 @@ namespace PcAssembly.Controllers
 
         }
 
-        // DELETE api/<PowerSupplyController>/5
-        [HttpDelete("{id}")]
+                [HttpDelete("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         public async Task<ActionResult<ServiceResponse<List<GetPowerSupplyDto>>>> Delete(Guid id)
         {

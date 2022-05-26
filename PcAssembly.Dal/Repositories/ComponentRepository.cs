@@ -8,8 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PcAssembly.Dal.Repositories
 {
-    //Abstract переделать
-    public class ComponentRepository<TComponent> : GenericRepository<TComponent, Guid>, 
+        public class ComponentRepository<TComponent> : GenericRepository<TComponent, Guid>, 
         IComponentRepository<TComponent> where TComponent : Component, IBaseEntity<Guid>
     {
         public ComponentRepository(DataContext _context, IMapper _mapper) : base(_context, _mapper)

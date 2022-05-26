@@ -20,11 +20,11 @@ namespace PcAssembly.Dal.Extensions
 
             var total = await query.CountAsync();
 
+            query = query.Sort(pagedRequest);
+
             query = query.Paginate(pagedRequest);
 
             var projectionResult = query.ProjectTo<TDto>(mapper.ConfigurationProvider);
-
-            projectionResult = projectionResult.Sort(pagedRequest);
 
             var listResult = await projectionResult.ToListAsync();
 
@@ -62,6 +62,7 @@ namespace PcAssembly.Dal.Extensions
                 {
                     predicate.Append($" {requestFilters.LogicalOperator} ");
                 }
+
                 predicate.Append(requestFilters.Filters[i].Path + $".{nameof(string.Contains)}(@{i})");
             }
 

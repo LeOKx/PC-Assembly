@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
 import { AuthResponseDto } from 'src/app/interface/response/authResponseDto';
 import { UserForAuthenticationDto } from 'src/app/interface/user/userForAuthenticationDto';
+import { UserInfo } from 'src/app/interface/user/userInfo copy';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -26,9 +27,6 @@ export class LoginComponent implements OnInit {
     })
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
-  // public validateControl = (controlName: string) => {
-  //   return this.loginForm.controls[controlName].invalid && this.loginForm.controls[controlName].touched
-  // }
   public hasError = (controlName: string, errorName: string) => {
     return this.loginForm.controls[controlName].hasError(errorName)
   }
@@ -49,7 +47,7 @@ export class LoginComponent implements OnInit {
     ))
     .subscribe(res => {
        localStorage.setItem("token", res.token);
-       this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+       this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful, userForAuth.email);
        this._router.navigate([this._returnUrl]);
     })
   }

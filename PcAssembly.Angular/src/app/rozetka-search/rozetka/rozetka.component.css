@@ -1,0 +1,14 @@
+button{
+    text-align: center;
+    background-color: rgb(6, 122, 223);
+    margin-left: 30px;
+
+}
+.rozetka{
+    font-size: 50px;
+}
+.mat-icon{
+    width: 100px;
+    height: 25px;
+    /* transform: scale(2); */
+}

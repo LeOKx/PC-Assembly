@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
 import { Motherboard } from 'src/app/interface/pc-components/motherboard.model';
@@ -13,6 +13,7 @@ import { PowerSupply } from 'src/app/interface/pc-components/power-supply.model'
 export class MotherboardInfoComponent implements OnInit {
 
   public motherboardData: Motherboard;
+  @Input() getId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,11 +22,18 @@ export class MotherboardInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let objectId: string;
-    this.route.params.subscribe(params =>{
-      objectId = params['id'];
-        this.getMotherboard(objectId);
-    });
+    if(this.getId == null)
+    {
+      let objectId: string;
+      this.route.params.subscribe(params =>{
+        objectId = params['id'];
+          this.getMotherboard(objectId);
+      });
+    }
+    else
+    {
+      this.getMotherboard(this.getId);
+    }
   }
 
   getMotherboard(id: string): void {

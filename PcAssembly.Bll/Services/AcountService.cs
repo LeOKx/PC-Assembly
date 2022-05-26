@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using PcAssembly.Bll.Interfaces;
 using PcAssembly.Common.Dtos.User;
 using PcAssembly.Domain.Auth;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PcAssembly.Bll.Services
 {
-    public class AcountService
+    public class AcountService : IAcountService
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;

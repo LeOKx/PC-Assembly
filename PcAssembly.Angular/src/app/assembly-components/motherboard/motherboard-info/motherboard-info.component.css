@@ -3,6 +3,7 @@
     justify-content: center;
     border-style: groove;
     max-width: 500px;
+    min-width: 500px;
     padding: 10px;
     background-color: rgb(70, 67, 67);
 }

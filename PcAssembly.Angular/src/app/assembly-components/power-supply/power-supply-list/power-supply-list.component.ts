@@ -5,8 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs';
+import { Location } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { PowerSupply } from 'src/app/interface/pc-components/power-supply.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -25,13 +26,15 @@ import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
 export class PowerSupplyListComponent implements AfterViewInit, OnInit {
 
   pagedPowerSupplys: PagedResult<PowerSupply>;
+  isLoading = true;
+  noItems = false;
 
   tableColumns: TableColumn[] = [
     { name: 'imageUrl', index: 'imageUrl', displayName: 'Image' },
     { name: 'model', index: 'model', displayName: 'Model', useInSearch: true },
     { name: 'company', index: 'company', displayName: 'Company', useInSearch: true },
     { name: 'price', index: 'price', displayName: 'Price' },
-    { name: 'power', index: 'Power', displayName: 'Power', useInSearch: true },
+    { name: 'power', index: 'Power', displayName: 'Power'},
     { name: 'powerConsumption', index: 'powerConsumption', displayName: 'PowerConsumption' },
     { name: 'id', index: 'id', displayName: 'Id' },
   ];
@@ -58,12 +61,13 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
     ) {
         this.displayedColumns = this.tableColumns.map(column => column.name);
         this.filterForm = this.formBuilder.group({
         model: [''],
         company: [''],
-        power: [''],
       });
      }
      ngOnInit(): void {
@@ -91,7 +95,12 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
       this.powerSupplyService.getDataPaged(paginatedRequest)
         .subscribe((pagedPowerSupplys: PagedResult<PowerSupply>) => {
+          this.noItems = false;
+          this.isLoading = false;
           this.pagedPowerSupplys = pagedPowerSupplys;
+          if(pagedPowerSupplys.total == 0){
+            this.noItems = true;
+          }
         });
     }
 
@@ -174,7 +183,8 @@ export class PowerSupplyListComponent implements AfterViewInit, OnInit {
 
     selectPowerSupply(id: string): void{
       this.powerSupplyService.getById(id).subscribe((powerSupplyObj: PowerSupply) => {
-        localStorage.setItem('power-supply', JSON.stringify(powerSupplyObj));
+        localStorage.setItem('powerSupply', JSON.stringify(powerSupplyObj));
+        this.location.back();
       })
     }
 

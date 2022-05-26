@@ -35,6 +35,10 @@ export class AppComponent implements OnInit {
         "ram",
         this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/ram.svg")
       );
+      this.matIconRegistry.addSvgIcon(
+        "rozetka",
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/rozetka-45.svg")
+      );
     }
   
   ngOnInit(): void {

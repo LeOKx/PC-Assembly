@@ -9,10 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PcAssembly.Domain.Components;
+using PcAssembly.Domain;
 
 namespace PcAssembly.Common.Dtos.Assembly
 {
-    public class GetAssemblyDto
+    public class GetAssemblyDto : BaseEntity
     {
         public string? Name { get; set; }
         public GetCpuDto Cpu { get; set; }

@@ -1,34 +1,37 @@
 <div class="info-container">
-    <table>
+    <table style="width: 90%;">
         <tr>
-            <div>
-                <img class="image-prewiev" src="{{motherboardData.imageUrl}}">
-            </div>
+            <table style="width: 100%;">
+                <tr style="text-align: center;">
+                  <img style="height: 200px;"  [src]="[motherboardData?.imageUrl]">
+                </tr>
+              </table>
         </tr>
         <tr>
             <div class="info">
-                <p>Model: {{motherboardData.model}}</p>
-                <p>Company: {{motherboardData.company}}</p>
-                <p>Type of Component: {{motherboardData.type}}</p>
-                <p>Chipset: {{motherboardData.chipset}}</p>
-                <p>Socket: {{motherboardData.socket}}</p>
-                <p>Form Factor: {{motherboardData.formFactor}}</p>
-                <p>Ram Type: {{motherboardData.ramType}}</p>
-                <p>Slots of Ram: {{motherboardData.ramSlots}}</p>
-                <p>Power Consumption: {{motherboardData.powerConsumption}}</p>
+                <p>Model: {{motherboardData?.model}}</p>
+                <p>Company: {{motherboardData?.company}}</p>
+                <p>Type of Component: {{motherboardData?.type}}</p>
+                <p>Chipset: {{motherboardData?.chipset}}</p>
+                <p>Socket: {{motherboardData?.socket}}</p>
+                <p>Form Factor: {{motherboardData?.formFactor}}</p>
+                <p>Ram Type: {{motherboardData?.ramType}}</p>
+                <p>Slots of Ram: {{motherboardData?.ramSlots}}</p>
+                <p>Power Consumption: {{motherboardData?.powerConsumption}}</p>
                 <p>About:</p>
-                <p>{{motherboardData.infoAbout}}</p>
+                <p>{{motherboardData?.infoAbout}}</p>
             </div>
         </tr>
         <tr>
             <div>
                 <p>
                     <button mat-raised-button class="return" (click)="back()">Return</button>
+                    <app-rozetka [model]="motherboardData?.model" [company]="motherboardData?.company"></app-rozetka>
                 </p>
             </div>
             <div class="price">
                 <p>
-                    Price: {{motherboardData.price | currency:"₴"}}
+                    Price: {{motherboardData?.price | currency:"₴"}}
                 </p>
             </div>
         </tr>

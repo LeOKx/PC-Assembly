@@ -9,7 +9,6 @@ namespace PcAssembly.Domain
 {
     public class SavedAssemblies:BaseEntity
     {
-        //public int AssemblyId { get; set; }
         public Assembly? Assembly { get; set; }
         public string UserId { get; set; }
         public User? User { get; set; }

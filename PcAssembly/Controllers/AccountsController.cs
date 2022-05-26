@@ -16,12 +16,12 @@ namespace PcAssembly.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IAcountService _userService;
         private readonly JwtHandler _jwtHandler;
-        public AccountsController(UserManager<User> userManager, JwtHandler jwtHandler)
+        public AccountsController(UserManager<User> userManager, JwtHandler jwtHandler, IAcountService userService)
         {
+            _userService = userService;
             _userManager = userManager;
             _jwtHandler = jwtHandler;
         }
-        //Post request for registrarion new user
         [HttpPost("Registration")]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
         {
@@ -38,7 +38,6 @@ namespace PcAssembly.Controllers
 
             return StatusCode(201);
         }
-        //Post request for authentification
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthentication)
         {
@@ -47,11 +46,16 @@ namespace PcAssembly.Controllers
             {
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             }
-            var signingCredentials = _jwtHandler.GetSigningCredentials();
-            var claims = await _jwtHandler.GetClaims(user);
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            var token = await _jwtHandler.GenereateTokenForUser(user);
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserInfoDto>> getUserInfo(string userId)
+        {
+            User user =  await _userManager.FindByIdAsync(userId);
+            UserInfoDto userDto = new UserInfoDto() { UserName = user.UserName};
+            return Ok(userDto);
         }
     }
 }

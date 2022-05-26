@@ -11,6 +11,5 @@ namespace PcAssembly.Dal.Interfaces
     {
         public Task<bool> ExistComponentWithTheModel(string model);
         public Task<TComponent> DeleteComponentWithTheModel(string model);
-        public Task<List<TComponent>> GetAll(); 
     }
 }

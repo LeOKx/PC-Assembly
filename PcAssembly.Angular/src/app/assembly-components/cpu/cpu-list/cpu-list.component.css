@@ -13,7 +13,7 @@ th.mat-header-cell {
 }
 .filterMenu{
   width: 100%;
-  min-width: 1500px;
+  min-width: 1300px;
 }
 .search-panel{
 
@@ -28,4 +28,9 @@ th.mat-header-cell {
 .searchForm{
   justify-content: center;
   justify-items: center;
+}
+.spinner{
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
 }

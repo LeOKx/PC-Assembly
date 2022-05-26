@@ -1,6 +1,6 @@
-import { Component } from "./component.model";
+import { ComponentModel } from "./component.model";
 
-export interface CPU extends Component {
+export interface CPU extends ComponentModel {
 
         socket: string,
         family: string,

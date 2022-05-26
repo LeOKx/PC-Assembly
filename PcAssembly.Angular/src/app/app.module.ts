@@ -8,7 +8,6 @@ import {MaterialModule} from '../material.module';
 import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { PowerPipeModule } from './pipes/power.pipe.module';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { LayoutComponent } from './layout/layout.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -23,6 +22,9 @@ import { MotherboardModule } from './assembly-components/motherboard/motherboard
 import { PowerSupplyModule } from './assembly-components/power-supply/power-supply.module';
 import { RamModule } from './assembly-components/ram/ram.module';
 import { AssemblyModule } from './assembly-components/assembly/assembly.module';
+import { RozetkaModule } from './rozetka-search/rozetka/rozetka.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import {  NgxSlickJsModule } from 'ngx-slickjs'
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -39,8 +41,8 @@ export function tokenGetter() {
     ForbiddenComponent,
   ],
   imports: [
-    FormsModule,
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -48,19 +50,28 @@ export function tokenGetter() {
     MatNativeDateModule,
     HttpClientModule,
     ReactiveFormsModule,
-    PowerPipeModule,
     CpuModule,
     GraphicCardModule,
     MotherboardModule,
     PowerSupplyModule,
     RamModule,
     AssemblyModule,
+    RozetkaModule,
+    SlickCarouselModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         
       }
-    })
+    }),
+    NgxSlickJsModule.forRoot({
+      links: {
+        jquery: "https://code.jquery.com/jquery-3.4.0.min.js",
+        slickJs: "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js",
+        slickCss: "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css",
+        slickThemeCss: "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+      }
+  })
   ],
   
   providers: [

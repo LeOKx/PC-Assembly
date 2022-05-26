@@ -54,15 +54,11 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header> Number of dies </mat-header-cell>
     <mat-cell *matCellDef="let ram"> {{ram.count}} </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="powerConsumption">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> PowerConsumption </mat-header-cell>
-    <mat-cell *matCellDef="let ram"> {{ram.powerConsumption}} </mat-cell>
-  </ng-container>
   <ng-container matColumnDef="imageUrl" style="min-width: 300px;">
-    <mat-header-cell *matHeaderCellDef>
+    <mat-header-cell class="image-cell" *matHeaderCellDef>
       Image
     </mat-header-cell>
-    <mat-cell *matCellDef="let ram" >
+    <mat-cell class="image-cell" *matCellDef="let ram" >
       <img style="max-height: 100px; max-width: 300px;" src="" [src]="ram.imageUrl">
     </mat-cell>
   </ng-container>
@@ -96,6 +92,15 @@
   <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
 </mat-table>
+<div class="spinner" *ngIf="noItems" >
+  <h1>Nothing :(</h1>
+</div>
+<div class="spinner" *ngIf="isLoading" >
+  <mat-progress-spinner 
+      color="primary" 
+      mode="indeterminate">
+  </mat-progress-spinner>
+</div>
 
 <mat-paginator [length]="pagedRams?.total" [pageSizeOptions]="[1, 2, 5, 10, 25, 50]" pageSize="5"></mat-paginator>
 

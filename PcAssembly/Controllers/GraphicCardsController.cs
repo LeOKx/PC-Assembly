@@ -8,13 +8,11 @@ using PcAssembly.Common.Dtos.User;
 using PcAssembly.Common.Models;
 using PcAssembly.Common.Models.PagedRequest;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PcAssembly.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize]
-    [ApiController]
+        [ApiController]
     public class GraphicCardsController : ControllerBase
     {
         private readonly IGraphicCardService _graphicCardService;
@@ -25,13 +23,11 @@ namespace PcAssembly.Controllers
 
         }
 
-        // GET: api/<GraphicCardController>
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<GetGraphicCardDto>>>> Get()
         {
 
-            //return graphicCardList;
-            return Ok(await _graphicCardService.GetGPUs());
+                        return Ok(await _graphicCardService.GetGPUs());
         }
 
         [HttpPost("paginated-search")]
@@ -40,16 +36,13 @@ namespace PcAssembly.Controllers
             return await _graphicCardService.GetPagedGraphicCards(pagedRequest);
         }
 
-        // GET api/<GraphicCardController>/5
         [HttpGet("{id}")]
         
         public async Task<ActionResult<GetGraphicCardDto>> GetSingle(Guid id)
         {
-            //return graphicCardList.FirstOrDefault(graphicCard => graphicCard.Id == id);
-            return Ok(await _graphicCardService.GetGraphicCardById(id));
+                        return Ok(await _graphicCardService.GetGraphicCardById(id));
         }
 
-        // POST api/<GraphicCardController>
         [HttpPost]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
@@ -63,7 +56,6 @@ namespace PcAssembly.Controllers
             return Ok(response);
         }
 
-        // PUT api/<GraphicCardController>/5
         [HttpPut("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
@@ -94,8 +86,7 @@ namespace PcAssembly.Controllers
 
         }
 
-        // DELETE api/<GraphicCardController>/5
-        [HttpDelete("{id}")]
+                [HttpDelete("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         public async Task<ActionResult<ServiceResponse<List<GetGraphicCardDto>>>> Delete(Guid id)
         {

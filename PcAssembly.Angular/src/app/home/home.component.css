@@ -1,18 +1,79 @@
-section div p{
+div p{
+    text-align: center;
     color: #40a21f;
     font-size: 30px;
     text-shadow: 2px 3px 5px grey;
     margin: 30px 0;
+    cursor: pointer;
 }
-section div + p{
+/* div + p{
+    text-align: center;
     color: #8c3fb5;
     font-weight: bold;
     font-size: 20px;
     padding-bottom: 20px;
-}
+} */
 mat-tab-group {
     text-align: center;
 }
 mat-tab-group p {
     padding-top: 20px;
+}
+
+.slider{
+    margin-top: 2vw;
+}
+.slickItemStyle{
+    cursor: pointer;
+}
+.home-preview{
+    opacity: 80%;
+    background-color: #00A79D;
+    width: 100%;
+    height: 25vw;
+    border-radius: 10px;
+    columns: 40vw 2;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5)
+}
+.home-preview h1, h2{
+
+    color: #f3f3f3;
+    font-size: 35px;
+    text-shadow: 2px 3px 5px grey;
+    margin: 10px 0;
+    cursor: pointer;
+}
+.home-preview h2{
+    font-size: 25px;
+}
+.home-preview button{
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+.home-preview-left{
+    /* background-color: rgb(45, 143, 158); */
+    display: block;
+    padding-top: 7.5vw;
+    margin-left: 10vw;
+
+}
+.home-preview-left button{
+    
+    background-color: rgb(28, 27, 27);
+
+}
+.home-preview-right{
+    
+    width: 100%;
+    height: 100%;
+    margin-top: 235px;
+    background-image: url('https://cdn1.vectorstock.com/i/1000x1000/30/60/assembling-pc-personal-computer-hardware-vector-13773060.jpg');
+    background-size: cover;
+    
+    /* border-radius: 10px; */
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    /* background: url(https://localhost:7144/api/images/6c9cb61c-5c46-4da1-b119-93faa3ef5cdb); */
+    /* background-image: 'https://cdn1.vectorstock.com/i/1000x1000/30/60/assembling-pc-personal-computer-hardware-vector-13773060.jpg'; */
 }

@@ -55,17 +55,17 @@
     <mat-cell *matCellDef="let graphicCard"> {{graphicCard.powerConsumption}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="imageUrl" style="min-width: 250px;">
-    <mat-header-cell *matHeaderCellDef>
+    <mat-header-cell class="image-cell" *matHeaderCellDef>
       Image
     </mat-header-cell>
-    <mat-cell *matCellDef="let graphicCard" >
+    <mat-cell class="image-cell" *matCellDef="let graphicCard" >
       <img style="height: 120px; max-width: 200px;" src="" [src]="graphicCard.imageUrl">
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="id" >
     <mat-header-cell *matHeaderCellDef>
-      <button mat-button style="color:white; margin-left: 40px; background-color:darkgrey" (click)="resetGrid()">Reset</button>
+     
     </mat-header-cell>
     <mat-cell  *matCellDef="let graphicCard" >
     <div *ngIf="isAdmin; then adminMenu else userMenu"></div>
@@ -92,6 +92,16 @@
   <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
 </mat-table>
+
+<div class="spinner" *ngIf="noItems" >
+  <h1>Nothing :(</h1>
+</div>
+<div class="spinner" *ngIf="isLoading" >
+  <mat-progress-spinner 
+      color="primary" 
+      mode="indeterminate">
+  </mat-progress-spinner>
+</div>
 
 <mat-paginator [length]="pagedGraphicCards?.total" [pageSizeOptions]="[1, 2, 5, 10, 25, 50]" pageSize="5"></mat-paginator>
 

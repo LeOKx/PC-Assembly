@@ -1,32 +1,35 @@
 <div class="info-container">
     <table>
         <tr>
-            <div>
-                <img class="image-prewiev" src="{{ramData.imageUrl}}">
-            </div>
+            <table style="width: 100%;">
+                <tr style="text-align: center;">
+                  <img style="height: 200px;"  [src]="[ramData?.imageUrl]">
+                </tr>
+              </table>
         </tr>
         <tr>
             <div class="info">
-                <p>Model: {{ramData.model}}</p>
-                <p>Company: {{ramData.company}}</p>
-                <p>Type of Component: {{ramData.type}}</p>
-                <p>Ram Type: {{ramData.ramType}}</p>
-                <p>Ram Size: {{ramData.ramSize}}</p>
-                <p>Тumber of dies: {{ramData.count}}</p>
-                <p>Power Consumption: {{ramData.powerConsumption}}</p>
+                <p>Model: {{ramData?.model}}</p>
+                <p>Company: {{ramData?.company}}</p>
+                <p>Type of Component: {{ramData?.type}}</p>
+                <p>Ram Type: {{ramData?.ramType}}</p>
+                <p>Ram Size: {{ramData?.ramSize}}</p>
+                <p>Тumber of dies: {{ramData?.count}}</p>
+                <p>Power Consumption: {{ramData?.powerConsumption}}</p>
                 <p>About:</p>
-                <p>{{ramData.infoAbout}}</p>
+                <p>{{ramData?.infoAbout}}</p>
             </div>
         </tr>
         <tr>
             <div>
                 <p>
                     <button mat-raised-button class="return" (click)="back()">Return</button>
+                    <app-rozetka [model]="ramData?.model" [company]="ramData?.company"></app-rozetka>
                 </p>
             </div>
             <div class="price">
                 <p>
-                    Price: {{ramData.price | currency:"₴"}}
+                    Price: {{ramData?.price | currency:"₴"}}
                 </p>
             </div>
         </tr>

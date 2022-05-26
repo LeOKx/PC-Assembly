@@ -7,9 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EditCpuComponent } from './edit-cpu/edit-cpu.component';
 import { CpuInfoComponent } from './cpu-info/cpu-info.component';
 import { ImageUploadModule } from 'src/app/image-upload/image-upload.module';
-import { PowerPipeModule } from 'src/app/pipes/power.pipe.module';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { CpuTableService } from 'src/app/shared/services/cpu-table.service';
+import { RozetkaModule } from 'src/app/rozetka-search/rozetka/rozetka.module';
 
 
 
@@ -23,9 +23,12 @@ import { CpuTableService } from 'src/app/shared/services/cpu-table.service';
     CommonModule,
     CpuRoutingModule,
     MaterialModule,
-    PowerPipeModule,
     ReactiveFormsModule,
-    ImageUploadModule
+    ImageUploadModule,
+    RozetkaModule
+  ],
+  exports:[
+    CpuInfoComponent
   ],
   providers: [
     CpuTableService,

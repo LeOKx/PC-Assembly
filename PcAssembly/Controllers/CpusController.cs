@@ -8,7 +8,6 @@ using PcAssembly.Common.Dtos.User;
 using PcAssembly.Common.Models;
 using PcAssembly.Common.Models.PagedRequest;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PcAssembly.Controllers
 {
@@ -24,13 +23,11 @@ namespace PcAssembly.Controllers
 
         }
 
-        // GET: api/<CpuController>
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<GetCpuDto>>>> Get()
         {
 
-            //return cpuList;
-            return Ok(await _cpuService.GetCPUs());
+                        return Ok(await _cpuService.GetCPUs());
         }
 
         [HttpPost("paginated-search")]
@@ -39,16 +36,13 @@ namespace PcAssembly.Controllers
             return await _cpuService.GetPagedCpus(pagedRequest);
         }
 
-        // GET api/<CpuController>/5
         [HttpGet("{id}")]
         
         public async Task<ActionResult<GetCpuDto>> GetSingle(Guid id)
         {
-            //return cpuList.FirstOrDefault(cpu => cpu.Id == id);
-            return Ok(await _cpuService.GetCpuById(id));
+                        return Ok(await _cpuService.GetCpuById(id));
         }
 
-        // POST api/<CpuController>
         [HttpPost]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
@@ -62,7 +56,6 @@ namespace PcAssembly.Controllers
             return Ok(response);
         }
 
-        // PUT api/<CpuController>/5
         [HttpPut("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
@@ -93,7 +86,6 @@ namespace PcAssembly.Controllers
 
         }
 
-        // DELETE api/<CpuController>/5
         [HttpDelete("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         public async Task<ActionResult<ServiceResponse<GetCpuDto>>> Delete(Guid id)

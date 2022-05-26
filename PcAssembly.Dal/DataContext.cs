@@ -24,18 +24,17 @@ namespace PcAssembly.Dal
         public DbSet<Motherboard> Motherboards { get; set; }
         public DbSet<Ram> Rams { get; set; }
         public DbSet<PowerSupply> PowerSupplies { get; set; }
-        //public DbSet<ManufacturerInfo> ManufacturerInfos { get; set; }
         public DbSet<Assembly> Assemblies{ get; set; }
-        //public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UsersProfiles { get; set; }
-        //public DbSet<CompanyList> Companies { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<RatedByUserAssembly> RatedByUserAssemblies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new AssemblyConfig());
             modelBuilder.ApplyConfiguration(new SavedAssemblyConfig());
+            modelBuilder.ApplyConfiguration(new RatedByUserAssemblyConfig());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
             modelBuilder.Entity<CPU>().ToTable("CPUs");

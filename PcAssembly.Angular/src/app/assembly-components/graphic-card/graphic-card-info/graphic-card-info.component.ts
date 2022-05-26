@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
 import { GraphicCard } from 'src/app/interface/pc-components/graphic-card.model';
@@ -12,6 +12,7 @@ import { GraphicCardTableService } from 'src/app/shared/services/graphic-card-ta
 export class GraphicCardInfoComponent implements OnInit {
 
   public graphicCardData: GraphicCard;
+  @Input() getId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,11 +21,18 @@ export class GraphicCardInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let objectId: string;
-    this.route.params.subscribe(params =>{
-      objectId = params['id'];
-        this.getGraphicCard(objectId);
-    });
+    if(this.getId == null)
+    {
+      let objectId: string;
+      this.route.params.subscribe(params =>{
+        objectId = params['id'];
+          this.getGraphicCard(objectId);
+      });
+    }
+    else
+    {
+      this.getGraphicCard(this.getId);
+    }
   }
 
   getGraphicCard(id: string): void {

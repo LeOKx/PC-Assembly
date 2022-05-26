@@ -5,18 +5,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs';
+import { Location } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModule } from 'src/app/confirm-dialog/confirm-dialog.module';
 import { CPU } from 'src/app/interface/pc-components/cpu.model';
 import { Motherboard } from 'src/app/interface/pc-components/motherboard.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-// import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { CpuTableService } from 'src/app/shared/services/cpu-table.service';
 import { Filter } from 'src/app/_infrastructure/models/Filter';
 import { FilterLogicalOperators } from 'src/app/_infrastructure/models/FilterLogicalOperators';
-// import { RepositoryService } from 'src/app/shared/services/repository.service';
 import { PagedResult } from 'src/app/_infrastructure/models/PagedResult';
 import { PaginatedRequest } from 'src/app/_infrastructure/models/PaginatedRequest';
 import { RequestFilters } from 'src/app/_infrastructure/models/RequestFilters';
@@ -29,6 +28,7 @@ import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
 export class CpuListComponent implements AfterViewInit, OnInit {
 
   pagedCpus: PagedResult<CPU>;
+  isLoading = true;
 
   tableColumns: TableColumn[] = [
     { name: 'imageUrl', index: 'imageUrl', displayName: 'Image' },
@@ -41,7 +41,6 @@ export class CpuListComponent implements AfterViewInit, OnInit {
     { name: 'cores', index: 'cores', displayName: 'Cores'},
     { name: 'threads', index: 'threads', displayName: 'Threads' },
     { name: 'frequency', index: 'frequency', displayName: 'Frequency' },
-    { name: 'powerConsumption', index: 'powerConsumption', displayName: 'PowerConsumption' },
     { name: 'id', index: 'id', displayName: 'Id' },
   ];
 
@@ -66,7 +65,9 @@ export class CpuListComponent implements AfterViewInit, OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router,
+    private location: Location,
     ) {
         this.displayedColumns = this.tableColumns.map(column => column.name);
         this.filterForm = this.formBuilder.group({
@@ -92,7 +93,7 @@ export class CpuListComponent implements AfterViewInit, OnInit {
 
     ngAfterViewInit() {
       if(this.select)
-        this.filterCpusFromForm();
+        this.filterFirst();
       else
         this.loadCpusFromApi();
       
@@ -108,8 +109,10 @@ export class CpuListComponent implements AfterViewInit, OnInit {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
       this.cpuService.getDataPaged(paginatedRequest)
         .subscribe((pagedCpus: PagedResult<CPU>) => {
+          this.noItems = false;
+          this.isLoading = false;
           this.pagedCpus = pagedCpus;
-          if(pagedCpus.items == null){
+          if(pagedCpus.total == 0){
             this.noItems = true;
           }
         });
@@ -139,7 +142,6 @@ export class CpuListComponent implements AfterViewInit, OnInit {
     }
 
     applySearch() {
-      this.filterFirst();
       this.createFiltersFromSearchInput();
       this.loadCpusFromApi();
     }
@@ -150,7 +152,6 @@ export class CpuListComponent implements AfterViewInit, OnInit {
     }
   
     filterCpusFromForm() {
-      this.filterFirst();
       this.createFiltersFromForm();
       this.loadCpusFromApi();
     }
@@ -198,13 +199,16 @@ export class CpuListComponent implements AfterViewInit, OnInit {
       if(localStorage.getItem('motherboard')!==null){
        let motherboard =  JSON.parse(localStorage.getItem('motherboard')) as Motherboard;
        this.filterForm.controls['socket'].setValue(motherboard.socket);
-      }
+      };
+      this.filterCpusFromForm();
     }
 
     selectCpu(id: string): void{
       this.cpuService.getById(id).subscribe((cpuObj: CPU) => {
         localStorage.setItem('cpu', JSON.stringify(cpuObj));
+        this.location.back();
       })
+      
     }
 
 }

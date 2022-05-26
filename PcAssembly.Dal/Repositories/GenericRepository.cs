@@ -23,8 +23,7 @@ namespace PcAssembly.Dal.Repositories
         {
             this._context = context;
             this._mapper = mapper;
-            //_dbSet = _context.Set<TEntity>();
-        }
+                    }
 
         public async Task<TEntity> GetById(TId id)
         {

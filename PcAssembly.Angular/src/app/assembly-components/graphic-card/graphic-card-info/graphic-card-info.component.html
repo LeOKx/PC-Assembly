@@ -1,31 +1,34 @@
 <div class="info-container">
-    <table>
+    <table style="width: 90%;">
         <tr>
-            <div>
-                <img class="image-prewiev" src="{{graphicCardData.imageUrl}}">
-            </div>
+            <table style="width: 100%;">
+                <tr style="text-align: center;">
+                  <img style="height: 200px;"  [src]="[graphicCardData?.imageUrl]">
+                </tr>
+              </table>
         </tr>
         <tr>
             <div class="info">
-                <p>Model: {{graphicCardData.model}}</p>
-                <p>Company: {{graphicCardData.company}}</p>
-                <p>Type of Component: {{graphicCardData.type}}</p>
-                <p>SgRam Type: {{graphicCardData.sgRamType}}</p>
-                <p>SgRam Size: {{graphicCardData.sgRamSize}}</p>
-                <p>Power Consumption: {{graphicCardData.powerConsumption}}</p>
+                <p>Model: {{graphicCardData?.model}}</p>
+                <p>Company: {{graphicCardData?.company}}</p>
+                <p>Type of Component: {{graphicCardData?.type}}</p>
+                <p>SgRam Type: {{graphicCardData?.sgRamType}}</p>
+                <p>SgRam Size: {{graphicCardData?.sgRamSize}}</p>
+                <p>Power Consumption: {{graphicCardData?.powerConsumption}}</p>
                 <p>About:</p>
-                <p>{{graphicCardData.infoAbout}}</p>
+                <p>{{graphicCardData?.infoAbout}}</p>
             </div>
         </tr>
         <tr>
             <div>
                 <p>
                     <button mat-raised-button class="return" (click)="back()">Return</button>
+                    <app-rozetka [model]="graphicCardData?.model" [company]="graphicCardData?.company"></app-rozetka>
                 </p>
             </div>
             <div class="price">
                 <p>
-                    Price: {{graphicCardData.price | currency:"₴"}}
+                    Price: {{graphicCardData?.price | currency:"₴"}}
                 </p>
             </div>
         </tr>

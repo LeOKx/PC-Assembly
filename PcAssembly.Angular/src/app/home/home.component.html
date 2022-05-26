@@ -1,17 +1,23 @@
-<section fxLayout="column" fxFlexAlign="stretch">
+
+<div class="home-preview">
+  <div class="home-preview-left">
+    <h1>Build your own Computer</h1>
+    <h2>By yourself easily</h2>
+    <p></p>
+    <button mat-button [routerLink]="['/create-assembly']">Create Assembly</button>
+  </div>
+  <div style="background-image: url(https://localhost:7144/api/images/42afc0ba-3963-41c0-ab2e-35f533a09d27);" class="home-preview-right">
+
+  </div>
+
+</div>
     <div fxFlexAlign="center">
       <p>Welcome to the PcAssembly Application</p>
     </div>
-    <p>In this application we can:</p>
-    <mat-tab-group (selectedTabChange)="executeSelectedChange($event)">
-        <mat-tab label="See Users Assemblies"> 
-          <p>Some of users Assemblies</p> 
-        </mat-tab>
-        <mat-tab label="Create You're Own Assembly">
-           <p>Create Youre Cool Assembly</p>
-        </mat-tab>
-        <mat-tab label="Or Generate Assembly [Beta]">
-           <p>I don't know, if this function will be in final version</p>
-        </mat-tab>
-      </mat-tab-group>
-</section>
+    <div class="container slider"> 
+      <div slickContainer #slickController="slick" [slickConfig]="config">
+        <ng-container *ngIf="slickController.initialize">
+        <img style="cursor: pointer; margin-left: 30px; margin-right: 30px;" slickItem 
+        *ngFor="let item of slides" src="{{item.img}}" alt="{{item.alt}}" class="p-10" [routerLink]="item.link">
+        </ng-container>
+      </div>

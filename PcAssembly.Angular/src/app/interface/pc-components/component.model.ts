@@ -1,4 +1,4 @@
-export interface Component {
+export interface ComponentModel {
    
     id:string,
     model: string,

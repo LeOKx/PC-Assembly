@@ -2,18 +2,18 @@ table {
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  min-width: 500px;
+  min-width: 400px;
 }
 th.mat-header-cell {
   text-align: left;
-  max-width: 300px;
+  max-width: 200px;
 }
 .mat-cell{
   padding: 5px;
 }
 .filterMenu{
   width: 100%;
-  min-width: 1500px;
+  min-width: 1200px;
 }
 .search-panel{
 
@@ -28,4 +28,13 @@ th.mat-header-cell {
 .searchForm{
   justify-content: center;
   justify-items: center;
+}
+.image-cell{
+  min-width: 300px;
+  width: 300px;
+}
+.spinner{
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
 }

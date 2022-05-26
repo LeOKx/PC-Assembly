@@ -1,6 +1,6 @@
-import { Component } from "./component.model";
+import { ComponentModel } from "./component.model";
 
-  export interface Motherboard extends Component  {
+  export interface Motherboard extends ComponentModel  {
    
         socket: string,
         chipset: string,

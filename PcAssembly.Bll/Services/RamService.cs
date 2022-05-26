@@ -129,6 +129,8 @@ namespace PcAssembly.Bll.Services
                         dbRam.RamType = updatedRam.RamType;
                     if (!string.IsNullOrWhiteSpace(updatedRam.RamSize.ToString()))
                         dbRam.RamSize = updatedRam.RamSize;
+                    if (!string.IsNullOrWhiteSpace(updatedRam.Count.ToString()))
+                        dbRam.Count = updatedRam.Count;
 
                     await _repository.Update(dbRam);
                     await _repository.SaveChangesAsync();

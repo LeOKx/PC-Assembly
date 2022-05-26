@@ -5,6 +5,14 @@ import { AssemblyListComponent } from './assembly-list/assembly-list.component';
 import { CreateAssemblyComponent } from './create-assembly/create-assembly.component';
 import { AssemblyInfoComponent } from './assembly-info/assembly-info.component';
 import { AssemblyRoutingModule } from './assembly-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AssemblyService } from 'src/app/shared/services/assembly.service';
+import { ImageUploadModule } from 'src/app/image-upload/image-upload.module';
+import { CpuModule } from '../cpu/cpu.module';
+import { MotherboardModule } from '../motherboard/motherboard.module';
+import { GraphicCardModule } from '../graphic-card/graphic-card.module';
+import { RamModule } from '../ram/ram.module';
+import { PowerSupplyModule } from '../power-supply/power-supply.module';
 
 
 
@@ -12,12 +20,22 @@ import { AssemblyRoutingModule } from './assembly-routing.module';
   declarations: [
     AssemblyListComponent,
     CreateAssemblyComponent,
-    AssemblyInfoComponent
+    AssemblyInfoComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    AssemblyRoutingModule
+    AssemblyRoutingModule,
+    ReactiveFormsModule,
+    ImageUploadModule,
+    CpuModule,
+    MotherboardModule,
+    GraphicCardModule,
+    RamModule,
+    PowerSupplyModule
+  ],
+  providers: [
+    AssemblyService
   ]
 })
 export class AssemblyModule { }

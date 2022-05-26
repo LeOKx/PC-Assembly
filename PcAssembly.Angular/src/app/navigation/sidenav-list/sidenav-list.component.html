@@ -1,8 +1,8 @@
 
       <mat-nav-list justifyContent="center">
         <a routerLink="/home" mat-list-item (click)="onSidenavClose()"><mat-icon>home</mat-icon>Home</a>
-        <a href="#Assemblyies" mat-list-item (click)="onSidenavClose()"><mat-icon>people_alt</mat-icon>Users Assemblyies</a>
-        <a href="#CreateAssembly"mat-list-item (click)="onSidenavClose()"><mat-icon svgIcon="computer"></mat-icon>Create own Assembly</a>
+        <a [routerLink]="['/assemblies']" mat-list-item (click)="onSidenavClose()"><mat-icon>people_alt</mat-icon>Users Assemblies</a>
+        <a [routerLink]="['/create-assembly']" mat-list-item (click)="onSidenavClose()"><mat-icon svgIcon="computer"></mat-icon>Create own Assembly</a>
         <!-- <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a> -->
         <button mat-menu-item [matMenuTriggerFor]="menu"><mat-icon>list</mat-icon>Components</button>
         <mat-menu #menu="matMenu">

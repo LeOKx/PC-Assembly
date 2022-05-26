@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PowerSupply } from 'src/app/interface/pc-components/power-supply.model';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { PowerSupplyTableService } from 'src/app/shared/services/power-supply-table.service';
+import { ImageDefault } from 'src/assets/defaultImg/defaultImg.enum';
 
 @Component({
   selector: 'app-edit-powerSupply',
@@ -73,8 +74,8 @@ export class EditPowerSupplyComponent implements OnInit{
        if(powerSupplyToSave.infoAbout == null){
          powerSupplyToSave.infoAbout = '';
        }
-       if(powerSupplyToSave.imageUrl == ''){
-        powerSupplyToSave.imageUrl = 'https://icon-library.com/images/icon-power-supply/icon-power-supply-9.jpg';
+       if(powerSupplyToSave.imageUrl == '' || powerSupplyToSave.imageUrl ==null ){
+        powerSupplyToSave.imageUrl = ImageDefault.powerSupply;
       }
        this.powerSupplyService.savePowerSupply(powerSupplyToSave).subscribe(
          () => this.onSaveComplete()
@@ -85,8 +86,10 @@ export class EditPowerSupplyComponent implements OnInit{
   onSaveComplete(): void {
     // Reset the form to clear the flags
     this.powerSupplyForm.reset();
-    this.router.navigate(['/power-supplys','']);
+    this.router.navigate(['/power-supplies','']);
   }
 
-  
+  setUploadImage(url: string): void {
+    this.powerSupplyForm.controls['imageUrl'].setValue(url)
+  }
 }

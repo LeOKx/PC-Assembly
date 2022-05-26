@@ -1,12 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs';
+import { Location } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModule } from 'src/app/confirm-dialog/confirm-dialog.module';
 import { GraphicCard } from 'src/app/interface/pc-components/graphic-card.model';
@@ -26,6 +28,8 @@ import { TableColumn } from 'src/app/_infrastructure/models/TableColumn';
 export class GraphicCardListComponent implements AfterViewInit, OnInit {
 
   pagedGraphicCards: PagedResult<GraphicCard>;
+  isLoading = true;
+  noItems = false;
 
   tableColumns: TableColumn[] = [
     { name: 'imageUrl', index: 'imageUrl', displayName: 'Image' },
@@ -60,6 +64,8 @@ export class GraphicCardListComponent implements AfterViewInit, OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
     ) {
         this.displayedColumns = this.tableColumns.map(column => column.name);
         this.filterForm = this.formBuilder.group({
@@ -92,7 +98,12 @@ export class GraphicCardListComponent implements AfterViewInit, OnInit {
       const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
       this.graphicCardService.getDataPaged(paginatedRequest)
         .subscribe((pagedGraphicCards: PagedResult<GraphicCard>) => {
+          this.noItems = false;
+          this.isLoading = false;
           this.pagedGraphicCards = pagedGraphicCards;
+          if(pagedGraphicCards.total == 0){
+            this.noItems = true;
+          }
         });
     }
 
@@ -175,8 +186,10 @@ export class GraphicCardListComponent implements AfterViewInit, OnInit {
 
     selectGraphicCard(id: string): void{
       this.graphicCardService.getById(id).subscribe((graphicCardObj: GraphicCard) => {
-        localStorage.setItem('graphic-card', JSON.stringify(graphicCardObj));
+        localStorage.setItem('graphicCard', JSON.stringify(graphicCardObj));
+        this.location.back();
       })
+      
     }
 
 }

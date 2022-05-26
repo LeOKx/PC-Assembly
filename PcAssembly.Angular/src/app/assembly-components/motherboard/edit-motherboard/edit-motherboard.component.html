@@ -22,6 +22,11 @@
       </mat-toolbar>
   
       <mat-card-content >
+        <table style="width: 100%;">
+          <tr style="text-align: center;">
+            <img style="height: 200px;"  [src]="motherboardForm.controls['imageUrl'].value">
+          </tr>
+        </table>
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
         </mat-form-field>
@@ -77,6 +82,9 @@
           <mat-form-field style="width: 100%;">
             <textarea matInput placeholder="Image Url" formControlName="imageUrl" matTextareaAutosize></textarea>
           </mat-form-field>
+          <div style=" margin-bottom: 50px; ">
+            <app-image-upload (urlImageUpload)="setUploadImage($event)"></app-image-upload> 
+          </div>
           
 
           <mat-form-field style="width: 100%;">

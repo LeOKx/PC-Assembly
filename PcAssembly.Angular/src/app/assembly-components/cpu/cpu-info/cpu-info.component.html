@@ -1,9 +1,11 @@
 <div class="info-container">
     <table>
         <tr>
-            <div>
-                <img class="image-prewiev" [src]="[cpuData?.imageUrl]">
-            </div>
+            <table style="width: 100%;">
+                <tr style="text-align: center;">
+                  <img style="height: 200px;"  [src]="[cpuData?.imageUrl]">
+                </tr>
+              </table>
         </tr>
         <tr>
             <div class="info">
@@ -24,6 +26,7 @@
             <div>
                 <p>
                     <button mat-raised-button class="return" (click)="back()">Return</button>
+                    <app-rozetka [model]="cpuData?.model" [company]="cpuData?.company"></app-rozetka>
                 </p>
             </div>
             <div class="price">

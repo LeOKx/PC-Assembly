@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Motherboard } from 'src/app/interface/pc-components/motherboard.model';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { MotherboardTableService } from 'src/app/shared/services/motherboard-table.service';
+import { ImageDefault } from 'src/assets/defaultImg/defaultImg.enum';
 
 @Component({
   selector: 'app-edit-motherboard',
@@ -77,8 +78,8 @@ export class EditMotherboardComponent implements OnInit{
        if(motherboardToSave.infoAbout == null){
          motherboardToSave.infoAbout = '';
        };
-       if(motherboardToSave.imageUrl == ''){
-        motherboardToSave.imageUrl = 'https://thumbs.dreamstime.com/b/motherboard-pc-icon-doodle-hand-drawn-outline-style-part-computer-software-hardware-set-vector-244860819.jpg';
+       if(motherboardToSave.imageUrl == ''|| motherboardToSave.imageUrl ==null ){
+        motherboardToSave.imageUrl = ImageDefault.motherboard;
       };
        this.motherboardService.saveMotherboard(motherboardToSave).subscribe(
          () => this.onSaveComplete()
@@ -91,6 +92,8 @@ export class EditMotherboardComponent implements OnInit{
     this.motherboardForm.reset();
     this.router.navigate(['/motherboards','']);
   }
-
+  setUploadImage(url: string): void {
+    this.motherboardForm.controls['imageUrl'].setValue(url)
+  }
   
 }

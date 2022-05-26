@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
 import { CPU } from 'src/app/interface/pc-components/cpu.model';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { CpuTableService } from 'src/app/shared/services/cpu-table.service';
+import { ImageDefault } from 'src/assets/defaultImg/defaultImg.enum';
 
 @Component({
   selector: 'app-edit-cpu',
@@ -15,6 +17,8 @@ export class EditCpuComponent implements OnInit{
 
   public pageTitle: string;
   public cpuForm: FormGroup;
+  public errorMessage: string;
+  public showError: boolean;
 
   cpuResp: ServiceResponse<CPU>;
   cpu: CPU;
@@ -80,10 +84,17 @@ export class EditCpuComponent implements OnInit{
        if(cpuToSave.infoAbout == null){
          cpuToSave.infoAbout = '';
        }
-       if(cpuToSave.imageUrl == ''){
-        cpuToSave.imageUrl = 'https://st.depositphotos.com/32466374/53062/v/600/depositphotos_530621888-stock-illustration-cpu-icon-chip-in-line.jpg';
+       if(cpuToSave.imageUrl == ''|| cpuToSave.imageUrl ==null ){
+        cpuToSave.imageUrl = ImageDefault.cpu;
       }
-       this.cpuService.saveCpu(cpuToSave).subscribe(
+       this.cpuService.saveCpu(cpuToSave)
+       .pipe(
+        catchError((error: string) => {
+          this.errorMessage = error;
+          this.showError = true;
+          return of();
+      }
+      )).subscribe(
          () => this.onSaveComplete()
        );
     }
@@ -94,6 +105,8 @@ export class EditCpuComponent implements OnInit{
     this.cpuForm.reset();
     this.router.navigate(['/cpus','']);
   }
-
+  setUploadImage(url: string): void {
+    this.cpuForm.controls['imageUrl'].setValue(url)
+  }
   
 }

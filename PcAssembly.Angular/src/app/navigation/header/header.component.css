@@ -11,6 +11,7 @@ a:hover, a:active{
     margin: 0;
 }
 mat-toolbar{
+    background-color: #00A79D;
     border-radius: 3px;
 }
 @media(max-width: 959px){
@@ -21,4 +22,8 @@ mat-toolbar{
 
 .logout-btn, .logout-btn mat-icon{
     color:red;
+}
+.username{
+    margin-top: 5px;
+    font-size: 13px;
 }

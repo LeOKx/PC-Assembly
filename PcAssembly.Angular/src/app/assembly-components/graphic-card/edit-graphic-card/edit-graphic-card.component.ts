@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GraphicCard } from 'src/app/interface/pc-components/graphic-card.model';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { GraphicCardTableService } from 'src/app/shared/services/graphic-card-table.service';
+import { ImageDefault } from 'src/assets/defaultImg/defaultImg.enum';
 
 @Component({
   selector: 'app-edit-graphicCard',
@@ -15,6 +16,7 @@ export class EditGraphicCardComponent implements OnInit{
 
   public pageTitle: string;
   public graphicCardForm: FormGroup;
+  isLoading = true;
 
   graphicCardResp: ServiceResponse<GraphicCard>;
   graphicCard: GraphicCard;
@@ -74,8 +76,8 @@ export class EditGraphicCardComponent implements OnInit{
        if(graphicCardToSave.infoAbout == null){
          graphicCardToSave.infoAbout = '';
        }
-       if(graphicCardToSave.imageUrl == ''){
-        graphicCardToSave.imageUrl = 'https://thumbs.dreamstime.com/b/gpu-card-outline-vector-gpu-card-outline-vector-rendering-d-technology-concept-graphics-card-148109545.jpg';
+       if(graphicCardToSave.imageUrl == ''|| graphicCardToSave.imageUrl ==null ){
+        graphicCardToSave.imageUrl = ImageDefault.graphicCard;
       }
        this.graphicCardService.saveGraphicCard(graphicCardToSave).subscribe(
          () => this.onSaveComplete()
@@ -89,5 +91,7 @@ export class EditGraphicCardComponent implements OnInit{
     this.router.navigate(['/graphic-cards','']);
   }
 
-  
+  setUploadImage(url: string): void {
+    this.graphicCardForm.controls['imageUrl'].setValue(url)
+  }
 }

@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { EnvironmentUrlService } from './enviroment-url.service';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { ServiceResponse } from 'src/app/interface/service-response.model';
 import { PaginatedRequest } from 'src/app/_infrastructure/models/PaginatedRequest';
 import { PagedResult } from 'src/app/_infrastructure/models/PagedResult';
+import { mergeMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,8 +19,14 @@ export class RepositoryService<T>{
     return this.http.get<ServiceResponse<T>>(this.createCompleteRoute(this.route, this.envUrl.urlAddress), this.generateHeaders());
   }
 
+  
   public getDataPaged(paginatedRequest: PaginatedRequest): Observable<PagedResult<T>> {
+    //Без задержки
     return this.http.post<PagedResult<T>>(this.createCompleteRoute(this.route, this.envUrl.urlAddress)+'paginated-search', paginatedRequest, this.generateHeaders());
+    //С задержкой
+    // return timer(2000).pipe(
+    //   mergeMap(() => this.http.post<PagedResult<T>>(this.createCompleteRoute(this.route, this.envUrl.urlAddress)+'paginated-search', paginatedRequest, this.generateHeaders()))
+    // );
   }
 
   public getById(id: string): Observable<T> {
@@ -35,10 +42,10 @@ export class RepositoryService<T>{
   }
 
   public create(body:T): Observable<ServiceResponse<T>> {
-    return this.http.post<ServiceResponse<T>>(this.createCompleteRoute(this.route, this.envUrl.urlAddress), body, this.generateHeaders());
+    return this.http.post<ServiceResponse<T>>(this.createCompleteRoute(this.route, this.envUrl.urlAddress), body, this.generateHeaders())
   }
  
-  private createCompleteRoute = (route: string, envAddress: string) => {
+  protected createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
   }
 
@@ -46,7 +53,7 @@ export class RepositoryService<T>{
     return this.http.get(this.createCompleteRoute(route, this.envUrl.urlAddress), this.generateHeaders());
   }
  
-  private generateHeaders = () => {
+  protected generateHeaders = () => {
     return {
       headers: new HttpHeaders({
       "Content-Type": "application/json",

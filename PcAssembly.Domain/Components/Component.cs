@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PcAssembly.Domain.Components;
 using PcAssembly.Domain.Enums;
-//using PcAssembly.Domain.Lists;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

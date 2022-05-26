@@ -17,13 +17,20 @@
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-card-actions>
-  
+          <mat-error *ngIf="showError" role="alert">
+            <span [innerHTML]="errorMessage"></span>
+          </mat-error>
         </mat-toolbar-row>
       </mat-toolbar>
   
       <mat-card-content >
 
         <div class="form-card">
+          <table style="width: 100%;">
+            <tr style="text-align: center;">
+              <img style="height: 200px;"  [src]="cpuForm.controls['imageUrl'].value">
+            </tr>
+          </table>
           <mat-form-field style="width: 100%;">
             <input matInput placeholder="Model" type="text" placeholder="Model. (required)" formControlName="model"/>
           </mat-form-field>
@@ -84,10 +91,9 @@
           <mat-form-field style="width: 100%;">
             <textarea matInput placeholder="Image Url" formControlName="imageUrl" matTextareaAutosize></textarea>
           </mat-form-field>
-<!-- 
-          <div style="margin: 5px; margin-bottom: 50px;">
-            <app-image-upload></app-image-upload>
-          </div> -->
+          <div style=" margin-bottom: 50px; ">
+            <app-image-upload (urlImageUpload)="setUploadImage($event)"></app-image-upload> 
+          </div>
           
 
           <mat-form-field style="width: 100%;">

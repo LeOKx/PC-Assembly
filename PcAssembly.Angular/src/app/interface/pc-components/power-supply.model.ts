@@ -1,6 +1,6 @@
-import { Component } from "./component.model";
+import { ComponentModel } from "./component.model";
 
-export interface PowerSupply extends Component {
+export interface PowerSupply extends ComponentModel {
         power:number
   } 
   

@@ -24,6 +24,26 @@ namespace PcAssembly.Dal.EntityConfiguration
                 .HasForeignKey(m => m.GraphicCardId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.HasOne(c => c.Motherboard)
+                .WithMany()
+                .HasForeignKey(m => m.MotherboardId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(c => c.Ram)
+                .WithMany()
+                .HasForeignKey(m => m.RamId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(c => c.PowerSupply)
+                .WithMany()
+                .HasForeignKey(m => m.PowerSupplyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(m => m.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

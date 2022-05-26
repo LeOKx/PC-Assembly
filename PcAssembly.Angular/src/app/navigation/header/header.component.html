@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="toolbar">
+<mat-toolbar style="background-color: #028078;" color="primary" class="toolbar">
     <button mat-icon-button (click)="onToggleSidenav()">
         <mat-icon>menu</mat-icon>
     </button>
@@ -18,11 +18,19 @@
                 </a>
             </li>
         </ul>
-        <button *ngIf='isUserAuthenticated' mat-icon-button [matMenuTriggerFor]="menuProfile" ><mat-icon>account_circle</mat-icon></button>
-            <mat-menu class="user-menu" #menuProfile="matMenu">
-                <a mat-menu-item href="#Profile"><mat-icon>person</mat-icon>Profile</a>
-                <a class = "logout-btn" mat-menu-item (click)="logout()" ><mat-icon>logout</mat-icon>Logout</a>
-            </mat-menu>
+        <ul *ngIf='isUserAuthenticated' fxLayout fxLayoutGap="15px" class="navigation-items">
+            <li>
+                <p *ngIf='isUserAuthenticated' class="username">{{userName}}</p>
+            </li>
+            <li>
+                <button *ngIf='isUserAuthenticated' mat-icon-button [matMenuTriggerFor]="menuProfile" ><mat-icon>account_circle</mat-icon></button>
+                <mat-menu class="user-menu" #menuProfile="matMenu">
+                    <a mat-menu-item href="#Profile"><mat-icon>person</mat-icon>Profile</a>
+                    <a class = "logout-btn" mat-menu-item (click)="logout()" ><mat-icon>logout</mat-icon>Logout</a>
+                </mat-menu>
+            </li>
+        </ul >
+        
     </form>
     
   </mat-toolbar>

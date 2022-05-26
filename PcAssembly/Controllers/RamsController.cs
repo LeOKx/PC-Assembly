@@ -8,13 +8,11 @@ using PcAssembly.Common.Dtos.User;
 using PcAssembly.Common.Models;
 using PcAssembly.Common.Models.PagedRequest;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PcAssembly.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize]
-    [ApiController]
+        [ApiController]
     public class RamsController : ControllerBase
     {
         private readonly IRamService _ramService;
@@ -25,14 +23,11 @@ namespace PcAssembly.Controllers
 
         }
 
-        // GET: api/<RamController>
-        [HttpGet]
-        //[Authorize]
-        public async Task<ActionResult<ServiceResponse<List<GetRamDto>>>> Get()
+                [HttpGet]
+                public async Task<ActionResult<ServiceResponse<List<GetRamDto>>>> Get()
         {
 
-            //return ramList;
-            return Ok(await _ramService.GetRams());
+                        return Ok(await _ramService.GetRams());
         }
 
         [HttpPost("paginated-search")]
@@ -41,17 +36,14 @@ namespace PcAssembly.Controllers
             return await _ramService.GetPagedRams(pagedRequest);
         }
 
-        // GET api/<RamController>/5
-        [HttpGet("{id}")]
+                [HttpGet("{id}")]
         
         public async Task<ActionResult<GetRamDto>> GetSingle(Guid id)
         {
-            //return ramList.FirstOrDefault(ram => ram.Id == id);
-            return Ok(await _ramService.GetRamById(id));
+                        return Ok(await _ramService.GetRamById(id));
         }
 
-        // POST api/<RamController>
-        [HttpPost]
+                [HttpPost]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
         public async Task<ActionResult<ServiceResponse<List<GetRamDto>>>> AddRam([FromBody] AddRamDto newRam)
@@ -64,8 +56,7 @@ namespace PcAssembly.Controllers
             return Ok(response);
         }
 
-        // PUT api/<RamController>/5
-        [HttpPut("{id}")]
+                [HttpPut("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         [ApiExceptionFilter]
         public async Task<ActionResult<ServiceResponse<List<GetRamDto>>>> UpdateRam(Guid id, [FromBody] UpdateRamDto updatedRam)
@@ -95,8 +86,7 @@ namespace PcAssembly.Controllers
 
         }
 
-        // DELETE api/<RamController>/5
-        [HttpDelete("{id}")]
+                [HttpDelete("{id}")]
         [Authorize(Roles = RolesNames.Administrator)]
         public async Task<ActionResult<ServiceResponse<List<GetRamDto>>>> Delete(Guid id)
         {

@@ -1,1 +1,130 @@
-<p>assembly-list works!</p>
+<mat-card class="filterMenu" style="height: 100%;">
+    <mat-card-header>
+      <mat-card-title class="view-card-title">
+        <h1>Assemblies</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <mat-form-field>
+          <mat-placeholder>
+            <mat-icon>subject</mat-icon>
+            <b> Search</b>
+          </mat-placeholder>
+          <input matInput [formControl]="searchInput" (keyup.enter)="applySearch()">
+        </mat-form-field>
+        <span class="title-spacer"></span>
+        
+        <button *ngIf="isAdmin" mat-mini-fab style="margin-right:10px; background-color:#e07c9e" [routerLink]="['/create-assembly']">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-mini-fab style="margin-right:10px; background-color:#a28b6e" (click)="sidenav.toggle()">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-mini-fab style="margin-right:10px; background-color:darkgray" (click)="loadAssembliesFromApi()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  
+  
+  <mat-table  #table [dataSource]="pagedAssemblies?.items" matSort matSortActive="name" matSortDirection="asc">
+    <div *ngIf="isLoading" 
+    style="display: flex; justify-content: center; align-items: center; background: white;">
+        <mat-progress-spinner 
+            color="primary" 
+            mode="indeterminate">
+        </mat-progress-spinner>
+    </div>
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let assembly"> {{assembly.name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="totalPrice">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> TotalPrice </mat-header-cell>
+      <mat-cell *matCellDef="let assembly"> {{assembly.totalPrice}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="rating">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rating </mat-header-cell>
+      <mat-cell *matCellDef="let assembly"> {{assembly.rating}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="userId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User Name </mat-header-cell>
+      <mat-cell *matCellDef="let assembly"> {{getUsername(assembly?.userId)}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="createDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> CreateDate </mat-header-cell>
+      <mat-cell *matCellDef="let assembly"> {{assembly.createDate | date:'d MMM, y'}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="imageUrl" style="min-width: 300px;">
+      <mat-header-cell *matHeaderCellDef>
+        Image
+      </mat-header-cell>
+      <mat-cell *matCellDef="let assembly" >
+        <img style="max-height: 100px; max-width: 300px;" src="" [src]="assembly.imageUrl">
+      </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="id" >
+      <mat-header-cell *matHeaderCellDef>
+        
+      </mat-header-cell>
+      <mat-cell  *matCellDef="let assembly" >
+      <div *ngIf="isAdmin; then adminMenu else userMenu"></div>
+      <ng-template #adminMenu>
+        <button *ngIf="isAdmin" mat-mini-fab style="background-color:rgb(8, 199, 199); min-height: 30px; margin: 10px;" [routerLink]="['/assembly-edit', assembly.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button *ngIf="isAdmin" mat-mini-fab style="background-color:rgb(248, 86, 86); min-height: 30px;  margin: 10px; margin-right: 100px;" (click)="openDialogForDeleting(assembly.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-template>
+      <ng-template #userMenu>
+        <button *ngIf="!isAdmin" mat-mini-fab style="background-color:rgb(164, 8, 199); min-height: 30px;" [routerLink]="['/assembly-info', assembly.id]">
+          <mat-icon>menu_open</mat-icon>
+        </button>
+      </ng-template>
+    </mat-cell>
+    </ng-container>
+  
+    <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  
+  </mat-table>
+  <div class="spinner" *ngIf="noItems" >
+    <h1>Nothing :(</h1>
+  </div>
+  <div class="spinner" *ngIf="isLoading" >
+    <mat-progress-spinner 
+        color="primary" 
+        mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+  <mat-paginator [length]="pagedAssemblies?.total" [pageSizeOptions]="[1, 2, 5, 10, 25, 50]" pageSize="5"></mat-paginator>
+  
+  </mat-card>
+  
+  <mat-sidenav class="search-panel" dark #sidenav mode="push" opened="false">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <div mat-card-avatar class="avatar"></div>
+        <mat-card-subtitle>
+          <button mat-raised-button style="color:lightgrey; background-color:darkgreen" (click)="filterAssembliesFromForm();sidenav.toggle()">
+            <mat-icon>search</mat-icon>Search </button>
+          <button mat-raised-button style="color:lightgrey; background-color:darkred" (click)="resetGrid(); sidenav.toggle()">
+            <mat-icon>refresh</mat-icon>Reset</button>
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <mat-nav-list style="margin-left:20px;">
+      <form class="searchForm" [formGroup]="filterForm" (ngSubmit)="sidenav.toggle()">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Name" style="width:200px;" formControlName="name" (keyup.enter)="filterAssembliesFromForm();sidenav.toggle()"  />
+        </mat-form-field> 
+        <br>
+        <br>
+        <br>
+      </form>
+    </mat-nav-list>
+  </mat-sidenav>

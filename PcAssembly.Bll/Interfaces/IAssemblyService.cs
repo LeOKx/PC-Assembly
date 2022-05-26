@@ -15,6 +15,7 @@ namespace PcAssembly.Bll.Interfaces
         Task<ServiceResponse<GetAssemblyDto>> CreateAssembly(AddAssemblyDto assemblyDto);
         Task<ServiceResponse<List<GetAssemblyDto>>> GetAssemblies();
         Task<GetAssemblyDto> GetAssemblyById(Guid id);
+        Task<GenerateAssemblyDto> GenerateAssembly(double price);
         Task<ServiceResponse<GetAssemblyDto>> UpdateAssembly(Guid id, UpdateAssemblyDto updatedAssembly);
     }
 }

@@ -50,18 +50,18 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header> PowerConsumption </mat-header-cell>
     <mat-cell *matCellDef="let powerSupply"> {{powerSupply.powerConsumption}} </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="imageUrl" style="min-width: 250px;">
-    <mat-header-cell *matHeaderCellDef>
+  <ng-container class="image-cell" matColumnDef="imageUrl" style="min-width: 300px;">
+    <mat-header-cell class="image-cell" *matHeaderCellDef>
       Image
     </mat-header-cell>
-    <mat-cell *matCellDef="let powerSupply" >
-      <img style="height: 120px; max-width: 200px;" src="" [src]="powerSupply.imageUrl">
+    <mat-cell class="image-cell" *matCellDef="let powerSupply" >
+      <img style="height: 120px; max-width: 250px;" src="" [src]="powerSupply.imageUrl">
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="id" >
     <mat-header-cell *matHeaderCellDef>
-      <button mat-button style="color:white; margin-left: 40px; background-color:darkgrey" (click)="resetGrid()">Reset</button>
+      
     </mat-header-cell>
     <mat-cell  *matCellDef="let powerSupply" >
     <div *ngIf="isAdmin; then adminMenu else userMenu"></div>
@@ -88,6 +88,15 @@
   <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
 </mat-table>
+<div class="spinner" *ngIf="noItems" >
+  <h1>Nothing :(</h1>
+</div>
+<div class="spinner" *ngIf="isLoading" >
+  <mat-progress-spinner 
+      color="primary" 
+      mode="indeterminate">
+  </mat-progress-spinner>
+</div>
 
 <mat-paginator [length]="pagedPowerSupplys?.total" [pageSizeOptions]="[1, 2, 5, 10, 25, 50]" pageSize="5"></mat-paginator>
 
@@ -113,10 +122,6 @@
       <br>
       <mat-form-field>
         <input matInput type="text" placeholder="Company" style="width:200px;" formControlName="company" (keyup.enter)="filterPowerSupplysFromForm();sidenav.toggle()"  />
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-        <input matInput type="number" placeholder="Power" style="width:200px;" formControlName="power" (keyup.enter)="filterPowerSupplysFromForm();sidenav.toggle()"  />
       </mat-form-field>
     </form>
   </mat-nav-list>
